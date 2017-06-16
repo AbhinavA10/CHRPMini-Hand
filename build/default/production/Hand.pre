@@ -6683,15 +6683,18 @@ void initOsc(void);
 void initPorts(void);
 void initANA(void);
 
-# 23 "Hand.c"
-unsigned char arcPos[5] = {10, 115, 172, 210, 42};
+# 19 "Hand.c"
+unsigned char arcPos[5] = {0, 0, 0, 0, 0};
 int nDelay;
+unsigned char cMode, cDelay;
+bool modeSelect = 0, isPressed = 0, wasTheButtonLetGo = 1;
 
-# 38
+# 35
 unsigned char adConvert(unsigned char chan) {
 ADON = 1;
 ADCON0 = (ADCON0 & 0b11000011);
 ADCON0 = (ADCON0 | chan);
+
 __nop();
 __nop();
 __nop();
@@ -6705,25 +6708,67 @@ ADON = 0;
 return (ADRESH);
 }
 
-# 59
+# 57
 void convertSensors() {
-arcPos[0] = adConvert(0b00000000);
-arcPos[1] = adConvert(0b00000100);
-arcPos[2] = adConvert(0b00001000);
-arcPos[3] = adConvert(0b00001100);
-arcPos[4] = adConvert(0b00010000);
+
+# 65
 }
 
 # 70
+unsigned char checkMode() {
+unsigned char cTempMode = cMode;
+if (PORTEbits.RE3 == 0) {
+isPressed = 1;
+if (!modeSelect && wasTheButtonLetGo) {
+cDelay++;
+if (cDelay == 20) {
+cDelay = 0;
+modeSelect = 1;
+wasTheButtonLetGo = 0;
+for (unsigned char i = 0; i < 5; i++) {
+arcPos[i] = 0;
+}
+}
+} else if (wasTheButtonLetGo) {
+cDelay++;
+if (cDelay == 20) {
+cDelay = 0;
+modeSelect = 0;
+wasTheButtonLetGo = 0;
+for (unsigned char i = 0; i < 5; i++) {
+arcPos[i] = 0;
+}
+} else {
+for (unsigned char i = 0; i < 5; i++) {
+arcPos[i] = (cTempMode == i) ? 255 : 0;
+}
+}
+}
+}
+
+if (PORTEbits.RE3 == 1) {
+if (isPressed == 1 && modeSelect) {
+cTempMode++;
+if (cTempMode == 5)cTempMode = 0;
+}
+wasTheButtonLetGo = 1;
+cDelay = 0;
+isPressed = 0;
+}
+return cTempMode;
+}
+
+# 116
 void pulseServos() {
 
-# 76
+# 125
 LATBbits.LATB7 = 1;
 _delay((unsigned long)((540)*(48000000/4000000.0)));
 for (unsigned char i = arcPos[0]; i != 0; i--) {
 _delay((unsigned long)((6)*(48000000/4000000.0)));
 }
 LATBbits.LATB7 = 0;
+
 
 LATBbits.LATB6 = 1;
 _delay((unsigned long)((540)*(48000000/4000000.0)));
@@ -6732,6 +6777,7 @@ _delay((unsigned long)((6)*(48000000/4000000.0)));
 }
 LATBbits.LATB6 = 0;
 
+
 LATBbits.LATB5 = 1;
 _delay((unsigned long)((540)*(48000000/4000000.0)));
 for (unsigned char i = arcPos[2]; i != 0; i--) {
@@ -6739,12 +6785,14 @@ _delay((unsigned long)((6)*(48000000/4000000.0)));
 }
 LATBbits.LATB5 = 0;
 
+
 LATBbits.LATB4 = 1;
 _delay((unsigned long)((540)*(48000000/4000000.0)));
 for (unsigned char i = arcPos[3]; i != 0; i--) {
 _delay((unsigned long)((6)*(48000000/4000000.0)));
 }
 LATBbits.LATB4 = 0;
+
 
 LATBbits.LATB2 = 1;
 _delay((unsigned long)((540)*(48000000/4000000.0)));
@@ -6754,28 +6802,37 @@ _delay((unsigned long)((6)*(48000000/4000000.0)));
 LATBbits.LATB2 = 0;
 }
 
-# 116
-void delay(){
-nDelay = (int)((20000 - 2500 - 540*5 - arcPos[0] - arcPos[1] - arcPos[2] - arcPos[3] - arcPos[4])/6);
-for(int i = nDelay; i != 0; i--){
+# 168
+void delay() {
+nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[0] - arcPos[1] - arcPos[2] - arcPos[3] - arcPos[4]) / 6);
+for (int i = nDelay; i != 0; i--) {
 _delay((unsigned long)((6)*(48000000/4000000.0)));
 }
 }
 
-# 126
+# 178
 int main(void) {
 initOsc();
 initPorts();
 initANA();
+cMode = 0;
+cDelay = 0;
 while (1) {
+switch (cMode) {
+case 0:
 convertSensors();
+break;
+default:
+break;
+}
 pulseServos();
 
 
 delay();
+cMode = checkMode();
 if (PORTEbits.RE3 == 0)
 {
-asm("goto 0x001C");
+
 }
 }
 }

@@ -31,15 +31,15 @@
 [v _initPorts initPorts `(v  1 e 1 0 ]
 "60
 [v _initANA initANA `(v  1 e 1 0 ]
-"38 H:\MPLAB\CHRPMini-Hand\Hand.c
-[v _adConvert adConvert `(uc  1 e 1 0 ]
-"59
+"57 H:\MPLAB\CHRPMini-Hand\Hand.c
 [v _convertSensors convertSensors `(v  1 e 1 0 ]
 "70
-[v _pulseServos pulseServos `(v  1 e 1 0 ]
+[v _checkMode checkMode `(uc  1 e 1 0 ]
 "116
+[v _pulseServos pulseServos `(v  1 e 1 0 ]
+"168
 [v _delay delay `(v  1 e 1 0 ]
-"126
+"178
 [v _main main `(i  1 e 2 0 ]
 "230 C:\Program Files\Microchip\xc8\v1.42\include\pic18f25k50.h
 [v _ANSELA ANSELA `VEuc  1 e 1 @3931 ]
@@ -53,23 +53,23 @@
 [v _PORTB PORTB `VEuc  1 e 1 @3969 ]
 "3055
 [v _PORTC PORTC `VEuc  1 e 1 @3970 ]
-[s S101 . 1 `uc 1 . 1 0 :3:0 
+[s S52 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 RE3 1 0 :1:3 
 ]
 "3216
-[s S104 . 1 `uc 1 . 1 0 :3:0 
+[s S55 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 CCP9E 1 0 :1:3 
 ]
-[s S107 . 1 `uc 1 . 1 0 :3:0 
+[s S58 . 1 `uc 1 . 1 0 :3:0 
 `uc 1 PC3E 1 0 :1:3 
 ]
-[u S110 . 1 `S101 1 . 1 0 `S104 1 . 1 0 `S107 1 . 1 0 ]
-[v _PORTEbits PORTEbits `VES110  1 e 1 @3972 ]
+[u S61 . 1 `S52 1 . 1 0 `S55 1 . 1 0 `S58 1 . 1 0 ]
+[v _PORTEbits PORTEbits `VES61  1 e 1 @3972 ]
 "3470
 [v _LATA LATA `VEuc  1 e 1 @3977 ]
 "3582
 [v _LATB LATB `VEuc  1 e 1 @3978 ]
-[s S52 . 1 `uc 1 LATB0 1 0 :1:0 
+[s S75 . 1 `uc 1 LATB0 1 0 :1:0 
 `uc 1 LATB1 1 0 :1:1 
 `uc 1 LATB2 1 0 :1:2 
 `uc 1 LATB3 1 0 :1:3 
@@ -79,7 +79,7 @@
 `uc 1 LATB7 1 0 :1:7 
 ]
 "3609
-[s S61 . 1 `uc 1 LB0 1 0 :1:0 
+[s S84 . 1 `uc 1 LB0 1 0 :1:0 
 `uc 1 LB1 1 0 :1:1 
 `uc 1 LB2 1 0 :1:2 
 `uc 1 LB3 1 0 :1:3 
@@ -88,8 +88,8 @@
 `uc 1 LB6 1 0 :1:6 
 `uc 1 LB7 1 0 :1:7 
 ]
-[u S70 . 1 `S52 1 . 1 0 `S61 1 . 1 0 ]
-[v _LATBbits LATBbits `VES70  1 e 1 @3978 ]
+[u S93 . 1 `S75 1 . 1 0 `S84 1 . 1 0 ]
+[v _LATBbits LATBbits `VES93  1 e 1 @3978 ]
 "3694
 [v _LATC LATC `VEuc  1 e 1 @3979 ]
 "4153
@@ -120,29 +120,36 @@
 [v _ADON ADON `VEb  1 e 0 @32272 ]
 "13652
 [v _GO GO `VEb  1 e 0 @32273 ]
-"23 H:\MPLAB\CHRPMini-Hand\Hand.c
+"19 H:\MPLAB\CHRPMini-Hand\Hand.c
 [v _arcPos arcPos `[5]uc  1 e 5 0 ]
-"24
+"20
 [v _nDelay nDelay `i  1 e 2 0 ]
-"126
+"21
+[v _cMode cMode `uc  1 e 1 0 ]
+[v _cDelay cDelay `uc  1 e 1 0 ]
+"22
+[v _modeSelect modeSelect `uc  1 e 1 0 ]
+[v _isPressed isPressed `uc  1 e 1 0 ]
+[v _wasTheButtonLetGo wasTheButtonLetGo `uc  1 e 1 0 ]
+"178
 [v _main main `(i  1 e 2 0 ]
 {
-"141
+"202
 } 0
-"70
+"116
 [v _pulseServos pulseServos `(v  1 e 1 0 ]
 {
-"106
-[v pulseServos@i_143 i `uc  1 a 1 5 ]
-"99
-[v pulseServos@i_142 i `uc  1 a 1 4 ]
-"92
-[v pulseServos@i_141 i `uc  1 a 1 3 ]
-"85
-[v pulseServos@i_140 i `uc  1 a 1 2 ]
-"78
+"159
+[v pulseServos@i_155 i `uc  1 a 1 5 ]
+"151
+[v pulseServos@i_154 i `uc  1 a 1 4 ]
+"143
+[v pulseServos@i_153 i `uc  1 a 1 3 ]
+"135
+[v pulseServos@i_152 i `uc  1 a 1 2 ]
+"127
 [v pulseServos@i i `uc  1 a 1 1 ]
-"110
+"163
 } 0
 "27 H:\MPLAB\CHRPMini-Hand\CHRP3.c
 [v _initPorts initPorts `(v  1 e 1 0 ]
@@ -159,12 +166,12 @@
 {
 "68
 } 0
-"116 H:\MPLAB\CHRPMini-Hand\Hand.c
+"168 H:\MPLAB\CHRPMini-Hand\Hand.c
 [v _delay delay `(v  1 e 1 0 ]
 {
-"118
+"170
 [v delay@i i `i  1 a 2 12 ]
-"121
+"173
 } 0
 "8 C:\Program Files\Microchip\xc8\v1.42\sources\common\awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
@@ -179,16 +186,21 @@
 [v ___awdiv@divisor divisor `i  1 p 2 2 ]
 "42
 } 0
-"59 H:\MPLAB\CHRPMini-Hand\Hand.c
+"57 H:\MPLAB\CHRPMini-Hand\Hand.c
 [v _convertSensors convertSensors `(v  1 e 1 0 ]
 {
 "65
 } 0
-"38
-[v _adConvert adConvert `(uc  1 e 1 0 ]
+"70
+[v _checkMode checkMode `(uc  1 e 1 0 ]
 {
-[v adConvert@chan chan `uc  1 a 1 wreg ]
-[v adConvert@chan chan `uc  1 a 1 wreg ]
-[v adConvert@chan chan `uc  1 a 1 0 ]
-"53
+"94
+[v checkMode@i_140 i `uc  1 a 1 5 ]
+"90
+[v checkMode@i_139 i `uc  1 a 1 3 ]
+"80
+[v checkMode@i i `uc  1 a 1 2 ]
+"71
+[v checkMode@cTempMode cTempMode `uc  1 a 1 4 ]
+"111
 } 0

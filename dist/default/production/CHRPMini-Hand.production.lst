@@ -1,7 +1,7 @@
 
 
 Microchip Technology PIC18 LITE Macro Assembler V1.42 build -159332390 
-                                                                                               Mon Jun 12 10:08:31 2017
+                                                                                               Fri Jun 16 15:07:07 2017
 
 Microchip Technology Omniscient Code Generator v1.42 (Free mode) build 201704130522
      1                           	processor	18F25K50
@@ -72,1160 +72,1346 @@ Microchip Technology Omniscient Code Generator v1.42 (Free mode) build 201704130
     58  002008                     __pidataCOMRAM:
     59                           	opt stack 0
     60                           
-    61                           ;initializer for _arcPos
-    62  002008  0A                 	db	10
-    63  002009  73                 	db	115
-    64  00200A  AC                 	db	172
-    65  00200B  D2                 	db	210
-    66  00200C  2A                 	db	42
-    67  0000                     _ANSELC	set	3933
-    68  0000                     _ANSELB	set	3932
-    69  0000                     _ANSELA	set	3931
-    70  0000                     _PORTEbits	set	3972
-    71  0000                     _LATBbits	set	3978
-    72  0000                     _ADRESH	set	4036
-    73  0000                     _ADCON2	set	4032
-    74  0000                     _ADCON1	set	4033
-    75  0000                     _ADCON0	set	4034
-    76  0000                     _PORTC	set	3970
-    77  0000                     _PORTB	set	3969
-    78  0000                     _PORTA	set	3968
-    79  0000                     _T0CON	set	4053
-    80  0000                     _TRISC	set	3988
-    81  0000                     _LATC	set	3979
-    82  0000                     _TRISB	set	3987
-    83  0000                     _LATB	set	3978
-    84  0000                     _TRISA	set	3986
-    85  0000                     _LATA	set	3977
-    86  0000                     _ACTCON	set	4021
-    87  0000                     _OSCCON2	set	4050
-    88  0000                     _OSCCON	set	4051
-    89  0000                     _OSCTUNE	set	3995
-    90  0000                     _GO	set	32273
-    91  0000                     _ADON	set	32272
-    92                           
-    93                           ; #config settings
-    94  0000                     
-    95                           	psect	cinit
-    96  007DD0                     __pcinit:
+    61                           ;initializer for _wasTheButtonLetGo
+    62  002008  01                 	db	1
+    63  0000                     _ANSELC	set	3933
+    64  0000                     _ANSELB	set	3932
+    65  0000                     _ANSELA	set	3931
+    66  0000                     _LATBbits	set	3978
+    67  0000                     _PORTEbits	set	3972
+    68  0000                     _ADRESH	set	4036
+    69  0000                     _ADCON2	set	4032
+    70  0000                     _ADCON1	set	4033
+    71  0000                     _ADCON0	set	4034
+    72  0000                     _PORTC	set	3970
+    73  0000                     _PORTB	set	3969
+    74  0000                     _PORTA	set	3968
+    75  0000                     _T0CON	set	4053
+    76  0000                     _TRISC	set	3988
+    77  0000                     _LATC	set	3979
+    78  0000                     _TRISB	set	3987
+    79  0000                     _LATB	set	3978
+    80  0000                     _TRISA	set	3986
+    81  0000                     _LATA	set	3977
+    82  0000                     _ACTCON	set	4021
+    83  0000                     _OSCCON2	set	4050
+    84  0000                     _OSCCON	set	4051
+    85  0000                     _OSCTUNE	set	3995
+    86  0000                     _GO	set	32273
+    87  0000                     _ADON	set	32272
+    88                           
+    89                           ; #config settings
+    90  0000                     
+    91                           	psect	cinit
+    92  007CA0                     __pcinit:
+    93                           	opt stack 0
+    94  007CA0                     start_initialization:
+    95                           	opt stack 0
+    96  007CA0                     __initialization:
     97                           	opt stack 0
-    98  007DD0                     start_initialization:
-    99                           	opt stack 0
-   100  007DD0                     __initialization:
-   101                           	opt stack 0
-   102                           
-   103                           ; Initialize objects allocated to COMRAM (5 bytes)
-   104                           ; load TBLPTR registers with __pidataCOMRAM
-   105  007DD0  0E08               	movlw	low __pidataCOMRAM
-   106  007DD2  6EF6               	movwf	tblptrl,c
-   107  007DD4  0E20               	movlw	high __pidataCOMRAM
-   108  007DD6  6EF7               	movwf	tblptrh,c
-   109  007DD8  0E00               	movlw	low (__pidataCOMRAM shr (0+16))
-   110  007DDA  6EF8               	movwf	tblptru,c
-   111  007DDC  EE00  F00F         	lfsr	0,__pdataCOMRAM
-   112  007DE0  EE10 F005          	lfsr	1,5
-   113  007DE4                     copy_data0:
-   114  007DE4  0009               	tblrd		*+
-   115  007DE6  CFF5 FFEE          	movff	tablat,postinc0
-   116  007DEA  50E5               	movf	postdec1,w,c
-   117  007DEC  50E1               	movf	fsr1l,w,c
-   118  007DEE  E1FA               	bnz	copy_data0
-   119                           
-   120                           ; Clear objects allocated to COMRAM (2 bytes)
-   121  007DF0  6A15               	clrf	(__pbssCOMRAM+1)& (0+255),c
-   122  007DF2  6A14               	clrf	__pbssCOMRAM& (0+255),c
-   123  007DF4                     end_of_initialization:
-   124                           	opt stack 0
-   125  007DF4                     __end_of__initialization:
-   126                           	opt stack 0
-   127  007DF4  0100               	movlb	0
-   128  007DF6  EFB0  F03E         	goto	_main	;jump to C main() function
-   129                           tblptru	equ	0xFF8
-   130                           tblptrh	equ	0xFF7
-   131                           tblptrl	equ	0xFF6
-   132                           tablat	equ	0xFF5
-   133                           postinc0	equ	0xFEE
-   134                           postdec1	equ	0xFE5
-   135                           fsr1l	equ	0xFE1
-   136                           
-   137                           	psect	bssCOMRAM
-   138  000014                     __pbssCOMRAM:
+    98                           
+    99                           ; Initialize objects allocated to COMRAM (1 bytes)
+   100                           ; load TBLPTR registers with __pidataCOMRAM
+   101  007CA0  0E08               	movlw	low __pidataCOMRAM
+   102  007CA2  6EF6               	movwf	tblptrl,c
+   103  007CA4  0E20               	movlw	high __pidataCOMRAM
+   104  007CA6  6EF7               	movwf	tblptrh,c
+   105  007CA8  0E00               	movlw	low (__pidataCOMRAM shr (0+16))
+   106  007CAA  6EF8               	movwf	tblptru,c
+   107  007CAC  0009               	tblrd		*+	;fetch initializer
+   108  007CAE  CFF5 F01A          	movff	tablat,__pdataCOMRAM
+   109                           
+   110                           ; Clear objects allocated to COMRAM (11 bytes)
+   111  007CB2  EE00  F00F         	lfsr	0,__pbssCOMRAM
+   112  007CB6  0E0B               	movlw	11
+   113  007CB8                     clear_0:
+   114  007CB8  6AEE               	clrf	postinc0,c
+   115  007CBA  06E8               	decf	wreg,f,c
+   116  007CBC  E1FD               	bnz	clear_0
+   117  007CBE                     end_of_initialization:
+   118                           	opt stack 0
+   119  007CBE                     __end_of__initialization:
+   120                           	opt stack 0
+   121  007CBE  0E00               	movlw	low (__Lmediumconst shr (0+16))
+   122  007CC0  6EF8               	movwf	tblptru,c
+   123  007CC2  0100               	movlb	0
+   124  007CC4  EF64  F03E         	goto	_main	;jump to C main() function
+   125                           tblptru	equ	0xFF8
+   126                           tblptrh	equ	0xFF7
+   127                           tblptrl	equ	0xFF6
+   128                           tablat	equ	0xFF5
+   129                           postinc0	equ	0xFEE
+   130                           wreg	equ	0xFE8
+   131                           
+   132                           	psect	bssCOMRAM
+   133  00000F                     __pbssCOMRAM:
+   134                           	opt stack 0
+   135  00000F                     _arcPos:
+   136                           	opt stack 0
+   137  00000F                     	ds	5
+   138  000014                     _nDelay:
    139                           	opt stack 0
-   140  000014                     _nDelay:
-   141                           	opt stack 0
-   142  000014                     	ds	2
-   143                           tblptru	equ	0xFF8
-   144                           tblptrh	equ	0xFF7
-   145                           tblptrl	equ	0xFF6
-   146                           tablat	equ	0xFF5
-   147                           postinc0	equ	0xFEE
-   148                           postdec1	equ	0xFE5
-   149                           fsr1l	equ	0xFE1
-   150                           
-   151                           	psect	dataCOMRAM
-   152  00000F                     __pdataCOMRAM:
-   153                           	opt stack 0
-   154  00000F                     _arcPos:
-   155                           	opt stack 0
-   156  00000F                     	ds	5
-   157                           tblptru	equ	0xFF8
-   158                           tblptrh	equ	0xFF7
-   159                           tblptrl	equ	0xFF6
-   160                           tablat	equ	0xFF5
-   161                           postinc0	equ	0xFEE
-   162                           postdec1	equ	0xFE5
-   163                           fsr1l	equ	0xFE1
-   164                           
-   165                           	psect	cstackCOMRAM
-   166  000001                     __pcstackCOMRAM:
-   167                           	opt stack 0
-   168  000001                     ??_pulseServos:
-   169  000001                     ?___awdiv:
-   170                           	opt stack 0
-   171  000001                     adConvert@chan:
-   172                           	opt stack 0
-   173  000001                     ___awdiv@dividend:
-   174                           	opt stack 0
-   175                           
-   176                           ; 2 bytes @ 0x0
-   177  000001                     	ds	1
-   178  000002                     pulseServos@i:
-   179                           	opt stack 0
-   180                           
-   181                           ; 1 bytes @ 0x1
-   182  000002                     	ds	1
-   183  000003                     pulseServos@i_140:
-   184                           	opt stack 0
-   185  000003                     ___awdiv@divisor:
-   186                           	opt stack 0
-   187                           
-   188                           ; 2 bytes @ 0x2
-   189  000003                     	ds	1
-   190  000004                     pulseServos@i_141:
-   191                           	opt stack 0
-   192                           
-   193                           ; 1 bytes @ 0x3
-   194  000004                     	ds	1
-   195  000005                     pulseServos@i_142:
+   140  000014                     	ds	2
+   141  000016                     _isPressed:
+   142                           	opt stack 0
+   143  000016                     	ds	1
+   144  000017                     _modeSelect:
+   145                           	opt stack 0
+   146  000017                     	ds	1
+   147  000018                     _cDelay:
+   148                           	opt stack 0
+   149  000018                     	ds	1
+   150  000019                     _cMode:
+   151                           	opt stack 0
+   152  000019                     	ds	1
+   153                           tblptru	equ	0xFF8
+   154                           tblptrh	equ	0xFF7
+   155                           tblptrl	equ	0xFF6
+   156                           tablat	equ	0xFF5
+   157                           postinc0	equ	0xFEE
+   158                           wreg	equ	0xFE8
+   159                           
+   160                           	psect	dataCOMRAM
+   161  00001A                     __pdataCOMRAM:
+   162                           	opt stack 0
+   163  00001A                     _wasTheButtonLetGo:
+   164                           	opt stack 0
+   165  00001A                     	ds	1
+   166                           tblptru	equ	0xFF8
+   167                           tblptrh	equ	0xFF7
+   168                           tblptrl	equ	0xFF6
+   169                           tablat	equ	0xFF5
+   170                           postinc0	equ	0xFEE
+   171                           wreg	equ	0xFE8
+   172                           
+   173                           	psect	cstackCOMRAM
+   174  000001                     __pcstackCOMRAM:
+   175                           	opt stack 0
+   176  000001                     ??_pulseServos:
+   177  000001                     ?___awdiv:
+   178                           	opt stack 0
+   179  000001                     _checkMode$141:
+   180                           	opt stack 0
+   181  000001                     ___awdiv@dividend:
+   182                           	opt stack 0
+   183                           
+   184                           ; 2 bytes @ 0x0
+   185  000001                     	ds	1
+   186  000002                     pulseServos@i:
+   187                           	opt stack 0
+   188                           
+   189                           ; 1 bytes @ 0x1
+   190  000002                     	ds	1
+   191  000003                     checkMode@i:
+   192                           	opt stack 0
+   193  000003                     pulseServos@i_152:
+   194                           	opt stack 0
+   195  000003                     ___awdiv@divisor:
    196                           	opt stack 0
-   197  000005                     ___awdiv@counter:
-   198                           	opt stack 0
-   199                           
-   200                           ; 1 bytes @ 0x4
-   201  000005                     	ds	1
-   202  000006                     pulseServos@i_143:
+   197                           
+   198                           ; 2 bytes @ 0x2
+   199  000003                     	ds	1
+   200  000004                     checkMode@i_139:
+   201                           	opt stack 0
+   202  000004                     pulseServos@i_153:
    203                           	opt stack 0
-   204  000006                     ___awdiv@sign:
-   205                           	opt stack 0
-   206                           
-   207                           ; 1 bytes @ 0x5
-   208  000006                     	ds	1
-   209  000007                     ___awdiv@quotient:
+   204                           
+   205                           ; 1 bytes @ 0x3
+   206  000004                     	ds	1
+   207  000005                     checkMode@cTempMode:
+   208                           	opt stack 0
+   209  000005                     pulseServos@i_154:
    210                           	opt stack 0
-   211                           
-   212                           ; 2 bytes @ 0x6
-   213  000007                     	ds	2
-   214  000009                     ??_delay:
-   215                           
-   216                           ; 1 bytes @ 0x8
-   217  000009                     	ds	4
-   218  00000D                     delay@i:
+   211  000005                     ___awdiv@counter:
+   212                           	opt stack 0
+   213                           
+   214                           ; 1 bytes @ 0x4
+   215  000005                     	ds	1
+   216  000006                     checkMode@i_140:
+   217                           	opt stack 0
+   218  000006                     pulseServos@i_155:
    219                           	opt stack 0
-   220                           
-   221                           ; 2 bytes @ 0xC
-   222  00000D                     	ds	2
-   223  00000F                     tblptru	equ	0xFF8
-   224                           tblptrh	equ	0xFF7
-   225                           tblptrl	equ	0xFF6
-   226                           tablat	equ	0xFF5
-   227                           postinc0	equ	0xFEE
-   228                           postdec1	equ	0xFE5
-   229                           fsr1l	equ	0xFE1
-   230                           
-   231                           ; 1 bytes @ 0xE
-   232 ;;
-   233 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
-   234 ;;
-   235 ;; *************** function _main *****************
-   236 ;; Defined at:
-   237 ;;		line 126 in file "Hand.c"
-   238 ;; Parameters:    Size  Location     Type
-   239 ;;		None
-   240 ;; Auto vars:     Size  Location     Type
-   241 ;;		None
-   242 ;; Return value:  Size  Location     Type
-   243 ;;                  2  106[None  ] int 
-   244 ;; Registers used:
-   245 ;;		wreg, status,2, status,0, cstack
-   246 ;; Tracked objects:
-   247 ;;		On entry : 0/0
-   248 ;;		On exit  : 0/0
-   249 ;;		Unchanged: 0/0
-   250 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   251 ;;      Params:         0       0       0       0       0       0       0       0       0
-   252 ;;      Locals:         0       0       0       0       0       0       0       0       0
-   253 ;;      Temps:          0       0       0       0       0       0       0       0       0
-   254 ;;      Totals:         0       0       0       0       0       0       0       0       0
-   255 ;;Total ram usage:        0 bytes
-   256 ;; Hardware stack levels required when called:    2
-   257 ;; This function calls:
-   258 ;;		_convertSensors
-   259 ;;		_delay
-   260 ;;		_initANA
-   261 ;;		_initOsc
-   262 ;;		_initPorts
-   263 ;;		_pulseServos
-   264 ;; This function is called by:
-   265 ;;		Startup code after reset
-   266 ;; This function uses a non-reentrant model
-   267 ;;
-   268                           
-   269                           	psect	text0
-   270  007D60                     __ptext0:
-   271                           	opt stack 0
-   272  007D60                     _main:
-   273                           	opt stack 29
-   274                           
-   275                           ;Hand.c: 127: initOsc();
-   276                           
-   277                           ;incstack = 0
-   278  007D60  EC99  F03E         	call	_initOsc	;wreg free
-   279                           
-   280                           ;Hand.c: 128: initPorts();
-   281  007D64  ECFD  F03E         	call	_initPorts	;wreg free
-   282                           
-   283                           ;Hand.c: 129: initANA();
-   284  007D68  ECA2  F03E         	call	_initANA	;wreg free
-   285  007D6C                     l957:
-   286                           
-   287                           ;Hand.c: 131: convertSensors();
-   288  007D6C  ECD3  F03E         	call	_convertSensors	;wreg free
-   289                           
-   290                           ;Hand.c: 132: pulseServos();
-   291  007D70  EC9B  F03F         	call	_pulseServos	;wreg free
+   220  000006                     ___awdiv@sign:
+   221                           	opt stack 0
+   222                           
+   223                           ; 1 bytes @ 0x5
+   224  000006                     	ds	1
+   225  000007                     ___awdiv@quotient:
+   226                           	opt stack 0
+   227                           
+   228                           ; 2 bytes @ 0x6
+   229  000007                     	ds	2
+   230  000009                     ??_delay:
+   231                           
+   232                           ; 1 bytes @ 0x8
+   233  000009                     	ds	4
+   234  00000D                     delay@i:
+   235                           	opt stack 0
+   236                           
+   237                           ; 2 bytes @ 0xC
+   238  00000D                     	ds	2
+   239  00000F                     tblptru	equ	0xFF8
+   240                           tblptrh	equ	0xFF7
+   241                           tblptrl	equ	0xFF6
+   242                           tablat	equ	0xFF5
+   243                           postinc0	equ	0xFEE
+   244                           wreg	equ	0xFE8
+   245                           
+   246                           ; 1 bytes @ 0xE
+   247 ;;
+   248 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
+   249 ;;
+   250 ;; *************** function _main *****************
+   251 ;; Defined at:
+   252 ;;		line 178 in file "Hand.c"
+   253 ;; Parameters:    Size  Location     Type
+   254 ;;		None
+   255 ;; Auto vars:     Size  Location     Type
+   256 ;;		None
+   257 ;; Return value:  Size  Location     Type
+   258 ;;                  2  139[None  ] int 
+   259 ;; Registers used:
+   260 ;;		wreg, fsr2l, fsr2h, status,2, status,0, prodl, prodh, cstack
+   261 ;; Tracked objects:
+   262 ;;		On entry : 0/0
+   263 ;;		On exit  : 0/0
+   264 ;;		Unchanged: 0/0
+   265 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   266 ;;      Params:         0       0       0       0       0       0       0       0       0
+   267 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   268 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   269 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   270 ;;Total ram usage:        0 bytes
+   271 ;; Hardware stack levels required when called:    2
+   272 ;; This function calls:
+   273 ;;		_checkMode
+   274 ;;		_convertSensors
+   275 ;;		_delay
+   276 ;;		_initANA
+   277 ;;		_initOsc
+   278 ;;		_initPorts
+   279 ;;		_pulseServos
+   280 ;; This function is called by:
+   281 ;;		Startup code after reset
+   282 ;; This function uses a non-reentrant model
+   283 ;;
+   284                           
+   285                           	psect	text0
+   286  007CC8                     __ptext0:
+   287                           	opt stack 0
+   288  007CC8                     _main:
+   289                           	opt stack 29
+   290                           
+   291                           ;Hand.c: 179: initOsc();
    292                           
-   293                           ;Hand.c: 135: delay();
-   294  007D74  EC1B  F03F         	call	_delay	;wreg free
+   293                           ;incstack = 0
+   294  007CC8  EC39  F03E         	call	_initOsc	;wreg free
    295                           
-   296                           ;Hand.c: 136: if (PORTEbits.RE3 == 0)
-   297  007D78  B684               	btfsc	3972,3,c	;volatile
-   298  007D7A  D7F8               	goto	l957
-   299  007D7C  EF0E F000          	goto	28	;# 
-   300  007D80  D7F5               	goto	l957
-   301  007D82                     __end_of_main:
-   302                           	opt stack 0
-   303                           tblptru	equ	0xFF8
-   304                           tblptrh	equ	0xFF7
-   305                           tblptrl	equ	0xFF6
-   306                           tablat	equ	0xFF5
-   307                           postinc0	equ	0xFEE
-   308                           postdec1	equ	0xFE5
-   309                           fsr1l	equ	0xFE1
-   310                           
-   311 ;; *************** function _pulseServos *****************
-   312 ;; Defined at:
-   313 ;;		line 70 in file "Hand.c"
-   314 ;; Parameters:    Size  Location     Type
-   315 ;;		None
-   316 ;; Auto vars:     Size  Location     Type
-   317 ;;  i               1    5[COMRAM] unsigned char 
-   318 ;;  i               1    4[COMRAM] unsigned char 
-   319 ;;  i               1    3[COMRAM] unsigned char 
-   320 ;;  i               1    2[COMRAM] unsigned char 
-   321 ;;  i               1    1[COMRAM] unsigned char 
-   322 ;; Return value:  Size  Location     Type
-   323 ;;                  1    wreg      void 
-   324 ;; Registers used:
-   325 ;;		wreg, status,2, status,0
-   326 ;; Tracked objects:
-   327 ;;		On entry : 0/0
-   328 ;;		On exit  : 0/0
-   329 ;;		Unchanged: 0/0
-   330 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   331 ;;      Params:         0       0       0       0       0       0       0       0       0
-   332 ;;      Locals:         5       0       0       0       0       0       0       0       0
-   333 ;;      Temps:          1       0       0       0       0       0       0       0       0
-   334 ;;      Totals:         6       0       0       0       0       0       0       0       0
-   335 ;;Total ram usage:        6 bytes
-   336 ;; Hardware stack levels used:    1
-   337 ;; This function calls:
-   338 ;;		Nothing
-   339 ;; This function is called by:
-   340 ;;		_main
-   341 ;; This function uses a non-reentrant model
-   342 ;;
+   296                           ;Hand.c: 180: initPorts();
+   297  007CCC  EC7F  F03E         	call	_initPorts	;wreg free
+   298                           
+   299                           ;Hand.c: 181: initANA();
+   300  007CD0  EC42  F03E         	call	_initANA	;wreg free
+   301                           
+   302                           ;Hand.c: 182: cMode = 0;
+   303  007CD4  0E00               	movlw	0
+   304  007CD6  6E19               	movwf	_cMode,c
+   305                           
+   306                           ;Hand.c: 183: cDelay = 0;
+   307  007CD8  0E00               	movlw	0
+   308  007CDA  6E18               	movwf	_cDelay,c
+   309                           
+   310                           ;Hand.c: 185: switch (cMode) {
+   311                           
+   312                           ;Hand.c: 184: while (1) {
+   313  007CDC  D003               	goto	l1146
+   314  007CDE                     l1142:
+   315                           
+   316                           ;Hand.c: 187: convertSensors();
+   317  007CDE  EC02  F010         	call	_convertSensors	;wreg free
+   318                           
+   319                           ;Hand.c: 191: }
+   320                           
+   321                           ;Hand.c: 190: break;
+   322                           
+   323                           ;Hand.c: 189: default:
+   324                           
+   325                           ;Hand.c: 188: break;
+   326  007CE2  D004               	goto	l1148
+   327  007CE4                     l1146:
+   328  007CE4  5019               	movf	_cMode,w,c
+   329                           
+   330                           ; Switch size 1, requested type "space"
+   331                           ; Number of cases is 1, Range of values is 0 to 0
+   332                           ; switch strategies available:
+   333                           ; Name         Instructions Cycles
+   334                           ; simple_byte            4     3 (average)
+   335                           ;	Chosen strategy is simple_byte
+   336  007CE6  0A00               	xorlw	0	; case 0
+   337  007CE8  B4D8               	btfsc	status,2,c
+   338  007CEA  D7F9               	goto	l1142
+   339  007CEC                     l1148:
+   340                           
+   341                           ;Hand.c: 192: pulseServos();
+   342  007CEC  EC1D  F03F         	call	_pulseServos	;wreg free
    343                           
-   344                           	psect	text1
-   345  007F36                     __ptext1:
-   346                           	opt stack 0
-   347  007F36                     _pulseServos:
-   348                           	opt stack 30
-   349                           
-   350                           ;Hand.c: 76: LATBbits.LATB7 = 1;
-   351                           
-   352                           ;incstack = 0
-   353  007F36  8E8A               	bsf	3978,7,c	;volatile
-   354                           
-   355                           ;Hand.c: 77: _delay((unsigned long)((540)*(48000000/4000000.0)));
-   356  007F38  0E09               	movlw	9
-   357  007F3A  6E01               	movwf	??_pulseServos& (0+255),c
-   358  007F3C  0E69               	movlw	105
-   359  007F3E                     u307:
-   360  007F3E  2EE8               	decfsz	wreg,f,c
-   361  007F40  D7FE               	bra	u307
-   362  007F42  2E01               	decfsz	??_pulseServos& (0+255),f,c
-   363  007F44  D7FC               	bra	u307
-   364  007F46  F000               	nop	
+   344                           ;Hand.c: 195: delay();
+   345  007CF0  EC9D  F03E         	call	_delay	;wreg free
+   346                           
+   347                           ;Hand.c: 196: cMode = checkMode();
+   348  007CF4  EC82  F03F         	call	_checkMode	;wreg free
+   349  007CF8  6E19               	movwf	_cMode,c
+   350                           
+   351                           ;Hand.c: 197: if (PORTEbits.RE3 == 0)
+   352  007CFA  5084               	movf	3972,w,c	;volatile
+   353                           
+   354                           ;Hand.c: 198: {
+   355  007CFC  D7F3               	goto	l1146
+   356  007CFE                     __end_of_main:
+   357                           	opt stack 0
+   358                           tblptru	equ	0xFF8
+   359                           tblptrh	equ	0xFF7
+   360                           tblptrl	equ	0xFF6
+   361                           tablat	equ	0xFF5
+   362                           postinc0	equ	0xFEE
+   363                           wreg	equ	0xFE8
+   364                           status	equ	0xFD8
    365                           
-   366                           ;Hand.c: 78: for (unsigned char i = arcPos[0]; i != 0; i--) {
-   367  007F48  C00F  F002         	movff	_arcPos,pulseServos@i
-   368  007F4C                     l809:
-   369  007F4C  5002               	movf	pulseServos@i,w,c
-   370  007F4E  B4D8               	btfsc	status,2,c
-   371  007F50  D005               	goto	l88
-   372                           
-   373                           ;Hand.c: 79: _delay((unsigned long)((6)*(48000000/4000000.0)));
-   374  007F52  0E18               	movlw	24
-   375  007F54                     u317:
-   376  007F54  2EE8               	decfsz	wreg,f,c
-   377  007F56  D7FE               	bra	u317
-   378  007F58  0602               	decf	pulseServos@i,f,c
-   379  007F5A  D7F8               	goto	l809
-   380  007F5C                     l88:
-   381                           
-   382                           ;Hand.c: 80: }
-   383                           ;Hand.c: 81: LATBbits.LATB7 = 0;
-   384  007F5C  9E8A               	bcf	3978,7,c	;volatile
-   385                           
-   386                           ;Hand.c: 83: LATBbits.LATB6 = 1;
-   387  007F5E  8C8A               	bsf	3978,6,c	;volatile
-   388                           
-   389                           ;Hand.c: 84: _delay((unsigned long)((540)*(48000000/4000000.0)));
-   390  007F60  0E09               	movlw	9
-   391  007F62  6E01               	movwf	??_pulseServos& (0+255),c
-   392  007F64  0E69               	movlw	105
-   393  007F66                     u327:
-   394  007F66  2EE8               	decfsz	wreg,f,c
-   395  007F68  D7FE               	bra	u327
-   396  007F6A  2E01               	decfsz	??_pulseServos& (0+255),f,c
-   397  007F6C  D7FC               	bra	u327
-   398  007F6E  F000               	nop	
-   399                           
-   400                           ;Hand.c: 85: for (unsigned char i = arcPos[1]; i != 0; i--) {
-   401  007F70  C010  F003         	movff	_arcPos+1,pulseServos@i_140
-   402  007F74                     l823:
-   403  007F74  5003               	movf	pulseServos@i_140,w,c
-   404  007F76  B4D8               	btfsc	status,2,c
-   405  007F78  D005               	goto	l90
+   366 ;; *************** function _pulseServos *****************
+   367 ;; Defined at:
+   368 ;;		line 116 in file "Hand.c"
+   369 ;; Parameters:    Size  Location     Type
+   370 ;;		None
+   371 ;; Auto vars:     Size  Location     Type
+   372 ;;  i               1    5[COMRAM] unsigned char 
+   373 ;;  i               1    4[COMRAM] unsigned char 
+   374 ;;  i               1    3[COMRAM] unsigned char 
+   375 ;;  i               1    2[COMRAM] unsigned char 
+   376 ;;  i               1    1[COMRAM] unsigned char 
+   377 ;; Return value:  Size  Location     Type
+   378 ;;                  1    wreg      void 
+   379 ;; Registers used:
+   380 ;;		wreg, status,2, status,0
+   381 ;; Tracked objects:
+   382 ;;		On entry : 0/0
+   383 ;;		On exit  : 0/0
+   384 ;;		Unchanged: 0/0
+   385 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   386 ;;      Params:         0       0       0       0       0       0       0       0       0
+   387 ;;      Locals:         5       0       0       0       0       0       0       0       0
+   388 ;;      Temps:          1       0       0       0       0       0       0       0       0
+   389 ;;      Totals:         6       0       0       0       0       0       0       0       0
+   390 ;;Total ram usage:        6 bytes
+   391 ;; Hardware stack levels used:    1
+   392 ;; This function calls:
+   393 ;;		Nothing
+   394 ;; This function is called by:
+   395 ;;		_main
+   396 ;; This function uses a non-reentrant model
+   397 ;;
+   398                           
+   399                           	psect	text1
+   400  007E3A                     __ptext1:
+   401                           	opt stack 0
+   402  007E3A                     _pulseServos:
+   403                           	opt stack 30
+   404                           
+   405                           ;Hand.c: 125: LATBbits.LATB7 = 1;
    406                           
-   407                           ;Hand.c: 86: _delay((unsigned long)((6)*(48000000/4000000.0)));
-   408  007F7A  0E18               	movlw	24
-   409  007F7C                     u337:
-   410  007F7C  2EE8               	decfsz	wreg,f,c
-   411  007F7E  D7FE               	bra	u337
-   412  007F80  0603               	decf	pulseServos@i_140,f,c
-   413  007F82  D7F8               	goto	l823
-   414  007F84                     l90:
-   415                           
-   416                           ;Hand.c: 87: }
-   417                           ;Hand.c: 88: LATBbits.LATB6 = 0;
-   418  007F84  9C8A               	bcf	3978,6,c	;volatile
-   419                           
-   420                           ;Hand.c: 90: LATBbits.LATB5 = 1;
-   421  007F86  8A8A               	bsf	3978,5,c	;volatile
-   422                           
-   423                           ;Hand.c: 91: _delay((unsigned long)((540)*(48000000/4000000.0)));
-   424  007F88  0E09               	movlw	9
-   425  007F8A  6E01               	movwf	??_pulseServos& (0+255),c
-   426  007F8C  0E69               	movlw	105
-   427  007F8E                     u347:
-   428  007F8E  2EE8               	decfsz	wreg,f,c
-   429  007F90  D7FE               	bra	u347
-   430  007F92  2E01               	decfsz	??_pulseServos& (0+255),f,c
-   431  007F94  D7FC               	bra	u347
-   432  007F96  F000               	nop	
-   433                           
-   434                           ;Hand.c: 92: for (unsigned char i = arcPos[2]; i != 0; i--) {
-   435  007F98  C011  F004         	movff	_arcPos+2,pulseServos@i_141
-   436  007F9C                     l837:
-   437  007F9C  5004               	movf	pulseServos@i_141,w,c
-   438  007F9E  B4D8               	btfsc	status,2,c
-   439  007FA0  D005               	goto	l92
+   407                           ;incstack = 0
+   408  007E3A  8E8A               	bsf	3978,7,c	;volatile
+   409                           
+   410                           ;Hand.c: 126: _delay((unsigned long)((540)*(48000000/4000000.0)));
+   411  007E3C  0E09               	movlw	9
+   412  007E3E  6E01               	movwf	??_pulseServos& (0+255),c
+   413  007E40  0E69               	movlw	105
+   414  007E42                     u627:
+   415  007E42  2EE8               	decfsz	wreg,f,c
+   416  007E44  D7FE               	bra	u627
+   417  007E46  2E01               	decfsz	??_pulseServos& (0+255),f,c
+   418  007E48  D7FC               	bra	u627
+   419  007E4A  F000               	nop	
+   420                           
+   421                           ;Hand.c: 127: for (unsigned char i = arcPos[0]; i != 0; i--) {
+   422  007E4C  C00F  F002         	movff	_arcPos,pulseServos@i
+   423  007E50                     l896:
+   424  007E50  5002               	movf	pulseServos@i,w,c
+   425  007E52  B4D8               	btfsc	status,2,c
+   426  007E54  D005               	goto	l121
+   427                           
+   428                           ;Hand.c: 128: _delay((unsigned long)((6)*(48000000/4000000.0)));
+   429  007E56  0E18               	movlw	24
+   430  007E58                     u637:
+   431  007E58  2EE8               	decfsz	wreg,f,c
+   432  007E5A  D7FE               	bra	u637
+   433  007E5C  0602               	decf	pulseServos@i,f,c
+   434  007E5E  D7F8               	goto	l896
+   435  007E60                     l121:
+   436                           
+   437                           ;Hand.c: 129: }
+   438                           ;Hand.c: 130: LATBbits.LATB7 = 0;
+   439  007E60  9E8A               	bcf	3978,7,c	;volatile
    440                           
-   441                           ;Hand.c: 93: _delay((unsigned long)((6)*(48000000/4000000.0)));
-   442  007FA2  0E18               	movlw	24
-   443  007FA4                     u357:
-   444  007FA4  2EE8               	decfsz	wreg,f,c
-   445  007FA6  D7FE               	bra	u357
-   446  007FA8  0604               	decf	pulseServos@i_141,f,c
-   447  007FAA  D7F8               	goto	l837
-   448  007FAC                     l92:
-   449                           
-   450                           ;Hand.c: 94: }
-   451                           ;Hand.c: 95: LATBbits.LATB5 = 0;
-   452  007FAC  9A8A               	bcf	3978,5,c	;volatile
-   453                           
-   454                           ;Hand.c: 97: LATBbits.LATB4 = 1;
-   455  007FAE  888A               	bsf	3978,4,c	;volatile
-   456                           
-   457                           ;Hand.c: 98: _delay((unsigned long)((540)*(48000000/4000000.0)));
-   458  007FB0  0E09               	movlw	9
-   459  007FB2  6E01               	movwf	??_pulseServos& (0+255),c
-   460  007FB4  0E69               	movlw	105
-   461  007FB6                     u367:
-   462  007FB6  2EE8               	decfsz	wreg,f,c
-   463  007FB8  D7FE               	bra	u367
-   464  007FBA  2E01               	decfsz	??_pulseServos& (0+255),f,c
-   465  007FBC  D7FC               	bra	u367
-   466  007FBE  F000               	nop	
-   467                           
-   468                           ;Hand.c: 99: for (unsigned char i = arcPos[3]; i != 0; i--) {
-   469  007FC0  C012  F005         	movff	_arcPos+3,pulseServos@i_142
-   470  007FC4                     l851:
-   471  007FC4  5005               	movf	pulseServos@i_142,w,c
-   472  007FC6  B4D8               	btfsc	status,2,c
-   473  007FC8  D005               	goto	l94
+   441                           ;Hand.c: 133: LATBbits.LATB6 = 1;
+   442  007E62  8C8A               	bsf	3978,6,c	;volatile
+   443                           
+   444                           ;Hand.c: 134: _delay((unsigned long)((540)*(48000000/4000000.0)));
+   445  007E64  0E09               	movlw	9
+   446  007E66  6E01               	movwf	??_pulseServos& (0+255),c
+   447  007E68  0E69               	movlw	105
+   448  007E6A                     u647:
+   449  007E6A  2EE8               	decfsz	wreg,f,c
+   450  007E6C  D7FE               	bra	u647
+   451  007E6E  2E01               	decfsz	??_pulseServos& (0+255),f,c
+   452  007E70  D7FC               	bra	u647
+   453  007E72  F000               	nop	
+   454                           
+   455                           ;Hand.c: 135: for (unsigned char i = arcPos[1]; i != 0; i--) {
+   456  007E74  C010  F003         	movff	_arcPos+1,pulseServos@i_152
+   457  007E78                     l910:
+   458  007E78  5003               	movf	pulseServos@i_152,w,c
+   459  007E7A  B4D8               	btfsc	status,2,c
+   460  007E7C  D005               	goto	l123
+   461                           
+   462                           ;Hand.c: 136: _delay((unsigned long)((6)*(48000000/4000000.0)));
+   463  007E7E  0E18               	movlw	24
+   464  007E80                     u657:
+   465  007E80  2EE8               	decfsz	wreg,f,c
+   466  007E82  D7FE               	bra	u657
+   467  007E84  0603               	decf	pulseServos@i_152,f,c
+   468  007E86  D7F8               	goto	l910
+   469  007E88                     l123:
+   470                           
+   471                           ;Hand.c: 137: }
+   472                           ;Hand.c: 138: LATBbits.LATB6 = 0;
+   473  007E88  9C8A               	bcf	3978,6,c	;volatile
    474                           
-   475                           ;Hand.c: 100: _delay((unsigned long)((6)*(48000000/4000000.0)));
-   476  007FCA  0E18               	movlw	24
-   477  007FCC                     u377:
-   478  007FCC  2EE8               	decfsz	wreg,f,c
-   479  007FCE  D7FE               	bra	u377
-   480  007FD0  0605               	decf	pulseServos@i_142,f,c
-   481  007FD2  D7F8               	goto	l851
-   482  007FD4                     l94:
-   483                           
-   484                           ;Hand.c: 101: }
-   485                           ;Hand.c: 102: LATBbits.LATB4 = 0;
-   486  007FD4  988A               	bcf	3978,4,c	;volatile
-   487                           
-   488                           ;Hand.c: 104: LATBbits.LATB2 = 1;
-   489  007FD6  848A               	bsf	3978,2,c	;volatile
-   490                           
-   491                           ;Hand.c: 105: _delay((unsigned long)((540)*(48000000/4000000.0)));
-   492  007FD8  0E09               	movlw	9
-   493  007FDA  6E01               	movwf	??_pulseServos& (0+255),c
-   494  007FDC  0E69               	movlw	105
-   495  007FDE                     u387:
-   496  007FDE  2EE8               	decfsz	wreg,f,c
-   497  007FE0  D7FE               	bra	u387
-   498  007FE2  2E01               	decfsz	??_pulseServos& (0+255),f,c
-   499  007FE4  D7FC               	bra	u387
-   500  007FE6  F000               	nop	
-   501                           
-   502                           ;Hand.c: 106: for (unsigned char i = arcPos[4]; i != 0; i--) {
-   503  007FE8  C013  F006         	movff	_arcPos+4,pulseServos@i_143
-   504  007FEC                     l865:
-   505  007FEC  5006               	movf	pulseServos@i_143,w,c
-   506  007FEE  B4D8               	btfsc	status,2,c
-   507  007FF0  D005               	goto	l96
+   475                           ;Hand.c: 141: LATBbits.LATB5 = 1;
+   476  007E8A  8A8A               	bsf	3978,5,c	;volatile
+   477                           
+   478                           ;Hand.c: 142: _delay((unsigned long)((540)*(48000000/4000000.0)));
+   479  007E8C  0E09               	movlw	9
+   480  007E8E  6E01               	movwf	??_pulseServos& (0+255),c
+   481  007E90  0E69               	movlw	105
+   482  007E92                     u667:
+   483  007E92  2EE8               	decfsz	wreg,f,c
+   484  007E94  D7FE               	bra	u667
+   485  007E96  2E01               	decfsz	??_pulseServos& (0+255),f,c
+   486  007E98  D7FC               	bra	u667
+   487  007E9A  F000               	nop	
+   488                           
+   489                           ;Hand.c: 143: for (unsigned char i = arcPos[2]; i != 0; i--) {
+   490  007E9C  C011  F004         	movff	_arcPos+2,pulseServos@i_153
+   491  007EA0                     l924:
+   492  007EA0  5004               	movf	pulseServos@i_153,w,c
+   493  007EA2  B4D8               	btfsc	status,2,c
+   494  007EA4  D005               	goto	l125
+   495                           
+   496                           ;Hand.c: 144: _delay((unsigned long)((6)*(48000000/4000000.0)));
+   497  007EA6  0E18               	movlw	24
+   498  007EA8                     u677:
+   499  007EA8  2EE8               	decfsz	wreg,f,c
+   500  007EAA  D7FE               	bra	u677
+   501  007EAC  0604               	decf	pulseServos@i_153,f,c
+   502  007EAE  D7F8               	goto	l924
+   503  007EB0                     l125:
+   504                           
+   505                           ;Hand.c: 145: }
+   506                           ;Hand.c: 146: LATBbits.LATB5 = 0;
+   507  007EB0  9A8A               	bcf	3978,5,c	;volatile
    508                           
-   509                           ;Hand.c: 107: _delay((unsigned long)((6)*(48000000/4000000.0)));
-   510  007FF2  0E18               	movlw	24
-   511  007FF4                     u397:
-   512  007FF4  2EE8               	decfsz	wreg,f,c
-   513  007FF6  D7FE               	bra	u397
-   514  007FF8  0606               	decf	pulseServos@i_143,f,c
-   515  007FFA  D7F8               	goto	l865
-   516  007FFC                     l96:
-   517                           
-   518                           ;Hand.c: 108: }
-   519                           ;Hand.c: 109: LATBbits.LATB2 = 0;
-   520  007FFC  948A               	bcf	3978,2,c	;volatile
-   521  007FFE  0012               	return		;funcret
-   522  008000                     __end_of_pulseServos:
-   523                           	opt stack 0
-   524                           tblptru	equ	0xFF8
-   525                           tblptrh	equ	0xFF7
-   526                           tblptrl	equ	0xFF6
-   527                           tablat	equ	0xFF5
-   528                           postinc0	equ	0xFEE
-   529                           wreg	equ	0xFE8
-   530                           postdec1	equ	0xFE5
-   531                           fsr1l	equ	0xFE1
-   532                           status	equ	0xFD8
-   533                           
-   534 ;; *************** function _initPorts *****************
-   535 ;; Defined at:
-   536 ;;		line 27 in file "CHRP3.c"
-   537 ;; Parameters:    Size  Location     Type
-   538 ;;		None
-   539 ;; Auto vars:     Size  Location     Type
-   540 ;;		None
-   541 ;; Return value:  Size  Location     Type
-   542 ;;                  1    wreg      void 
-   543 ;; Registers used:
-   544 ;;		wreg, status,2
-   545 ;; Tracked objects:
-   546 ;;		On entry : 0/0
-   547 ;;		On exit  : 0/0
-   548 ;;		Unchanged: 0/0
-   549 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   550 ;;      Params:         0       0       0       0       0       0       0       0       0
-   551 ;;      Locals:         0       0       0       0       0       0       0       0       0
-   552 ;;      Temps:          0       0       0       0       0       0       0       0       0
-   553 ;;      Totals:         0       0       0       0       0       0       0       0       0
-   554 ;;Total ram usage:        0 bytes
-   555 ;; Hardware stack levels used:    1
-   556 ;; This function calls:
-   557 ;;		Nothing
-   558 ;; This function is called by:
-   559 ;;		_main
-   560 ;; This function uses a non-reentrant model
-   561 ;;
-   562                           
-   563                           	psect	text2
-   564  007DFA                     __ptext2:
-   565                           	opt stack 0
-   566  007DFA                     _initPorts:
-   567                           	opt stack 30
-   568                           
-   569                           ;CHRP3.c: 30: LATA = 0b00000000;
-   570                           
-   571                           ;incstack = 0
-   572  007DFA  0E00               	movlw	0
-   573  007DFC  6E89               	movwf	3977,c	;volatile
-   574                           
-   575                           ;CHRP3.c: 31: ANSELA = 0b00000000;
-   576  007DFE  0E00               	movlw	0
-   577  007E00  010F               	movlb	15	; () banked
-   578  007E02  6F5B               	movwf	91,b	;volatile
-   579                           
-   580                           ;CHRP3.c: 32: TRISA = 0b00101111;
-   581  007E04  0E2F               	movlw	47
-   582  007E06  6E92               	movwf	3986,c	;volatile
-   583                           
-   584                           ;CHRP3.c: 34: LATB = 0b00000000;
-   585  007E08  0E00               	movlw	0
-   586  007E0A  6E8A               	movwf	3978,c	;volatile
-   587                           
-   588                           ;CHRP3.c: 35: ANSELB = 0b00000000;
-   589  007E0C  0E00               	movlw	0
-   590  007E0E  010F               	movlb	15	; () banked
-   591  007E10  6F5C               	movwf	92,b	;volatile
-   592                           
-   593                           ;CHRP3.c: 36: TRISB = 0b00000000;
-   594  007E12  0E00               	movlw	0
-   595  007E14  6E93               	movwf	3987,c	;volatile
-   596                           
-   597                           ;CHRP3.c: 37: LATC = 0b00000000;
-   598  007E16  0E00               	movlw	0
-   599  007E18  6E8B               	movwf	3979,c	;volatile
-   600                           
-   601                           ;CHRP3.c: 38: ANSELC = 0b00000000;
-   602  007E1A  0E00               	movlw	0
-   603  007E1C  010F               	movlb	15	; () banked
-   604  007E1E  6F5D               	movwf	93,b	;volatile
-   605                           
-   606                           ;CHRP3.c: 39: TRISC = 0b10110000;
-   607  007E20  0EB0               	movlw	176
-   608  007E22  6E94               	movwf	3988,c	;volatile
-   609                           
-   610                           ;CHRP3.c: 42: T0CON = 0b10000001;
-   611  007E24  0E81               	movlw	129
-   612  007E26  6ED5               	movwf	4053,c	;volatile
-   613                           
-   614                           ;CHRP3.c: 45: PORTA = 0;
-   615  007E28  0E00               	movlw	0
-   616  007E2A  6E80               	movwf	3968,c	;volatile
-   617                           
-   618                           ;CHRP3.c: 46: PORTB = 0;
-   619  007E2C  0E00               	movlw	0
-   620  007E2E  6E81               	movwf	3969,c	;volatile
+   509                           ;Hand.c: 149: LATBbits.LATB4 = 1;
+   510  007EB2  888A               	bsf	3978,4,c	;volatile
+   511                           
+   512                           ;Hand.c: 150: _delay((unsigned long)((540)*(48000000/4000000.0)));
+   513  007EB4  0E09               	movlw	9
+   514  007EB6  6E01               	movwf	??_pulseServos& (0+255),c
+   515  007EB8  0E69               	movlw	105
+   516  007EBA                     u687:
+   517  007EBA  2EE8               	decfsz	wreg,f,c
+   518  007EBC  D7FE               	bra	u687
+   519  007EBE  2E01               	decfsz	??_pulseServos& (0+255),f,c
+   520  007EC0  D7FC               	bra	u687
+   521  007EC2  F000               	nop	
+   522                           
+   523                           ;Hand.c: 151: for (unsigned char i = arcPos[3]; i != 0; i--) {
+   524  007EC4  C012  F005         	movff	_arcPos+3,pulseServos@i_154
+   525  007EC8                     l938:
+   526  007EC8  5005               	movf	pulseServos@i_154,w,c
+   527  007ECA  B4D8               	btfsc	status,2,c
+   528  007ECC  D005               	goto	l127
+   529                           
+   530                           ;Hand.c: 152: _delay((unsigned long)((6)*(48000000/4000000.0)));
+   531  007ECE  0E18               	movlw	24
+   532  007ED0                     u697:
+   533  007ED0  2EE8               	decfsz	wreg,f,c
+   534  007ED2  D7FE               	bra	u697
+   535  007ED4  0605               	decf	pulseServos@i_154,f,c
+   536  007ED6  D7F8               	goto	l938
+   537  007ED8                     l127:
+   538                           
+   539                           ;Hand.c: 153: }
+   540                           ;Hand.c: 154: LATBbits.LATB4 = 0;
+   541  007ED8  988A               	bcf	3978,4,c	;volatile
+   542                           
+   543                           ;Hand.c: 157: LATBbits.LATB2 = 1;
+   544  007EDA  848A               	bsf	3978,2,c	;volatile
+   545                           
+   546                           ;Hand.c: 158: _delay((unsigned long)((540)*(48000000/4000000.0)));
+   547  007EDC  0E09               	movlw	9
+   548  007EDE  6E01               	movwf	??_pulseServos& (0+255),c
+   549  007EE0  0E69               	movlw	105
+   550  007EE2                     u707:
+   551  007EE2  2EE8               	decfsz	wreg,f,c
+   552  007EE4  D7FE               	bra	u707
+   553  007EE6  2E01               	decfsz	??_pulseServos& (0+255),f,c
+   554  007EE8  D7FC               	bra	u707
+   555  007EEA  F000               	nop	
+   556                           
+   557                           ;Hand.c: 159: for (unsigned char i = arcPos[4]; i != 0; i--) {
+   558  007EEC  C013  F006         	movff	_arcPos+4,pulseServos@i_155
+   559  007EF0                     l952:
+   560  007EF0  5006               	movf	pulseServos@i_155,w,c
+   561  007EF2  B4D8               	btfsc	status,2,c
+   562  007EF4  D005               	goto	l129
+   563                           
+   564                           ;Hand.c: 160: _delay((unsigned long)((6)*(48000000/4000000.0)));
+   565  007EF6  0E18               	movlw	24
+   566  007EF8                     u717:
+   567  007EF8  2EE8               	decfsz	wreg,f,c
+   568  007EFA  D7FE               	bra	u717
+   569  007EFC  0606               	decf	pulseServos@i_155,f,c
+   570  007EFE  D7F8               	goto	l952
+   571  007F00                     l129:
+   572                           
+   573                           ;Hand.c: 161: }
+   574                           ;Hand.c: 162: LATBbits.LATB2 = 0;
+   575  007F00  948A               	bcf	3978,2,c	;volatile
+   576  007F02  0012               	return		;funcret
+   577  007F04                     __end_of_pulseServos:
+   578                           	opt stack 0
+   579                           tblptru	equ	0xFF8
+   580                           tblptrh	equ	0xFF7
+   581                           tblptrl	equ	0xFF6
+   582                           tablat	equ	0xFF5
+   583                           postinc0	equ	0xFEE
+   584                           wreg	equ	0xFE8
+   585                           status	equ	0xFD8
+   586                           
+   587 ;; *************** function _initPorts *****************
+   588 ;; Defined at:
+   589 ;;		line 27 in file "CHRP3.c"
+   590 ;; Parameters:    Size  Location     Type
+   591 ;;		None
+   592 ;; Auto vars:     Size  Location     Type
+   593 ;;		None
+   594 ;; Return value:  Size  Location     Type
+   595 ;;                  1    wreg      void 
+   596 ;; Registers used:
+   597 ;;		wreg, status,2
+   598 ;; Tracked objects:
+   599 ;;		On entry : 0/0
+   600 ;;		On exit  : 0/0
+   601 ;;		Unchanged: 0/0
+   602 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   603 ;;      Params:         0       0       0       0       0       0       0       0       0
+   604 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   605 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   606 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   607 ;;Total ram usage:        0 bytes
+   608 ;; Hardware stack levels used:    1
+   609 ;; This function calls:
+   610 ;;		Nothing
+   611 ;; This function is called by:
+   612 ;;		_main
+   613 ;; This function uses a non-reentrant model
+   614 ;;
+   615                           
+   616                           	psect	text2
+   617  007CFE                     __ptext2:
+   618                           	opt stack 0
+   619  007CFE                     _initPorts:
+   620                           	opt stack 30
    621                           
-   622                           ;CHRP3.c: 47: PORTC = 0;
-   623  007E30  0E00               	movlw	0
-   624  007E32  6E82               	movwf	3970,c	;volatile
-   625                           
-   626                           ; BSR set to: 15
-   627  007E34  0012               	return		;funcret
-   628  007E36                     __end_of_initPorts:
-   629                           	opt stack 0
-   630                           tblptru	equ	0xFF8
-   631                           tblptrh	equ	0xFF7
-   632                           tblptrl	equ	0xFF6
-   633                           tablat	equ	0xFF5
-   634                           postinc0	equ	0xFEE
-   635                           wreg	equ	0xFE8
-   636                           postdec1	equ	0xFE5
-   637                           fsr1l	equ	0xFE1
-   638                           status	equ	0xFD8
-   639                           
-   640 ;; *************** function _initOsc *****************
-   641 ;; Defined at:
-   642 ;;		line 16 in file "CHRP3.c"
-   643 ;; Parameters:    Size  Location     Type
-   644 ;;		None
-   645 ;; Auto vars:     Size  Location     Type
-   646 ;;		None
-   647 ;; Return value:  Size  Location     Type
-   648 ;;                  1    wreg      void 
-   649 ;; Registers used:
-   650 ;;		wreg, status,2
-   651 ;; Tracked objects:
-   652 ;;		On entry : 0/0
-   653 ;;		On exit  : 0/0
-   654 ;;		Unchanged: 0/0
-   655 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   656 ;;      Params:         0       0       0       0       0       0       0       0       0
-   657 ;;      Locals:         0       0       0       0       0       0       0       0       0
-   658 ;;      Temps:          0       0       0       0       0       0       0       0       0
-   659 ;;      Totals:         0       0       0       0       0       0       0       0       0
-   660 ;;Total ram usage:        0 bytes
-   661 ;; Hardware stack levels used:    1
-   662 ;; This function calls:
-   663 ;;		Nothing
-   664 ;; This function is called by:
-   665 ;;		_main
-   666 ;; This function uses a non-reentrant model
-   667 ;;
-   668                           
-   669                           	psect	text3
-   670  007D32                     __ptext3:
-   671                           	opt stack 0
-   672  007D32                     _initOsc:
-   673                           	opt stack 30
+   622                           ;CHRP3.c: 30: LATA = 0b00000000;
+   623                           
+   624                           ;incstack = 0
+   625  007CFE  0E00               	movlw	0
+   626  007D00  6E89               	movwf	3977,c	;volatile
+   627                           
+   628                           ;CHRP3.c: 31: ANSELA = 0b00000000;
+   629  007D02  0E00               	movlw	0
+   630  007D04  010F               	movlb	15	; () banked
+   631  007D06  6F5B               	movwf	91,b	;volatile
+   632                           
+   633                           ;CHRP3.c: 32: TRISA = 0b00101111;
+   634  007D08  0E2F               	movlw	47
+   635  007D0A  6E92               	movwf	3986,c	;volatile
+   636                           
+   637                           ;CHRP3.c: 34: LATB = 0b00000000;
+   638  007D0C  0E00               	movlw	0
+   639  007D0E  6E8A               	movwf	3978,c	;volatile
+   640                           
+   641                           ;CHRP3.c: 35: ANSELB = 0b00000000;
+   642  007D10  0E00               	movlw	0
+   643  007D12  010F               	movlb	15	; () banked
+   644  007D14  6F5C               	movwf	92,b	;volatile
+   645                           
+   646                           ;CHRP3.c: 36: TRISB = 0b00000000;
+   647  007D16  0E00               	movlw	0
+   648  007D18  6E93               	movwf	3987,c	;volatile
+   649                           
+   650                           ;CHRP3.c: 37: LATC = 0b00000000;
+   651  007D1A  0E00               	movlw	0
+   652  007D1C  6E8B               	movwf	3979,c	;volatile
+   653                           
+   654                           ;CHRP3.c: 38: ANSELC = 0b00000000;
+   655  007D1E  0E00               	movlw	0
+   656  007D20  010F               	movlb	15	; () banked
+   657  007D22  6F5D               	movwf	93,b	;volatile
+   658                           
+   659                           ;CHRP3.c: 39: TRISC = 0b10110000;
+   660  007D24  0EB0               	movlw	176
+   661  007D26  6E94               	movwf	3988,c	;volatile
+   662                           
+   663                           ;CHRP3.c: 42: T0CON = 0b10000001;
+   664  007D28  0E81               	movlw	129
+   665  007D2A  6ED5               	movwf	4053,c	;volatile
+   666                           
+   667                           ;CHRP3.c: 45: PORTA = 0;
+   668  007D2C  0E00               	movlw	0
+   669  007D2E  6E80               	movwf	3968,c	;volatile
+   670                           
+   671                           ;CHRP3.c: 46: PORTB = 0;
+   672  007D30  0E00               	movlw	0
+   673  007D32  6E81               	movwf	3969,c	;volatile
    674                           
-   675                           ;CHRP3.c: 18: OSCTUNE = 0x80;
-   676                           
-   677                           ; BSR set to: 15
-   678                           ;incstack = 0
-   679  007D32  0E80               	movlw	128
-   680  007D34  6E9B               	movwf	3995,c	;volatile
-   681                           
-   682                           ;CHRP3.c: 19: OSCCON = 0x70;
-   683  007D36  0E70               	movlw	112
-   684  007D38  6ED3               	movwf	4051,c	;volatile
-   685                           
-   686                           ;CHRP3.c: 20: OSCCON2 = 0x10;
-   687  007D3A  0E10               	movlw	16
-   688  007D3C  6ED2               	movwf	4050,c	;volatile
-   689                           
-   690                           ;CHRP3.c: 21: ACTCON = 0x90;
-   691  007D3E  0E90               	movlw	144
-   692  007D40  6EB5               	movwf	4021,c	;volatile
-   693  007D42  0012               	return		;funcret
-   694  007D44                     __end_of_initOsc:
-   695                           	opt stack 0
-   696                           tblptru	equ	0xFF8
-   697                           tblptrh	equ	0xFF7
-   698                           tblptrl	equ	0xFF6
-   699                           tablat	equ	0xFF5
-   700                           postinc0	equ	0xFEE
-   701                           wreg	equ	0xFE8
-   702                           postdec1	equ	0xFE5
-   703                           fsr1l	equ	0xFE1
-   704                           status	equ	0xFD8
-   705                           
-   706 ;; *************** function _initANA *****************
-   707 ;; Defined at:
-   708 ;;		line 60 in file "CHRP3.c"
-   709 ;; Parameters:    Size  Location     Type
-   710 ;;		None
-   711 ;; Auto vars:     Size  Location     Type
-   712 ;;		None
-   713 ;; Return value:  Size  Location     Type
-   714 ;;                  1    wreg      void 
-   715 ;; Registers used:
-   716 ;;		wreg, status,2
-   717 ;; Tracked objects:
-   718 ;;		On entry : 0/0
-   719 ;;		On exit  : 0/0
-   720 ;;		Unchanged: 0/0
-   721 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   722 ;;      Params:         0       0       0       0       0       0       0       0       0
-   723 ;;      Locals:         0       0       0       0       0       0       0       0       0
-   724 ;;      Temps:          0       0       0       0       0       0       0       0       0
-   725 ;;      Totals:         0       0       0       0       0       0       0       0       0
-   726 ;;Total ram usage:        0 bytes
-   727 ;; Hardware stack levels used:    1
-   728 ;; This function calls:
-   729 ;;		Nothing
-   730 ;; This function is called by:
-   731 ;;		_main
-   732 ;; This function uses a non-reentrant model
-   733 ;;
-   734                           
-   735                           	psect	text4
-   736  007D44                     __ptext4:
-   737                           	opt stack 0
-   738  007D44                     _initANA:
-   739                           	opt stack 30
+   675                           ;CHRP3.c: 47: PORTC = 0;
+   676  007D34  0E00               	movlw	0
+   677  007D36  6E82               	movwf	3970,c	;volatile
+   678                           
+   679                           ; BSR set to: 15
+   680  007D38  0012               	return		;funcret
+   681  007D3A                     __end_of_initPorts:
+   682                           	opt stack 0
+   683                           tblptru	equ	0xFF8
+   684                           tblptrh	equ	0xFF7
+   685                           tblptrl	equ	0xFF6
+   686                           tablat	equ	0xFF5
+   687                           postinc0	equ	0xFEE
+   688                           wreg	equ	0xFE8
+   689                           status	equ	0xFD8
+   690                           
+   691 ;; *************** function _initOsc *****************
+   692 ;; Defined at:
+   693 ;;		line 16 in file "CHRP3.c"
+   694 ;; Parameters:    Size  Location     Type
+   695 ;;		None
+   696 ;; Auto vars:     Size  Location     Type
+   697 ;;		None
+   698 ;; Return value:  Size  Location     Type
+   699 ;;                  1    wreg      void 
+   700 ;; Registers used:
+   701 ;;		wreg, status,2
+   702 ;; Tracked objects:
+   703 ;;		On entry : 0/0
+   704 ;;		On exit  : 0/0
+   705 ;;		Unchanged: 0/0
+   706 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   707 ;;      Params:         0       0       0       0       0       0       0       0       0
+   708 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   709 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   710 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   711 ;;Total ram usage:        0 bytes
+   712 ;; Hardware stack levels used:    1
+   713 ;; This function calls:
+   714 ;;		Nothing
+   715 ;; This function is called by:
+   716 ;;		_main
+   717 ;; This function uses a non-reentrant model
+   718 ;;
+   719                           
+   720                           	psect	text3
+   721  007C72                     __ptext3:
+   722                           	opt stack 0
+   723  007C72                     _initOsc:
+   724                           	opt stack 30
+   725                           
+   726                           ;CHRP3.c: 18: OSCTUNE = 0x80;
+   727                           
+   728                           ; BSR set to: 15
+   729                           ;incstack = 0
+   730  007C72  0E80               	movlw	128
+   731  007C74  6E9B               	movwf	3995,c	;volatile
+   732                           
+   733                           ;CHRP3.c: 19: OSCCON = 0x70;
+   734  007C76  0E70               	movlw	112
+   735  007C78  6ED3               	movwf	4051,c	;volatile
+   736                           
+   737                           ;CHRP3.c: 20: OSCCON2 = 0x10;
+   738  007C7A  0E10               	movlw	16
+   739  007C7C  6ED2               	movwf	4050,c	;volatile
    740                           
-   741                           ;CHRP3.c: 62: LATA = 0b00000000;
-   742                           
-   743                           ;incstack = 0
-   744  007D44  0E00               	movlw	0
-   745  007D46  6E89               	movwf	3977,c	;volatile
-   746                           
-   747                           ;CHRP3.c: 63: ANSELA = 0b0011111;
-   748  007D48  0E1F               	movlw	31
-   749  007D4A  010F               	movlb	15	; () banked
-   750  007D4C  6F5B               	movwf	91,b	;volatile
-   751                           
-   752                           ;CHRP3.c: 64: ADCON0 = 0b00000000;
-   753  007D4E  0E00               	movlw	0
-   754  007D50  6EC2               	movwf	4034,c	;volatile
-   755                           
-   756                           ;CHRP3.c: 65: ADCON1 = 0b00000000;
-   757  007D52  0E00               	movlw	0
-   758  007D54  6EC1               	movwf	4033,c	;volatile
-   759                           
-   760                           ;CHRP3.c: 66: ADCON2 = 0b00001110;
-   761  007D56  0E0E               	movlw	14
-   762  007D58  6EC0               	movwf	4032,c	;volatile
-   763                           
-   764                           ;CHRP3.c: 67: TRISA = 0b00101111;
-   765  007D5A  0E2F               	movlw	47
-   766  007D5C  6E92               	movwf	3986,c	;volatile
-   767                           
-   768                           ; BSR set to: 15
-   769  007D5E  0012               	return		;funcret
-   770  007D60                     __end_of_initANA:
-   771                           	opt stack 0
-   772                           tblptru	equ	0xFF8
-   773                           tblptrh	equ	0xFF7
-   774                           tblptrl	equ	0xFF6
-   775                           tablat	equ	0xFF5
-   776                           postinc0	equ	0xFEE
-   777                           wreg	equ	0xFE8
-   778                           postdec1	equ	0xFE5
-   779                           fsr1l	equ	0xFE1
-   780                           status	equ	0xFD8
-   781                           
-   782 ;; *************** function _delay *****************
-   783 ;; Defined at:
-   784 ;;		line 116 in file "Hand.c"
-   785 ;; Parameters:    Size  Location     Type
-   786 ;;		None
-   787 ;; Auto vars:     Size  Location     Type
-   788 ;;  i               2   12[COMRAM] int 
-   789 ;; Return value:  Size  Location     Type
-   790 ;;                  1    wreg      void 
-   791 ;; Registers used:
-   792 ;;		wreg, status,2, status,0, cstack
-   793 ;; Tracked objects:
-   794 ;;		On entry : 0/0
-   795 ;;		On exit  : 0/0
-   796 ;;		Unchanged: 0/0
-   797 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   798 ;;      Params:         0       0       0       0       0       0       0       0       0
-   799 ;;      Locals:         2       0       0       0       0       0       0       0       0
-   800 ;;      Temps:          4       0       0       0       0       0       0       0       0
-   801 ;;      Totals:         6       0       0       0       0       0       0       0       0
-   802 ;;Total ram usage:        6 bytes
-   803 ;; Hardware stack levels used:    1
-   804 ;; Hardware stack levels required when called:    1
-   805 ;; This function calls:
-   806 ;;		___awdiv
-   807 ;; This function is called by:
-   808 ;;		_main
-   809 ;; This function uses a non-reentrant model
-   810 ;;
-   811                           
-   812                           	psect	text5
-   813  007E36                     __ptext5:
-   814                           	opt stack 0
-   815  007E36                     _delay:
-   816                           	opt stack 29
-   817                           
-   818                           ;Hand.c: 117: nDelay = (int)((20000 - 2500 - 540*5 - arcPos[0] - arcPos[1] - arcPos[2] -
-      +                           arcPos[3] - arcPos[4])/6);
-   819                           
-   820                           ; BSR set to: 15
-   821                           ;incstack = 0
-   822  007E36  0E50               	movlw	80
-   823  007E38  6E09               	movwf	??_delay& (0+255),c
-   824  007E3A  0E14               	movlw	20
-   825  007E3C  6E0A               	movwf	(??_delay+1)& (0+255),c
-   826  007E3E  5010               	movf	_arcPos+1,w,c
-   827  007E40  C00F  F00B         	movff	_arcPos,??_delay+2
-   828  007E44  6A0C               	clrf	(??_delay+3)& (0+255),c
-   829  007E46  260B               	addwf	??_delay+2,f,c
-   830  007E48  0E00               	movlw	0
-   831  007E4A  220C               	addwfc	??_delay+3,f,c
-   832  007E4C  5011               	movf	_arcPos+2,w,c
-   833  007E4E  260B               	addwf	??_delay+2,f,c
-   834  007E50  0E00               	movlw	0
-   835  007E52  220C               	addwfc	??_delay+3,f,c
-   836  007E54  5012               	movf	_arcPos+3,w,c
-   837  007E56  260B               	addwf	??_delay+2,f,c
-   838  007E58  0E00               	movlw	0
-   839  007E5A  220C               	addwfc	??_delay+3,f,c
-   840  007E5C  5013               	movf	_arcPos+4,w,c
-   841  007E5E  260B               	addwf	??_delay+2,f,c
-   842  007E60  0E00               	movlw	0
-   843  007E62  220C               	addwfc	??_delay+3,f,c
-   844  007E64  5009               	movf	??_delay,w,c
-   845  007E66  260B               	addwf	??_delay+2,f,c
-   846  007E68  500A               	movf	??_delay+1,w,c
-   847  007E6A  220C               	addwfc	??_delay+3,f,c
-   848  007E6C  1E0B               	comf	??_delay+2,f,c
-   849  007E6E  1E0C               	comf	??_delay+3,f,c
-   850  007E70  4A0B               	infsnz	??_delay+2,f,c
-   851  007E72  2A0C               	incf	??_delay+3,f,c
-   852  007E74  0E20               	movlw	32
-   853  007E76  240B               	addwf	??_delay+2,w,c
-   854  007E78  6E01               	movwf	___awdiv@dividend,c
-   855  007E7A  0E4E               	movlw	78
-   856  007E7C  200C               	addwfc	??_delay+3,w,c
-   857  007E7E  6E02               	movwf	___awdiv@dividend+1,c
-   858  007E80  0E00               	movlw	0
-   859  007E82  6E04               	movwf	___awdiv@divisor+1,c
-   860  007E84  0E06               	movlw	6
-   861  007E86  6E03               	movwf	___awdiv@divisor,c
-   862  007E88  EC59  F03F         	call	___awdiv	;wreg free
-   863  007E8C  C001  F014         	movff	?___awdiv,_nDelay
-   864  007E90  C002  F015         	movff	?___awdiv+1,_nDelay+1
-   865                           
-   866                           ;Hand.c: 118: for(int i = nDelay; i != 0; i--){
-   867  007E94  C014  F00D         	movff	_nDelay,delay@i
-   868  007E98  C015  F00E         	movff	_nDelay+1,delay@i+1
-   869  007E9C                     l947:
-   870  007E9C  500D               	movf	delay@i,w,c
-   871  007E9E  100E               	iorwf	delay@i+1,w,c
-   872  007EA0  B4D8               	btfsc	status,2,c
-   873  007EA2  0012               	return	
-   874                           
-   875                           ;Hand.c: 119: _delay((unsigned long)((6)*(48000000/4000000.0)));
-   876  007EA4  0E18               	movlw	24
-   877  007EA6                     u407:
-   878  007EA6  2EE8               	decfsz	wreg,f,c
-   879  007EA8  D7FE               	bra	u407
-   880  007EAA  060D               	decf	delay@i,f,c
-   881  007EAC  A0D8               	btfss	status,0,c
-   882  007EAE  060E               	decf	delay@i+1,f,c
-   883  007EB0  D7F5               	goto	l947
-   884  007EB2                     __end_of_delay:
-   885                           	opt stack 0
-   886                           tblptru	equ	0xFF8
-   887                           tblptrh	equ	0xFF7
-   888                           tblptrl	equ	0xFF6
-   889                           tablat	equ	0xFF5
-   890                           postinc0	equ	0xFEE
-   891                           wreg	equ	0xFE8
-   892                           postdec1	equ	0xFE5
-   893                           fsr1l	equ	0xFE1
-   894                           status	equ	0xFD8
-   895                           
-   896 ;; *************** function ___awdiv *****************
-   897 ;; Defined at:
-   898 ;;		line 8 in file "C:\Program Files\Microchip\xc8\v1.42\sources\common\awdiv.c"
-   899 ;; Parameters:    Size  Location     Type
-   900 ;;  dividend        2    0[COMRAM] int 
-   901 ;;  divisor         2    2[COMRAM] int 
-   902 ;; Auto vars:     Size  Location     Type
-   903 ;;  quotient        2    6[COMRAM] int 
-   904 ;;  sign            1    5[COMRAM] unsigned char 
-   905 ;;  counter         1    4[COMRAM] unsigned char 
-   906 ;; Return value:  Size  Location     Type
-   907 ;;                  2    0[COMRAM] int 
-   908 ;; Registers used:
-   909 ;;		wreg, status,2, status,0
-   910 ;; Tracked objects:
-   911 ;;		On entry : 0/0
-   912 ;;		On exit  : 0/0
-   913 ;;		Unchanged: 0/0
-   914 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-   915 ;;      Params:         4       0       0       0       0       0       0       0       0
-   916 ;;      Locals:         4       0       0       0       0       0       0       0       0
-   917 ;;      Temps:          0       0       0       0       0       0       0       0       0
-   918 ;;      Totals:         8       0       0       0       0       0       0       0       0
-   919 ;;Total ram usage:        8 bytes
-   920 ;; Hardware stack levels used:    1
-   921 ;; This function calls:
-   922 ;;		Nothing
-   923 ;; This function is called by:
-   924 ;;		_delay
-   925 ;; This function uses a non-reentrant model
-   926 ;;
-   927                           
-   928                           	psect	text6
-   929  007EB2                     __ptext6:
-   930                           	opt stack 0
-   931  007EB2                     ___awdiv:
-   932                           	opt stack 29
-   933                           
-   934                           ;incstack = 0
-   935  007EB2  0E00               	movlw	0
-   936  007EB4  6E06               	movwf	___awdiv@sign,c
-   937  007EB6  AE04               	btfss	___awdiv@divisor+1,7,c
-   938  007EB8  D006               	goto	l907
-   939  007EBA  6C03               	negf	___awdiv@divisor,c
-   940  007EBC  1E04               	comf	___awdiv@divisor+1,f,c
-   941  007EBE  B0D8               	btfsc	status,0,c
-   942  007EC0  2A04               	incf	___awdiv@divisor+1,f,c
-   943  007EC2  0E01               	movlw	1
-   944  007EC4  6E06               	movwf	___awdiv@sign,c
-   945  007EC6                     l907:
-   946  007EC6  AE02               	btfss	___awdiv@dividend+1,7,c
-   947  007EC8  D006               	goto	l913
-   948  007ECA  6C01               	negf	___awdiv@dividend,c
-   949  007ECC  1E02               	comf	___awdiv@dividend+1,f,c
-   950  007ECE  B0D8               	btfsc	status,0,c
-   951  007ED0  2A02               	incf	___awdiv@dividend+1,f,c
-   952  007ED2  0E01               	movlw	1
-   953  007ED4  1A06               	xorwf	___awdiv@sign,f,c
-   954  007ED6                     l913:
-   955  007ED6  0E00               	movlw	0
-   956  007ED8  6E08               	movwf	___awdiv@quotient+1,c
-   957  007EDA  0E00               	movlw	0
-   958  007EDC  6E07               	movwf	___awdiv@quotient,c
-   959  007EDE  5003               	movf	___awdiv@divisor,w,c
-   960  007EE0  1004               	iorwf	___awdiv@divisor+1,w,c
-   961  007EE2  B4D8               	btfsc	status,2,c
-   962  007EE4  D01C               	goto	l935
-   963  007EE6  0E01               	movlw	1
-   964  007EE8  6E05               	movwf	___awdiv@counter,c
-   965  007EEA  D004               	goto	l921
-   966  007EEC                     l919:
-   967  007EEC  90D8               	bcf	status,0,c
-   968  007EEE  3603               	rlcf	___awdiv@divisor,f,c
-   969  007EF0  3604               	rlcf	___awdiv@divisor+1,f,c
-   970  007EF2  2A05               	incf	___awdiv@counter,f,c
-   971  007EF4                     l921:
-   972  007EF4  AE04               	btfss	___awdiv@divisor+1,7,c
-   973  007EF6  D7FA               	goto	l919
-   974  007EF8                     l923:
-   975  007EF8  90D8               	bcf	status,0,c
-   976  007EFA  3607               	rlcf	___awdiv@quotient,f,c
-   977  007EFC  3608               	rlcf	___awdiv@quotient+1,f,c
-   978  007EFE  5003               	movf	___awdiv@divisor,w,c
-   979  007F00  5C01               	subwf	___awdiv@dividend,w,c
-   980  007F02  5004               	movf	___awdiv@divisor+1,w,c
-   981  007F04  5802               	subwfb	___awdiv@dividend+1,w,c
-   982  007F06  A0D8               	btfss	status,0,c
-   983  007F08  D005               	goto	l931
-   984  007F0A  5003               	movf	___awdiv@divisor,w,c
-   985  007F0C  5E01               	subwf	___awdiv@dividend,f,c
-   986  007F0E  5004               	movf	___awdiv@divisor+1,w,c
-   987  007F10  5A02               	subwfb	___awdiv@dividend+1,f,c
-   988  007F12  8007               	bsf	___awdiv@quotient,0,c
-   989  007F14                     l931:
-   990  007F14  90D8               	bcf	status,0,c
-   991  007F16  3204               	rrcf	___awdiv@divisor+1,f,c
-   992  007F18  3203               	rrcf	___awdiv@divisor,f,c
-   993  007F1A  2E05               	decfsz	___awdiv@counter,f,c
-   994  007F1C  D7ED               	goto	l923
-   995  007F1E                     l935:
-   996  007F1E  5006               	movf	___awdiv@sign,w,c
-   997  007F20  B4D8               	btfsc	status,2,c
-   998  007F22  D004               	goto	l939
-   999  007F24  6C07               	negf	___awdiv@quotient,c
-  1000  007F26  1E08               	comf	___awdiv@quotient+1,f,c
-  1001  007F28  B0D8               	btfsc	status,0,c
-  1002  007F2A  2A08               	incf	___awdiv@quotient+1,f,c
-  1003  007F2C                     l939:
-  1004  007F2C  C007  F001         	movff	___awdiv@quotient,?___awdiv
-  1005  007F30  C008  F002         	movff	___awdiv@quotient+1,?___awdiv+1
-  1006  007F34  0012               	return	
-  1007  007F36                     __end_of___awdiv:
-  1008                           	opt stack 0
-  1009                           tblptru	equ	0xFF8
-  1010                           tblptrh	equ	0xFF7
-  1011                           tblptrl	equ	0xFF6
-  1012                           tablat	equ	0xFF5
-  1013                           postinc0	equ	0xFEE
-  1014                           wreg	equ	0xFE8
-  1015                           postdec1	equ	0xFE5
-  1016                           fsr1l	equ	0xFE1
-  1017                           status	equ	0xFD8
-  1018                           
-  1019 ;; *************** function _convertSensors *****************
-  1020 ;; Defined at:
-  1021 ;;		line 59 in file "Hand.c"
-  1022 ;; Parameters:    Size  Location     Type
-  1023 ;;		None
-  1024 ;; Auto vars:     Size  Location     Type
-  1025 ;;		None
-  1026 ;; Return value:  Size  Location     Type
-  1027 ;;                  1    wreg      void 
-  1028 ;; Registers used:
-  1029 ;;		wreg, status,2, status,0, cstack
-  1030 ;; Tracked objects:
-  1031 ;;		On entry : 0/0
-  1032 ;;		On exit  : 0/0
-  1033 ;;		Unchanged: 0/0
-  1034 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-  1035 ;;      Params:         0       0       0       0       0       0       0       0       0
-  1036 ;;      Locals:         0       0       0       0       0       0       0       0       0
-  1037 ;;      Temps:          0       0       0       0       0       0       0       0       0
-  1038 ;;      Totals:         0       0       0       0       0       0       0       0       0
-  1039 ;;Total ram usage:        0 bytes
-  1040 ;; Hardware stack levels used:    1
-  1041 ;; Hardware stack levels required when called:    1
-  1042 ;; This function calls:
-  1043 ;;		_adConvert
-  1044 ;; This function is called by:
-  1045 ;;		_main
-  1046 ;; This function uses a non-reentrant model
-  1047 ;;
-  1048                           
-  1049                           	psect	text7
-  1050  007DA6                     __ptext7:
-  1051                           	opt stack 0
-  1052  007DA6                     _convertSensors:
-  1053                           	opt stack 29
-  1054                           
-  1055                           ;Hand.c: 60: arcPos[0] = adConvert(0b00000000);
-  1056                           
-  1057                           ;incstack = 0
-  1058  007DA6  0E00               	movlw	0
-  1059  007DA8  ECC1  F03E         	call	_adConvert
-  1060  007DAC  6E0F               	movwf	_arcPos,c
+   741                           ;CHRP3.c: 21: ACTCON = 0x90;
+   742  007C7E  0E90               	movlw	144
+   743  007C80  6EB5               	movwf	4021,c	;volatile
+   744  007C82  0012               	return		;funcret
+   745  007C84                     __end_of_initOsc:
+   746                           	opt stack 0
+   747                           tblptru	equ	0xFF8
+   748                           tblptrh	equ	0xFF7
+   749                           tblptrl	equ	0xFF6
+   750                           tablat	equ	0xFF5
+   751                           postinc0	equ	0xFEE
+   752                           wreg	equ	0xFE8
+   753                           status	equ	0xFD8
+   754                           
+   755 ;; *************** function _initANA *****************
+   756 ;; Defined at:
+   757 ;;		line 60 in file "CHRP3.c"
+   758 ;; Parameters:    Size  Location     Type
+   759 ;;		None
+   760 ;; Auto vars:     Size  Location     Type
+   761 ;;		None
+   762 ;; Return value:  Size  Location     Type
+   763 ;;                  1    wreg      void 
+   764 ;; Registers used:
+   765 ;;		wreg, status,2
+   766 ;; Tracked objects:
+   767 ;;		On entry : 0/0
+   768 ;;		On exit  : 0/0
+   769 ;;		Unchanged: 0/0
+   770 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   771 ;;      Params:         0       0       0       0       0       0       0       0       0
+   772 ;;      Locals:         0       0       0       0       0       0       0       0       0
+   773 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   774 ;;      Totals:         0       0       0       0       0       0       0       0       0
+   775 ;;Total ram usage:        0 bytes
+   776 ;; Hardware stack levels used:    1
+   777 ;; This function calls:
+   778 ;;		Nothing
+   779 ;; This function is called by:
+   780 ;;		_main
+   781 ;; This function uses a non-reentrant model
+   782 ;;
+   783                           
+   784                           	psect	text4
+   785  007C84                     __ptext4:
+   786                           	opt stack 0
+   787  007C84                     _initANA:
+   788                           	opt stack 30
+   789                           
+   790                           ;CHRP3.c: 62: LATA = 0b00000000;
+   791                           
+   792                           ;incstack = 0
+   793  007C84  0E00               	movlw	0
+   794  007C86  6E89               	movwf	3977,c	;volatile
+   795                           
+   796                           ;CHRP3.c: 63: ANSELA = 0b0011111;
+   797  007C88  0E1F               	movlw	31
+   798  007C8A  010F               	movlb	15	; () banked
+   799  007C8C  6F5B               	movwf	91,b	;volatile
+   800                           
+   801                           ;CHRP3.c: 64: ADCON0 = 0b00000000;
+   802  007C8E  0E00               	movlw	0
+   803  007C90  6EC2               	movwf	4034,c	;volatile
+   804                           
+   805                           ;CHRP3.c: 65: ADCON1 = 0b00000000;
+   806  007C92  0E00               	movlw	0
+   807  007C94  6EC1               	movwf	4033,c	;volatile
+   808                           
+   809                           ;CHRP3.c: 66: ADCON2 = 0b00001110;
+   810  007C96  0E0E               	movlw	14
+   811  007C98  6EC0               	movwf	4032,c	;volatile
+   812                           
+   813                           ;CHRP3.c: 67: TRISA = 0b00101111;
+   814  007C9A  0E2F               	movlw	47
+   815  007C9C  6E92               	movwf	3986,c	;volatile
+   816                           
+   817                           ; BSR set to: 15
+   818  007C9E  0012               	return		;funcret
+   819  007CA0                     __end_of_initANA:
+   820                           	opt stack 0
+   821                           tblptru	equ	0xFF8
+   822                           tblptrh	equ	0xFF7
+   823                           tblptrl	equ	0xFF6
+   824                           tablat	equ	0xFF5
+   825                           postinc0	equ	0xFEE
+   826                           wreg	equ	0xFE8
+   827                           status	equ	0xFD8
+   828                           
+   829 ;; *************** function _delay *****************
+   830 ;; Defined at:
+   831 ;;		line 168 in file "Hand.c"
+   832 ;; Parameters:    Size  Location     Type
+   833 ;;		None
+   834 ;; Auto vars:     Size  Location     Type
+   835 ;;  i               2   12[COMRAM] int 
+   836 ;; Return value:  Size  Location     Type
+   837 ;;                  1    wreg      void 
+   838 ;; Registers used:
+   839 ;;		wreg, status,2, status,0, cstack
+   840 ;; Tracked objects:
+   841 ;;		On entry : 0/0
+   842 ;;		On exit  : 0/0
+   843 ;;		Unchanged: 0/0
+   844 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   845 ;;      Params:         0       0       0       0       0       0       0       0       0
+   846 ;;      Locals:         2       0       0       0       0       0       0       0       0
+   847 ;;      Temps:          4       0       0       0       0       0       0       0       0
+   848 ;;      Totals:         6       0       0       0       0       0       0       0       0
+   849 ;;Total ram usage:        6 bytes
+   850 ;; Hardware stack levels used:    1
+   851 ;; Hardware stack levels required when called:    1
+   852 ;; This function calls:
+   853 ;;		___awdiv
+   854 ;; This function is called by:
+   855 ;;		_main
+   856 ;; This function uses a non-reentrant model
+   857 ;;
+   858                           
+   859                           	psect	text5
+   860  007D3A                     __ptext5:
+   861                           	opt stack 0
+   862  007D3A                     _delay:
+   863                           	opt stack 29
+   864                           
+   865                           ;Hand.c: 169: nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[0] - arcPos[1] - arcPos[2
+      +                          ] - arcPos[3] - arcPos[4]) / 6);
+   866                           
+   867                           ; BSR set to: 15
+   868                           ;incstack = 0
+   869  007D3A  0E50               	movlw	80
+   870  007D3C  6E09               	movwf	??_delay& (0+255),c
+   871  007D3E  0E14               	movlw	20
+   872  007D40  6E0A               	movwf	(??_delay+1)& (0+255),c
+   873  007D42  5010               	movf	_arcPos+1,w,c
+   874  007D44  C00F  F00B         	movff	_arcPos,??_delay+2
+   875  007D48  6A0C               	clrf	(??_delay+3)& (0+255),c
+   876  007D4A  260B               	addwf	??_delay+2,f,c
+   877  007D4C  0E00               	movlw	0
+   878  007D4E  220C               	addwfc	??_delay+3,f,c
+   879  007D50  5011               	movf	_arcPos+2,w,c
+   880  007D52  260B               	addwf	??_delay+2,f,c
+   881  007D54  0E00               	movlw	0
+   882  007D56  220C               	addwfc	??_delay+3,f,c
+   883  007D58  5012               	movf	_arcPos+3,w,c
+   884  007D5A  260B               	addwf	??_delay+2,f,c
+   885  007D5C  0E00               	movlw	0
+   886  007D5E  220C               	addwfc	??_delay+3,f,c
+   887  007D60  5013               	movf	_arcPos+4,w,c
+   888  007D62  260B               	addwf	??_delay+2,f,c
+   889  007D64  0E00               	movlw	0
+   890  007D66  220C               	addwfc	??_delay+3,f,c
+   891  007D68  5009               	movf	??_delay,w,c
+   892  007D6A  260B               	addwf	??_delay+2,f,c
+   893  007D6C  500A               	movf	??_delay+1,w,c
+   894  007D6E  220C               	addwfc	??_delay+3,f,c
+   895  007D70  1E0B               	comf	??_delay+2,f,c
+   896  007D72  1E0C               	comf	??_delay+3,f,c
+   897  007D74  4A0B               	infsnz	??_delay+2,f,c
+   898  007D76  2A0C               	incf	??_delay+3,f,c
+   899  007D78  0E20               	movlw	32
+   900  007D7A  240B               	addwf	??_delay+2,w,c
+   901  007D7C  6E01               	movwf	___awdiv@dividend,c
+   902  007D7E  0E4E               	movlw	78
+   903  007D80  200C               	addwfc	??_delay+3,w,c
+   904  007D82  6E02               	movwf	___awdiv@dividend+1,c
+   905  007D84  0E00               	movlw	0
+   906  007D86  6E04               	movwf	___awdiv@divisor+1,c
+   907  007D88  0E06               	movlw	6
+   908  007D8A  6E03               	movwf	___awdiv@divisor,c
+   909  007D8C  ECDB  F03E         	call	___awdiv	;wreg free
+   910  007D90  C001  F014         	movff	?___awdiv,_nDelay
+   911  007D94  C002  F015         	movff	?___awdiv+1,_nDelay+1
+   912                           
+   913                           ;Hand.c: 170: for (int i = nDelay; i != 0; i--) {
+   914  007D98  C014  F00D         	movff	_nDelay,delay@i
+   915  007D9C  C015  F00E         	movff	_nDelay+1,delay@i+1
+   916  007DA0                     l1128:
+   917  007DA0  500D               	movf	delay@i,w,c
+   918  007DA2  100E               	iorwf	delay@i+1,w,c
+   919  007DA4  B4D8               	btfsc	status,2,c
+   920  007DA6  0012               	return	
+   921                           
+   922                           ;Hand.c: 171: _delay((unsigned long)((6)*(48000000/4000000.0)));
+   923  007DA8  0E18               	movlw	24
+   924  007DAA                     u727:
+   925  007DAA  2EE8               	decfsz	wreg,f,c
+   926  007DAC  D7FE               	bra	u727
+   927  007DAE  060D               	decf	delay@i,f,c
+   928  007DB0  A0D8               	btfss	status,0,c
+   929  007DB2  060E               	decf	delay@i+1,f,c
+   930  007DB4  D7F5               	goto	l1128
+   931  007DB6                     __end_of_delay:
+   932                           	opt stack 0
+   933                           tblptru	equ	0xFF8
+   934                           tblptrh	equ	0xFF7
+   935                           tblptrl	equ	0xFF6
+   936                           tablat	equ	0xFF5
+   937                           postinc0	equ	0xFEE
+   938                           wreg	equ	0xFE8
+   939                           status	equ	0xFD8
+   940                           
+   941 ;; *************** function ___awdiv *****************
+   942 ;; Defined at:
+   943 ;;		line 8 in file "C:\Program Files\Microchip\xc8\v1.42\sources\common\awdiv.c"
+   944 ;; Parameters:    Size  Location     Type
+   945 ;;  dividend        2    0[COMRAM] int 
+   946 ;;  divisor         2    2[COMRAM] int 
+   947 ;; Auto vars:     Size  Location     Type
+   948 ;;  quotient        2    6[COMRAM] int 
+   949 ;;  sign            1    5[COMRAM] unsigned char 
+   950 ;;  counter         1    4[COMRAM] unsigned char 
+   951 ;; Return value:  Size  Location     Type
+   952 ;;                  2    0[COMRAM] int 
+   953 ;; Registers used:
+   954 ;;		wreg, status,2, status,0
+   955 ;; Tracked objects:
+   956 ;;		On entry : 0/0
+   957 ;;		On exit  : 0/0
+   958 ;;		Unchanged: 0/0
+   959 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+   960 ;;      Params:         4       0       0       0       0       0       0       0       0
+   961 ;;      Locals:         4       0       0       0       0       0       0       0       0
+   962 ;;      Temps:          0       0       0       0       0       0       0       0       0
+   963 ;;      Totals:         8       0       0       0       0       0       0       0       0
+   964 ;;Total ram usage:        8 bytes
+   965 ;; Hardware stack levels used:    1
+   966 ;; This function calls:
+   967 ;;		Nothing
+   968 ;; This function is called by:
+   969 ;;		_delay
+   970 ;; This function uses a non-reentrant model
+   971 ;;
+   972                           
+   973                           	psect	text6
+   974  007DB6                     __ptext6:
+   975                           	opt stack 0
+   976  007DB6                     ___awdiv:
+   977                           	opt stack 29
+   978                           
+   979                           ;incstack = 0
+   980  007DB6  0E00               	movlw	0
+   981  007DB8  6E06               	movwf	___awdiv@sign,c
+   982  007DBA  AE04               	btfss	___awdiv@divisor+1,7,c
+   983  007DBC  D006               	goto	l1018
+   984  007DBE  6C03               	negf	___awdiv@divisor,c
+   985  007DC0  1E04               	comf	___awdiv@divisor+1,f,c
+   986  007DC2  B0D8               	btfsc	status,0,c
+   987  007DC4  2A04               	incf	___awdiv@divisor+1,f,c
+   988  007DC6  0E01               	movlw	1
+   989  007DC8  6E06               	movwf	___awdiv@sign,c
+   990  007DCA                     l1018:
+   991  007DCA  AE02               	btfss	___awdiv@dividend+1,7,c
+   992  007DCC  D006               	goto	l1024
+   993  007DCE  6C01               	negf	___awdiv@dividend,c
+   994  007DD0  1E02               	comf	___awdiv@dividend+1,f,c
+   995  007DD2  B0D8               	btfsc	status,0,c
+   996  007DD4  2A02               	incf	___awdiv@dividend+1,f,c
+   997  007DD6  0E01               	movlw	1
+   998  007DD8  1A06               	xorwf	___awdiv@sign,f,c
+   999  007DDA                     l1024:
+  1000  007DDA  0E00               	movlw	0
+  1001  007DDC  6E08               	movwf	___awdiv@quotient+1,c
+  1002  007DDE  0E00               	movlw	0
+  1003  007DE0  6E07               	movwf	___awdiv@quotient,c
+  1004  007DE2  5003               	movf	___awdiv@divisor,w,c
+  1005  007DE4  1004               	iorwf	___awdiv@divisor+1,w,c
+  1006  007DE6  B4D8               	btfsc	status,2,c
+  1007  007DE8  D01C               	goto	l1046
+  1008  007DEA  0E01               	movlw	1
+  1009  007DEC  6E05               	movwf	___awdiv@counter,c
+  1010  007DEE  D004               	goto	l1032
+  1011  007DF0                     l1030:
+  1012  007DF0  90D8               	bcf	status,0,c
+  1013  007DF2  3603               	rlcf	___awdiv@divisor,f,c
+  1014  007DF4  3604               	rlcf	___awdiv@divisor+1,f,c
+  1015  007DF6  2A05               	incf	___awdiv@counter,f,c
+  1016  007DF8                     l1032:
+  1017  007DF8  AE04               	btfss	___awdiv@divisor+1,7,c
+  1018  007DFA  D7FA               	goto	l1030
+  1019  007DFC                     l1034:
+  1020  007DFC  90D8               	bcf	status,0,c
+  1021  007DFE  3607               	rlcf	___awdiv@quotient,f,c
+  1022  007E00  3608               	rlcf	___awdiv@quotient+1,f,c
+  1023  007E02  5003               	movf	___awdiv@divisor,w,c
+  1024  007E04  5C01               	subwf	___awdiv@dividend,w,c
+  1025  007E06  5004               	movf	___awdiv@divisor+1,w,c
+  1026  007E08  5802               	subwfb	___awdiv@dividend+1,w,c
+  1027  007E0A  A0D8               	btfss	status,0,c
+  1028  007E0C  D005               	goto	l1042
+  1029  007E0E  5003               	movf	___awdiv@divisor,w,c
+  1030  007E10  5E01               	subwf	___awdiv@dividend,f,c
+  1031  007E12  5004               	movf	___awdiv@divisor+1,w,c
+  1032  007E14  5A02               	subwfb	___awdiv@dividend+1,f,c
+  1033  007E16  8007               	bsf	___awdiv@quotient,0,c
+  1034  007E18                     l1042:
+  1035  007E18  90D8               	bcf	status,0,c
+  1036  007E1A  3204               	rrcf	___awdiv@divisor+1,f,c
+  1037  007E1C  3203               	rrcf	___awdiv@divisor,f,c
+  1038  007E1E  2E05               	decfsz	___awdiv@counter,f,c
+  1039  007E20  D7ED               	goto	l1034
+  1040  007E22                     l1046:
+  1041  007E22  5006               	movf	___awdiv@sign,w,c
+  1042  007E24  B4D8               	btfsc	status,2,c
+  1043  007E26  D004               	goto	l1050
+  1044  007E28  6C07               	negf	___awdiv@quotient,c
+  1045  007E2A  1E08               	comf	___awdiv@quotient+1,f,c
+  1046  007E2C  B0D8               	btfsc	status,0,c
+  1047  007E2E  2A08               	incf	___awdiv@quotient+1,f,c
+  1048  007E30                     l1050:
+  1049  007E30  C007  F001         	movff	___awdiv@quotient,?___awdiv
+  1050  007E34  C008  F002         	movff	___awdiv@quotient+1,?___awdiv+1
+  1051  007E38  0012               	return	
+  1052  007E3A                     __end_of___awdiv:
+  1053                           	opt stack 0
+  1054                           tblptru	equ	0xFF8
+  1055                           tblptrh	equ	0xFF7
+  1056                           tblptrl	equ	0xFF6
+  1057                           tablat	equ	0xFF5
+  1058                           postinc0	equ	0xFEE
+  1059                           wreg	equ	0xFE8
+  1060                           status	equ	0xFD8
   1061                           
-  1062                           ;Hand.c: 61: arcPos[1] = adConvert(0b00000100);
-  1063  007DAE  0E04               	movlw	4
-  1064  007DB0  ECC1  F03E         	call	_adConvert
-  1065  007DB4  6E10               	movwf	_arcPos+1,c
-  1066                           
-  1067                           ;Hand.c: 62: arcPos[2] = adConvert(0b00001000);
-  1068  007DB6  0E08               	movlw	8
-  1069  007DB8  ECC1  F03E         	call	_adConvert
-  1070  007DBC  6E11               	movwf	_arcPos+2,c
-  1071                           
-  1072                           ;Hand.c: 63: arcPos[3] = adConvert(0b00001100);
-  1073  007DBE  0E0C               	movlw	12
-  1074  007DC0  ECC1  F03E         	call	_adConvert
-  1075  007DC4  6E12               	movwf	_arcPos+3,c
-  1076                           
-  1077                           ;Hand.c: 64: arcPos[4] = adConvert(0b00010000);
-  1078  007DC6  0E10               	movlw	16
-  1079  007DC8  ECC1  F03E         	call	_adConvert
-  1080  007DCC  6E13               	movwf	_arcPos+4,c
-  1081  007DCE  0012               	return		;funcret
-  1082  007DD0                     __end_of_convertSensors:
-  1083                           	opt stack 0
-  1084                           tblptru	equ	0xFF8
-  1085                           tblptrh	equ	0xFF7
-  1086                           tblptrl	equ	0xFF6
-  1087                           tablat	equ	0xFF5
-  1088                           postinc0	equ	0xFEE
-  1089                           wreg	equ	0xFE8
-  1090                           postdec1	equ	0xFE5
-  1091                           fsr1l	equ	0xFE1
-  1092                           status	equ	0xFD8
-  1093                           
-  1094 ;; *************** function _adConvert *****************
-  1095 ;; Defined at:
-  1096 ;;		line 38 in file "Hand.c"
-  1097 ;; Parameters:    Size  Location     Type
-  1098 ;;  chan            1    wreg     unsigned char 
-  1099 ;; Auto vars:     Size  Location     Type
-  1100 ;;  chan            1    0[COMRAM] unsigned char 
-  1101 ;; Return value:  Size  Location     Type
-  1102 ;;                  1    wreg      unsigned char 
-  1103 ;; Registers used:
-  1104 ;;		wreg, status,2, status,0
-  1105 ;; Tracked objects:
-  1106 ;;		On entry : 0/0
-  1107 ;;		On exit  : 0/0
-  1108 ;;		Unchanged: 0/0
-  1109 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
-  1110 ;;      Params:         0       0       0       0       0       0       0       0       0
-  1111 ;;      Locals:         1       0       0       0       0       0       0       0       0
-  1112 ;;      Temps:          0       0       0       0       0       0       0       0       0
-  1113 ;;      Totals:         1       0       0       0       0       0       0       0       0
-  1114 ;;Total ram usage:        1 bytes
-  1115 ;; Hardware stack levels used:    1
-  1116 ;; This function calls:
-  1117 ;;		Nothing
-  1118 ;; This function is called by:
-  1119 ;;		_convertSensors
-  1120 ;; This function uses a non-reentrant model
-  1121 ;;
-  1122                           
-  1123                           	psect	text8
-  1124  007D82                     __ptext8:
-  1125                           	opt stack 0
-  1126  007D82                     _adConvert:
-  1127                           	opt stack 29
-  1128                           
-  1129                           ;incstack = 0
-  1130                           ;adConvert@chan stored from wreg
-  1131  007D82  6E01               	movwf	adConvert@chan,c
-  1132                           
-  1133                           ;Hand.c: 39: ADON = 1;
-  1134  007D84  80C2               	bsf	4034,0,c	;volatile
-  1135                           
-  1136                           ;Hand.c: 40: ADCON0 = (ADCON0 & 0b11000011);
-  1137  007D86  50C2               	movf	4034,w,c	;volatile
-  1138  007D88  0BC3               	andlw	195
-  1139  007D8A  6EC2               	movwf	4034,c	;volatile
+  1062 ;; *************** function _convertSensors *****************
+  1063 ;; Defined at:
+  1064 ;;		line 57 in file "Hand.c"
+  1065 ;; Parameters:    Size  Location     Type
+  1066 ;;		None
+  1067 ;; Auto vars:     Size  Location     Type
+  1068 ;;		None
+  1069 ;; Return value:  Size  Location     Type
+  1070 ;;                  1    wreg      void 
+  1071 ;; Registers used:
+  1072 ;;		None
+  1073 ;; Tracked objects:
+  1074 ;;		On entry : 0/0
+  1075 ;;		On exit  : 0/0
+  1076 ;;		Unchanged: 0/0
+  1077 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+  1078 ;;      Params:         0       0       0       0       0       0       0       0       0
+  1079 ;;      Locals:         0       0       0       0       0       0       0       0       0
+  1080 ;;      Temps:          0       0       0       0       0       0       0       0       0
+  1081 ;;      Totals:         0       0       0       0       0       0       0       0       0
+  1082 ;;Total ram usage:        0 bytes
+  1083 ;; Hardware stack levels used:    1
+  1084 ;; This function calls:
+  1085 ;;		Nothing
+  1086 ;; This function is called by:
+  1087 ;;		_main
+  1088 ;; This function uses a non-reentrant model
+  1089 ;;
+  1090                           
+  1091                           	psect	text7
+  1092  002004                     __ptext7:
+  1093                           	opt stack 0
+  1094  002004                     _convertSensors:
+  1095                           	opt stack 30
+  1096                           
+  1097                           ;incstack = 0
+  1098  002004  0012               	return		;funcret
+  1099  002006                     __end_of_convertSensors:
+  1100                           	opt stack 0
+  1101                           tblptru	equ	0xFF8
+  1102                           tblptrh	equ	0xFF7
+  1103                           tblptrl	equ	0xFF6
+  1104                           tablat	equ	0xFF5
+  1105                           postinc0	equ	0xFEE
+  1106                           wreg	equ	0xFE8
+  1107                           status	equ	0xFD8
+  1108                           
+  1109 ;; *************** function _checkMode *****************
+  1110 ;; Defined at:
+  1111 ;;		line 70 in file "Hand.c"
+  1112 ;; Parameters:    Size  Location     Type
+  1113 ;;		None
+  1114 ;; Auto vars:     Size  Location     Type
+  1115 ;;  i               1    5[COMRAM] unsigned char 
+  1116 ;;  i               1    3[COMRAM] unsigned char 
+  1117 ;;  i               1    2[COMRAM] unsigned char 
+  1118 ;;  cTempMode       1    4[COMRAM] unsigned char 
+  1119 ;; Return value:  Size  Location     Type
+  1120 ;;                  1    wreg      unsigned char 
+  1121 ;; Registers used:
+  1122 ;;		wreg, fsr2l, fsr2h, status,2, status,0, prodl, prodh
+  1123 ;; Tracked objects:
+  1124 ;;		On entry : 0/0
+  1125 ;;		On exit  : 0/0
+  1126 ;;		Unchanged: 0/0
+  1127 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+  1128 ;;      Params:         0       0       0       0       0       0       0       0       0
+  1129 ;;      Locals:         6       0       0       0       0       0       0       0       0
+  1130 ;;      Temps:          0       0       0       0       0       0       0       0       0
+  1131 ;;      Totals:         6       0       0       0       0       0       0       0       0
+  1132 ;;Total ram usage:        6 bytes
+  1133 ;; Hardware stack levels used:    1
+  1134 ;; This function calls:
+  1135 ;;		Nothing
+  1136 ;; This function is called by:
+  1137 ;;		_main
+  1138 ;; This function uses a non-reentrant model
+  1139 ;;
   1140                           
-  1141                           ;Hand.c: 41: ADCON0 = (ADCON0 | chan);
-  1142  007D8C  50C2               	movf	4034,w,c	;volatile
-  1143  007D8E  1001               	iorwf	adConvert@chan,w,c
-  1144  007D90  6EC2               	movwf	4034,c	;volatile
-  1145                           
-  1146                           ;Hand.c: 42: __nop();
-  1147  007D92  F000               	nop	
+  1141                           	psect	text8
+  1142  007F04                     __ptext8:
+  1143                           	opt stack 0
+  1144  007F04                     _checkMode:
+  1145                           	opt stack 30
+  1146                           
+  1147                           ;Hand.c: 71: unsigned char cTempMode = cMode;
   1148                           
-  1149                           ;Hand.c: 43: __nop();
-  1150  007D94  F000               	nop	
+  1149                           ;incstack = 0
+  1150  007F04  C019  F005         	movff	_cMode,checkMode@cTempMode
   1151                           
-  1152                           ;Hand.c: 44: __nop();
-  1153  007D96  F000               	nop	
-  1154                           
-  1155                           ;Hand.c: 45: __nop();
-  1156  007D98  F000               	nop	
-  1157                           
-  1158                           ;Hand.c: 47: GO = 1;
-  1159  007D9A  82C2               	bsf	4034,1,c	;volatile
-  1160  007D9C                     l78:
-  1161  007D9C  B2C2               	btfsc	4034,1,c	;volatile
-  1162  007D9E  D7FE               	goto	l78
-  1163                           
-  1164                           ;Hand.c: 51: ADON = 0;
-  1165  007DA0  90C2               	bcf	4034,0,c	;volatile
-  1166                           
-  1167                           ;Hand.c: 52: return (ADRESH);
-  1168  007DA2  50C4               	movf	4036,w,c	;volatile
-  1169  007DA4  0012               	return	
-  1170  007DA6                     __end_of_adConvert:
-  1171                           	opt stack 0
-  1172  0000                     tblptru	equ	0xFF8
-  1173                           tblptrh	equ	0xFF7
-  1174                           tblptrl	equ	0xFF6
-  1175                           tablat	equ	0xFF5
-  1176                           postinc0	equ	0xFEE
-  1177                           wreg	equ	0xFE8
-  1178                           postdec1	equ	0xFE5
-  1179                           fsr1l	equ	0xFE1
-  1180                           status	equ	0xFD8
-  1181                           tblptru	equ	0xFF8
-  1182                           tblptrh	equ	0xFF7
-  1183                           tblptrl	equ	0xFF6
-  1184                           tablat	equ	0xFF5
-  1185                           postinc0	equ	0xFEE
-  1186                           wreg	equ	0xFE8
-  1187                           postdec1	equ	0xFE5
-  1188                           fsr1l	equ	0xFE1
-  1189                           status	equ	0xFD8
-  1190                           
-  1191                           	psect	rparam
-  1192  0000                     tblptru	equ	0xFF8
-  1193                           tblptrh	equ	0xFF7
-  1194                           tblptrl	equ	0xFF6
-  1195                           tablat	equ	0xFF5
-  1196                           postinc0	equ	0xFEE
-  1197                           wreg	equ	0xFE8
-  1198                           postdec1	equ	0xFE5
-  1199                           fsr1l	equ	0xFE1
-  1200                           status	equ	0xFD8
+  1152                           ;Hand.c: 72: if (PORTEbits.RE3 == 0) {
+  1153  007F08  B684               	btfsc	3972,3,c	;volatile
+  1154  007F0A  D063               	goto	l97
+  1155                           
+  1156                           ;Hand.c: 73: isPressed = 1;
+  1157  007F0C  0E01               	movlw	1
+  1158  007F0E  6E16               	movwf	_isPressed,c
+  1159                           
+  1160                           ;Hand.c: 74: if (!modeSelect && wasTheButtonLetGo) {
+  1161  007F10  5017               	movf	_modeSelect,w,c
+  1162  007F12  A4D8               	btfss	status,2,c
+  1163  007F14  D020               	goto	l1076
+  1164  007F16  501A               	movf	_wasTheButtonLetGo,w,c
+  1165  007F18  B4D8               	btfsc	status,2,c
+  1166  007F1A  D01D               	goto	l1076
+  1167                           
+  1168                           ;Hand.c: 75: cDelay++;
+  1169  007F1C  2A18               	incf	_cDelay,f,c
+  1170                           
+  1171                           ;Hand.c: 76: if (cDelay == 20) {
+  1172  007F1E  0E14               	movlw	20
+  1173  007F20  1818               	xorwf	_cDelay,w,c
+  1174  007F22  A4D8               	btfss	status,2,c
+  1175  007F24  D056               	goto	l97
+  1176                           
+  1177                           ;Hand.c: 77: cDelay = 0;
+  1178  007F26  0E00               	movlw	0
+  1179  007F28  6E18               	movwf	_cDelay,c
+  1180                           
+  1181                           ;Hand.c: 78: modeSelect = 1;
+  1182  007F2A  0E01               	movlw	1
+  1183  007F2C  6E17               	movwf	_modeSelect,c
+  1184                           
+  1185                           ;Hand.c: 79: wasTheButtonLetGo = 0;
+  1186  007F2E  0E00               	movlw	0
+  1187  007F30  6E1A               	movwf	_wasTheButtonLetGo,c
+  1188                           
+  1189                           ;Hand.c: 80: for (unsigned char i = 0; i < 5; i++) {
+  1190  007F32  0E00               	movlw	0
+  1191  007F34  6E03               	movwf	checkMode@i,c
+  1192  007F36                     l1066:
+  1193  007F36  0E04               	movlw	4
+  1194  007F38  6403               	cpfsgt	checkMode@i,c
+  1195  007F3A  D001               	goto	l1070
+  1196  007F3C  D04A               	goto	l97
+  1197  007F3E                     l1070:
+  1198                           
+  1199                           ;Hand.c: 81: arcPos[i] = 0;
+  1200  007F3E  5003               	movf	checkMode@i,w,c
+  1201  007F40  0D01               	mullw	1
+  1202  007F42  0E0F               	movlw	low _arcPos
+  1203  007F44  24F3               	addwf	prodl,w,c
+  1204  007F46  6ED9               	movwf	fsr2l,c
+  1205  007F48  0E00               	movlw	high _arcPos
+  1206  007F4A  20F4               	addwfc	prodh,w,c
+  1207  007F4C  6EDA               	movwf	fsr2h,c
+  1208  007F4E  0E00               	movlw	0
+  1209  007F50  6EDF               	movwf	indf2,c
+  1210  007F52  2A03               	incf	checkMode@i,f,c
+  1211  007F54  D7F0               	goto	l1066
+  1212  007F56                     l1076:
+  1213  007F56  501A               	movf	_wasTheButtonLetGo,w,c
+  1214  007F58  B4D8               	btfsc	status,2,c
+  1215  007F5A  D03B               	goto	l97
+  1216                           
+  1217                           ;Hand.c: 85: cDelay++;
+  1218  007F5C  2A18               	incf	_cDelay,f,c
+  1219                           
+  1220                           ;Hand.c: 86: if (cDelay == 20) {
+  1221  007F5E  0E14               	movlw	20
+  1222  007F60  1818               	xorwf	_cDelay,w,c
+  1223  007F62  A4D8               	btfss	status,2,c
+  1224  007F64  D018               	goto	l1094
+  1225                           
+  1226                           ;Hand.c: 87: cDelay = 0;
+  1227  007F66  0E00               	movlw	0
+  1228  007F68  6E18               	movwf	_cDelay,c
+  1229                           
+  1230                           ;Hand.c: 88: modeSelect = 0;
+  1231  007F6A  0E00               	movlw	0
+  1232  007F6C  6E17               	movwf	_modeSelect,c
+  1233                           
+  1234                           ;Hand.c: 89: wasTheButtonLetGo = 0;
+  1235  007F6E  0E00               	movlw	0
+  1236  007F70  6E1A               	movwf	_wasTheButtonLetGo,c
+  1237                           
+  1238                           ;Hand.c: 90: for (unsigned char i = 0; i < 5; i++) {
+  1239  007F72  0E00               	movlw	0
+  1240  007F74  6E04               	movwf	checkMode@i_139,c
+  1241  007F76                     l1084:
+  1242  007F76  0E04               	movlw	4
+  1243  007F78  6404               	cpfsgt	checkMode@i_139,c
+  1244  007F7A  D001               	goto	l1088
+  1245  007F7C  D02A               	goto	l97
+  1246  007F7E                     l1088:
+  1247                           
+  1248                           ;Hand.c: 91: arcPos[i] = 0;
+  1249  007F7E  5004               	movf	checkMode@i_139,w,c
+  1250  007F80  0D01               	mullw	1
+  1251  007F82  0E0F               	movlw	low _arcPos
+  1252  007F84  24F3               	addwf	prodl,w,c
+  1253  007F86  6ED9               	movwf	fsr2l,c
+  1254  007F88  0E00               	movlw	high _arcPos
+  1255  007F8A  20F4               	addwfc	prodh,w,c
+  1256  007F8C  6EDA               	movwf	fsr2h,c
+  1257  007F8E  0E00               	movlw	0
+  1258  007F90  6EDF               	movwf	indf2,c
+  1259  007F92  2A04               	incf	checkMode@i_139,f,c
+  1260  007F94  D7F0               	goto	l1084
+  1261  007F96                     l1094:
+  1262                           
+  1263                           ;Hand.c: 94: for (unsigned char i = 0; i < 5; i++) {
+  1264  007F96  0E00               	movlw	0
+  1265  007F98  6E06               	movwf	checkMode@i_140,c
+  1266  007F9A                     l1096:
+  1267  007F9A  0E04               	movlw	4
+  1268  007F9C  6406               	cpfsgt	checkMode@i_140,c
+  1269  007F9E  D001               	goto	l1100
+  1270  007FA0  D018               	goto	l97
+  1271  007FA2                     l1100:
+  1272                           
+  1273                           ;Hand.c: 95: arcPos[i] = (cTempMode == i) ? 255 : 0;
+  1274  007FA2  5006               	movf	checkMode@i_140,w,c
+  1275  007FA4  1805               	xorwf	checkMode@cTempMode,w,c
+  1276  007FA6  B4D8               	btfsc	status,2,c
+  1277  007FA8  D005               	goto	l1104
+  1278  007FAA  0E00               	movlw	0
+  1279  007FAC  6E02               	movwf	_checkMode$141+1,c
+  1280  007FAE  0E00               	movlw	0
+  1281  007FB0  6E01               	movwf	_checkMode$141,c
+  1282  007FB2  D003               	goto	l1106
+  1283  007FB4                     l1104:
+  1284  007FB4  0E00               	movlw	0
+  1285  007FB6  6E02               	movwf	_checkMode$141+1,c
+  1286  007FB8  6801               	setf	_checkMode$141,c
+  1287  007FBA                     l1106:
+  1288  007FBA  5006               	movf	checkMode@i_140,w,c
+  1289  007FBC  0D01               	mullw	1
+  1290  007FBE  0E0F               	movlw	low _arcPos
+  1291  007FC0  24F3               	addwf	prodl,w,c
+  1292  007FC2  6ED9               	movwf	fsr2l,c
+  1293  007FC4  0E00               	movlw	high _arcPos
+  1294  007FC6  20F4               	addwfc	prodh,w,c
+  1295  007FC8  6EDA               	movwf	fsr2h,c
+  1296  007FCA  C001  FFDF         	movff	_checkMode$141,indf2
+  1297  007FCE  2A06               	incf	checkMode@i_140,f,c
+  1298  007FD0  D7E4               	goto	l1096
+  1299  007FD2                     l97:
+  1300                           
+  1301                           ;Hand.c: 96: }
+  1302                           ;Hand.c: 97: }
+  1303                           ;Hand.c: 98: }
+  1304                           ;Hand.c: 99: }
+  1305                           ;Hand.c: 101: if (PORTEbits.RE3 == 1) {
+  1306  007FD2  A684               	btfss	3972,3,c	;volatile
+  1307  007FD4  D013               	goto	l114
+  1308                           
+  1309                           ;Hand.c: 102: if (isPressed == 1 && modeSelect) {
+  1310  007FD6  0416               	decf	_isPressed,w,c
+  1311  007FD8  A4D8               	btfss	status,2,c
+  1312  007FDA  D00A               	goto	l115
+  1313  007FDC  5017               	movf	_modeSelect,w,c
+  1314  007FDE  B4D8               	btfsc	status,2,c
+  1315  007FE0  D007               	goto	l115
+  1316                           
+  1317                           ;Hand.c: 103: cTempMode++;
+  1318  007FE2  2A05               	incf	checkMode@cTempMode,f,c
+  1319                           
+  1320                           ;Hand.c: 104: if (cTempMode == 5)cTempMode = 0;
+  1321  007FE4  0E05               	movlw	5
+  1322  007FE6  1805               	xorwf	checkMode@cTempMode,w,c
+  1323  007FE8  A4D8               	btfss	status,2,c
+  1324  007FEA  D002               	goto	l115
+  1325  007FEC  0E00               	movlw	0
+  1326  007FEE  6E05               	movwf	checkMode@cTempMode,c
+  1327  007FF0                     l115:
+  1328                           
+  1329                           ;Hand.c: 105: }
+  1330                           ;Hand.c: 106: wasTheButtonLetGo = 1;
+  1331  007FF0  0E01               	movlw	1
+  1332  007FF2  6E1A               	movwf	_wasTheButtonLetGo,c
+  1333                           
+  1334                           ;Hand.c: 107: cDelay = 0;
+  1335  007FF4  0E00               	movlw	0
+  1336  007FF6  6E18               	movwf	_cDelay,c
+  1337                           
+  1338                           ;Hand.c: 108: isPressed = 0;
+  1339  007FF8  0E00               	movlw	0
+  1340  007FFA  6E16               	movwf	_isPressed,c
+  1341  007FFC                     l114:
+  1342                           
+  1343                           ;Hand.c: 109: }
+  1344                           ;Hand.c: 110: return cTempMode;
+  1345  007FFC  5005               	movf	checkMode@cTempMode,w,c
+  1346  007FFE  0012               	return	
+  1347  008000                     __end_of_checkMode:
+  1348                           	opt stack 0
+  1349  0000                     tblptru	equ	0xFF8
+  1350                           tblptrh	equ	0xFF7
+  1351                           tblptrl	equ	0xFF6
+  1352                           tablat	equ	0xFF5
+  1353                           prodh	equ	0xFF4
+  1354                           prodl	equ	0xFF3
+  1355                           postinc0	equ	0xFEE
+  1356                           wreg	equ	0xFE8
+  1357                           indf2	equ	0xFDF
+  1358                           fsr2h	equ	0xFDA
+  1359                           fsr2l	equ	0xFD9
+  1360                           status	equ	0xFD8
+  1361                           tblptru	equ	0xFF8
+  1362                           tblptrh	equ	0xFF7
+  1363                           tblptrl	equ	0xFF6
+  1364                           tablat	equ	0xFF5
+  1365                           prodh	equ	0xFF4
+  1366                           prodl	equ	0xFF3
+  1367                           postinc0	equ	0xFEE
+  1368                           wreg	equ	0xFE8
+  1369                           indf2	equ	0xFDF
+  1370                           fsr2h	equ	0xFDA
+  1371                           fsr2l	equ	0xFD9
+  1372                           status	equ	0xFD8
+  1373                           
+  1374                           	psect	rparam
+  1375  0000                     tblptru	equ	0xFF8
+  1376                           tblptrh	equ	0xFF7
+  1377                           tblptrl	equ	0xFF6
+  1378                           tablat	equ	0xFF5
+  1379                           prodh	equ	0xFF4
+  1380                           prodl	equ	0xFF3
+  1381                           postinc0	equ	0xFEE
+  1382                           wreg	equ	0xFE8
+  1383                           indf2	equ	0xFDF
+  1384                           fsr2h	equ	0xFDA
+  1385                           fsr2l	equ	0xFD9
+  1386                           status	equ	0xFD8
 
 
 Data Sizes:
     Strings     0
     Constant    0
-    Data        5
-    BSS         2
+    Data        1
+    BSS         11
     Persistent  0
     Stack       0
 
 Auto Spaces:
     Space          Size  Autos    Used
-    COMRAM           95     14      21
+    COMRAM           95     14      26
     BANK0           160      0       0
     BANK1           256      0       0
     BANK2           256      0       0
@@ -1243,7 +1429,6 @@ Critical Paths under _main in COMRAM
 
     _main->_delay
     _delay->___awdiv
-    _convertSensors->_adConvert
 
 Critical Paths under _main in BANK0
 
@@ -1282,7 +1467,8 @@ Call Graph Tables:
  ---------------------------------------------------------------------------------
  (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
  ---------------------------------------------------------------------------------
- (0) _main                                                 0     0      0     663
+ (0) _main                                                 0     0      0     967
+                          _checkMode
                      _convertSensors
                               _delay
                             _initANA
@@ -1306,11 +1492,10 @@ Call Graph Tables:
  (2) ___awdiv                                              8     4      4     452
                                               0 COMRAM     8     4      4
  ---------------------------------------------------------------------------------
- (1) _convertSensors                                       0     0      0      15
-                          _adConvert
+ (1) _convertSensors                                       0     0      0       0
  ---------------------------------------------------------------------------------
- (2) _adConvert                                            1     1      0      15
-                                              0 COMRAM     1     1      0
+ (1) _checkMode                                            6     6      0     319
+                                              0 COMRAM     6     6      0
  ---------------------------------------------------------------------------------
  Estimated maximum stack depth 2
  ---------------------------------------------------------------------------------
@@ -1318,8 +1503,8 @@ Call Graph Tables:
  Call Graph Graphs:
 
  _main (ROOT)
+   _checkMode
    _convertSensors
-     _adConvert
    _delay
      ___awdiv
    _initANA
@@ -1348,83 +1533,92 @@ BANK1              100      0       0       8        0.0%
 BITBANK0            A0      0       0       4        0.0%
 BANK0               A0      0       0       5        0.0%
 BITCOMRAM           5F      0       0       0        0.0%
-COMRAM              5F      E      15       1       22.1%
+COMRAM              5F      E      1A       1       27.4%
 BITSFR_1             0      0       0     200        0.0%
 SFR_1                0      0       0     200        0.0%
 BITSFR               0      0       0     200        0.0%
 SFR                  0      0       0     200        0.0%
 STACK                0      0       0       2        0.0%
 NULL                 0      0       0       0        0.0%
-ABS                  0      0      15       6        0.0%
-DATA                 0      0      15       3        0.0%
+ABS                  0      0      1A       6        0.0%
+DATA                 0      0      1A       3        0.0%
 CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V1.42 build -159332390 
-Symbol Table                                                                                   Mon Jun 12 10:08:31 2017
+Symbol Table                                                                                   Fri Jun 16 15:07:07 2017
 
-            _pulseServos 7F36                       l90 7F84                       l92 7FAC  
-                     l78 7D9C                       l94 7FD4                       l96 7FFC  
-                     l88 7F5C                       _GO 007E11             ___awdiv@sign 0006  
-           __CFG_CP0$OFF 000000             __CFG_CP1$OFF 000000             __CFG_CP2$OFF 000000  
-           __CFG_CP3$OFF 000000                      l823 7F74                      l921 7EF4  
-                    l913 7ED6                      l809 7F4C                      l931 7F14  
-                    l923 7EF8                      l907 7EC6                      l851 7FC4  
-                    l837 7F9C                      l919 7EEC                      l935 7F1E  
-                    l865 7FEC                      l939 7F2C                      l947 7E9C  
-                    l957 7D6C             __CFG_CPB$OFF 000000                      u307 7F3E  
-                    u317 7F54                      u407 7EA6                      u327 7F66  
-                    u337 7F7C             __CFG_CPD$OFF 000000                      u347 7F8E  
-                    u357 7FA4                      u367 7FB6                      u377 7FCC  
-                    u387 7FDE                      u397 7FF4                      wreg 000FE8  
-           __CFG_LVP$OFF 000000                     _ADON 007E10                     _LATA 000F89  
-                   _LATB 000F8A                     _LATC 000F8B                     _main 7D60  
-                   fsr1l 000FE1            __CFG_BORV$190 000000                     start 2000  
-          __CFG_IESO$OFF 000000             ___param_bank 000000                    ?_main 0001  
-        __end_of___awdiv 7F36                    _T0CON 000FD5          ___awdiv@divisor 0003  
-        ___awdiv@counter 0005                    _PORTA 000F80                    _PORTB 000F81  
-                  _PORTC 000F82                    _TRISA 000F92                    _TRISB 000F93  
-                  _TRISC 000F94            __CFG_WRT0$OFF 000000            __CFG_WRT1$OFF 000000  
-          __CFG_WRT2$OFF 000000            __CFG_WRT3$OFF 000000           __CFG_EBTR0$OFF 000000  
-         __CFG_FCMEN$OFF 000000           __CFG_EBTR1$OFF 000000           __CFG_EBTR2$OFF 000000  
-         __CFG_EBTR3$OFF 000000            __CFG_WRTB$OFF 000000            __CFG_WRTC$OFF 000000  
-          __CFG_WRTD$OFF 000000          __end_of_initANA 7D60           __CFG_EBTRB$OFF 000000  
-                  _delay 7E36          __end_of_initOsc 7D44                    tablat 000FF5  
+            _pulseServos 7E3A                       l97 7FD2                       _GO 007E11  
+           ___awdiv@sign 0006             __CFG_CP0$OFF 000000             __CFG_CP1$OFF 000000  
+           __CFG_CP2$OFF 000000             __CFG_CP3$OFF 000000                      l121 7E60  
+                    l114 7FFC                      l115 7FF0                      l123 7E88  
+                    l125 7EB0                      l127 7ED8                      l129 7F00  
+                    l910 7E78                      l924 7EA0                      l952 7EF0  
+                    l938 7EC8                      l896 7E50             __CFG_CPB$OFF 000000  
+           __CFG_CPD$OFF 000000                      u707 7EE2                      u627 7E42  
+                    u717 7EF8                      u637 7E58                      u727 7DAA  
+                    u647 7E6A                      u657 7E80                      u667 7E92  
+                    u677 7EA8                      u687 7EBA                      u697 7ED0  
+                    prod 000FF3                      wreg 000FE8             __CFG_LVP$OFF 000000  
+                   l1100 7FA2                     l1030 7DF0                     l1104 7FB4  
+                   l1032 7DF8                     l1024 7DDA                     l1106 7FBA  
+                   l1050 7E30                     l1042 7E18                     l1034 7DFC  
+                   l1018 7DCA                     l1070 7F3E                     l1046 7E22  
+                   l1142 7CDE                     l1128 7DA0                     l1066 7F36  
+                   l1146 7CE4                     l1084 7F76                     l1076 7F56  
+                   l1148 7CEC                     l1094 7F96                     l1096 7F9A  
+                   l1088 7F7E                     _ADON 007E10                     _LATA 000F89  
+                   _LATB 000F8A                     _LATC 000F8B                     _main 7CC8  
+                   indf2 000FDF                     fsr2l 000FD9            __CFG_BORV$190 000000  
+                   prodl 000FF3                     start 2000            __CFG_IESO$OFF 000000  
+           ___param_bank 000000                    ?_main 0001          __end_of___awdiv 7E3A  
+                  _T0CON 000FD5          ___awdiv@divisor 0003          ___awdiv@counter 0005  
+                  _PORTA 000F80                    _PORTB 000F81                    _PORTC 000F82  
+                  _TRISA 000F92                    _TRISB 000F93                    _TRISC 000F94  
+          __CFG_WRT0$OFF 000000            __CFG_WRT1$OFF 000000            __CFG_WRT2$OFF 000000  
+          __CFG_WRT3$OFF 000000           __CFG_EBTR0$OFF 000000           __CFG_FCMEN$OFF 000000  
+         __CFG_EBTR1$OFF 000000           __CFG_EBTR2$OFF 000000           __CFG_EBTR3$OFF 000000  
+                  _cMode 0019            __CFG_WRTB$OFF 000000            __CFG_WRTC$OFF 000000  
+          __CFG_WRTD$OFF 000000          __end_of_initANA 7CA0           __CFG_EBTRB$OFF 000000  
+                  _delay 7D3A          __end_of_initOsc 7C84                    tablat 000FF5  
                   status 000FD8           __CFG_T3CMX$RC0 000000           __CFG_MCLRE$OFF 000000  
-        __initialization 7DD0             __end_of_main 7D82                   ??_main 000F  
-          __activetblptr 000000           _convertSensors 7DA6           __CFG_SDOMX$RB3 000000  
+        __initialization 7CA0             __end_of_main 7CFE                   ??_main 000F  
+          __activetblptr 000002           _convertSensors 2004           __CFG_SDOMX$RB3 000000  
         __CFG_CCP2MX$RC1 000000                   ?_delay 0001                   _ADCON0 000FC2  
                  _ADCON1 000FC1                   _ADCON2 000FC0                   _ACTCON 000FB5  
                  _ADRESH 000FC4         ___awdiv@dividend 0001             pulseServos@i 0002  
                  _ANSELA 000F5B                   _ANSELB 000F5C                   _ANSELC 000F5D  
-                 _OSCCON 000FD3           __CFG_XINST$OFF 000000                   _nDelay 0014  
-              ??___awdiv 0005           __CFG_STVREN$ON 000000                   _arcPos 000F  
-                 delay@i 000D         ___awdiv@quotient 0007   __end_of_convertSensors 7DD0  
-              ??_initANA 0001                ??_initOsc 0001             __pdataCOMRAM 000F  
-                 tblptrh 000FF7                   tblptrl 000FF6                   tblptru 000FF8  
-     __size_of_adConvert 0024     __CFG_LS48MHZ$SYS48X8 000000               __accesstop 0060  
-__end_of__initialization 7DF4          __CFG_PBADEN$OFF 000000            ___rparam_used 000001  
-         __pcstackCOMRAM 0001         __CFG_nPWRTEN$OFF 000000            __end_of_delay 7EB2  
-           ?_pulseServos 0001          ?_convertSensors 0001          __CFG_PCLKEN$OFF 000000  
-         __CFG_nLPBOR$ON 000000                  ??_delay 0009       __size_of_initPorts 003C  
-      __CFG_PLLSEL$PLL3X 000000        __end_of_adConvert 7DA6          __CFG_WDTEN$SWON 000000  
-                _OSCCON2 000FD2                  _OSCTUNE 000F9B                  __Hparam 0000  
-                __Lparam 0000                  ___awdiv 7EB2                  __pcinit 7DD0  
-                __ramtop 0800                  __ptext0 7D60                  __ptext1 7F36  
-                __ptext2 7DFA                  __ptext3 7D32                  __ptext4 7D44  
-                __ptext5 7E36                  __ptext6 7EB2                  __ptext7 7DA6  
-                __ptext8 7D82                  _initANA 7D44        __end_of_initPorts 7E36  
-                _initOsc 7D32     end_of_initialization 7DF4                  postdec1 000FE5  
-                postinc0 000FEE     __size_of_pulseServos 00CA                _PORTEbits 000F84  
-       ??_convertSensors 0002            __pidataCOMRAM 2008      start_initialization 7DD0  
-              _adConvert 7D82              __pbssCOMRAM 0014                 ?___awdiv 0001  
-             ?_adConvert 0001                 ?_initANA 0001                 ?_initOsc 0001  
-              _initPorts 7DFA           __size_of_delay 007C                 _LATBbits 000F8A  
+                 _OSCCON 000FD3           __CFG_XINST$OFF 000000                   _cDelay 0018  
+                 _nDelay 0014                ??___awdiv 0005           __CFG_STVREN$ON 000000  
+                 _arcPos 000F                   delay@i 000D                   clear_0 7CB8  
+       ___awdiv@quotient 0007   __end_of_convertSensors 2006                ??_initANA 0001  
+              ??_initOsc 0001             __pdataCOMRAM 001A                   tblptrh 000FF7  
+                 tblptrl 000FF6                   tblptru 000FF8     __CFG_LS48MHZ$SYS48X8 000000  
+             __accesstop 0060  __end_of__initialization 7CBE          __CFG_PBADEN$OFF 000000  
+          ___rparam_used 000001           __pcstackCOMRAM 0001         __CFG_nPWRTEN$OFF 000000  
+     __size_of_checkMode 00FC            __end_of_delay 7DB6             ?_pulseServos 0001  
+        ?_convertSensors 0001          __CFG_PCLKEN$OFF 000000           __CFG_nLPBOR$ON 000000  
+                ??_delay 0009       __size_of_initPorts 003C        __CFG_PLLSEL$PLL3X 000000  
+      _wasTheButtonLetGo 001A          __CFG_WDTEN$SWON 000000                  _OSCCON2 000FD2  
+                _OSCTUNE 000F9B        __end_of_checkMode 8000                  __Hparam 0000  
+                __Lparam 0000               checkMode@i 0003                  ___awdiv 7DB6  
+                __pcinit 7CA0                  __ramtop 0800               _modeSelect 0017  
+                __ptext0 7CC8                  __ptext1 7E3A                  __ptext2 7CFE  
+                __ptext3 7C72                  __ptext4 7C84                  __ptext5 7D3A  
+                __ptext6 7DB6                  __ptext7 2004                  __ptext8 7F04  
+         checkMode@i_140 0006           checkMode@i_139 0004                  _initANA 7C84  
+      __end_of_initPorts 7D3A                  _initOsc 7C72     end_of_initialization 7CBE  
+          __Lmediumconst 0000            _checkMode$141 0001                  postinc0 000FEE  
+   __size_of_pulseServos 00CA                _PORTEbits 000F84         ??_convertSensors 0001  
+          __pidataCOMRAM 2008      start_initialization 7CA0              __pbssCOMRAM 000F  
+              _checkMode 7F04                 ?___awdiv 0001                 ?_initANA 0001  
+               ?_initOsc 0001                _isPressed 0016                _initPorts 7CFE  
+         __size_of_delay 007C                 _LATBbits 000F8A               ?_checkMode 0001  
        __CFG_WDTPS$32768 000000        __CFG_CFGPLLEN$OFF 000000               ?_initPorts 0001  
-              copy_data0 7DE4                 __Hrparam 0000         pulseServos@i_140 0003  
-       pulseServos@i_141 0004         pulseServos@i_142 0005         pulseServos@i_143 0006  
+     checkMode@cTempMode 0005                 __Hrparam 0000         pulseServos@i_152 0003  
+       pulseServos@i_153 0004         pulseServos@i_154 0005         pulseServos@i_155 0006  
                __Lrparam 0000       __CFG_BOREN$SBORDIS 000000            ??_pulseServos 0001  
-       __size_of___awdiv 0084              ??_adConvert 0001         __size_of_initANA 001C  
-       __size_of_initOsc 0012            __size_of_main 0022      __end_of_pulseServos 8000  
-            ??_initPorts 0001            adConvert@chan 0001     __CFG_CPUDIV$NOCLKDIV 000000  
-__size_of_convertSensors 002A       __CFG_FOSC$INTOSCIO 000000  
+       __size_of___awdiv 0084         __size_of_initANA 001C         __size_of_initOsc 0012  
+          __size_of_main 0036              ??_checkMode 0001      __end_of_pulseServos 7F04  
+            ??_initPorts 0001     __CFG_CPUDIV$NOCLKDIV 000000  __size_of_convertSensors 0002  
+     __CFG_FOSC$INTOSCIO 000000  

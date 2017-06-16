@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=C:\Program Files\Microchip\xc8\v1.42\dat\en_msgs.txt -cs \
   -h+dist/default/production\CHRPMini-Hand.production.sym \
   --cmf=dist/default/production\CHRPMini-Hand.production.cmf -z -Q18F25K50 \
-  -oC:\Users\SCHIE3~1\AppData\Local\Temp\sfo.2 \
+  -oC:\Users\SCHIE3~1\AppData\Local\Temp\s4d0.2 \
   -Mdist/default/production/CHRPMini-Hand.production.map -E1 -ver=XC8 \
   -ASTACK=060h-07ffh -pstack=STACK \
   -ACODE=02000h-02005h,02008h-02015h,02018h-07FFFh \
@@ -25,7 +25,7 @@ Linker command line:
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -prparam=COMRAM \
-  C:\Users\SCHIE3~1\AppData\Local\Temp\sfo.obj \
+  C:\Users\SCHIE3~1\AppData\Local\Temp\s4d0.obj \
   dist/default/production\CHRPMini-Hand.production.obj 
 
 Object code version is 3.11
@@ -38,42 +38,42 @@ Call graph: (short form)
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\SCHIE3~1\AppData\Local\Temp\sfo.obj
+C:\Users\SCHIE3~1\AppData\Local\Temp\s4d0.obj
                 init                               2000     2000        4     1000       0
                 idloc                            200000   200000        8   200000       0
                 config                           300000   300000        E   300000       0
 dist/default/production\CHRPMini-Hand.production.obj
-                text8                              7D82     7D82       24     3EC1       0
-                text7                              7DA6     7DA6       2A     3ED3       0
-                text6                              7EB2     7EB2       84     3F59       0
-                text5                              7E36     7E36       7C     3F1B       0
-                text4                              7D44     7D44       1C     3EA2       0
-                text3                              7D32     7D32       12     3E99       0
-                text2                              7DFA     7DFA       3C     3EFD       0
-                text1                              7F36     7F36       CA     3F9B       0
-                text0                              7D60     7D60       22     3EB0       0
+                text8                              7F04     7F04       FC     3F82       0
+                text7                              2004     2004        2     1000       0
+                text6                              7DB6     7DB6       84     3EDB       0
+                text5                              7D3A     7D3A       7C     3E9D       0
+                text4                              7C84     7C84       1C     3E42       0
+                text3                              7C72     7C72       12     3E39       0
+                text2                              7CFE     7CFE       3C     3E7F       0
+                text1                              7E3A     7E3A       CA     3F1D       0
+                text0                              7CC8     7CC8       36     3E64       0
                 cstackCOMRAM                          1        1        E        1       1
-                dataCOMRAM                            F        F        5        1       1
-                bssCOMRAM                            14       14        2        1       1
-                cinit                              7DD0     7DD0       2A     3EE8       0
-                idataCOMRAM                        2008     2008        5     2008       0
+                dataCOMRAM                           1A       1A        1        1       1
+                bssCOMRAM                             F        F        B        1       1
+                cinit                              7CA0     7CA0       28     3E50       0
+                idataCOMRAM                        2008     2008        1     2008       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   STACK          
 
         CLASS   CODE           
                 init                               2000     2000        4         0
-                text8                              7D82     7D82       24         0
-                text7                              7DA6     7DA6       2A         0
-                text6                              7EB2     7EB2       84         0
-                text5                              7E36     7E36       7C         0
-                text4                              7D44     7D44       1C         0
-                text3                              7D32     7D32       12         0
-                text2                              7DFA     7DFA       3C         0
-                text1                              7F36     7F36       CA         0
-                text0                              7D60     7D60       22         0
-                cinit                              7DD0     7DD0       2A         0
-                idataCOMRAM                        2008     2008        5         0
+                text8                              7F04     7F04       FC         0
+                text7                              2004     2004        2         0
+                text6                              7DB6     7DB6       84         0
+                text5                              7D3A     7D3A       7C         0
+                text4                              7C84     7C84       1C         0
+                text3                              7C72     7C72       12         0
+                text2                              7CFE     7CFE       3C         0
+                text1                              7E3A     7E3A       CA         0
+                text0                              7CC8     7CC8       36         0
+                cinit                              7CA0     7CA0       28         0
+                idataCOMRAM                        2008     2008        1         0
 
         CLASS   CONST          
 
@@ -83,8 +83,8 @@ TOTAL           Name                               Link     Load   Length     Sp
 
         CLASS   COMRAM         
                 cstackCOMRAM                          1        1        E         1
-                dataCOMRAM                            F        F        5         1
-                bssCOMRAM                            14       14        2         1
+                dataCOMRAM                           1A       1A        1         1
+                bssCOMRAM                             F        F        B         1
 
         CLASS   ABS1           
 
@@ -124,19 +124,18 @@ TOTAL           Name                               Link     Load   Length     Sp
 
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class
 
-                cstackCOMRAM                   000001  000015  000016         1       1  COMRAM  
-                reset_vec                      002000  000004  002004      1000       0  CODE    
-                idataCOMRAM                    002008  000005  00200D      2008       0  CODE    
-                text3                          007D32  000012  007D44      3E99       0  CODE    
-                text4                          007D44  00001C  007D60      3EA2       0  CODE    
-                text0                          007D60  000022  007D82      3EB0       0  CODE    
-                text8                          007D82  000024  007DA6      3EC1       0  CODE    
-                text7                          007DA6  00002A  007DD0      3ED3       0  CODE    
-                cinit                          007DD0  00002A  007DFA      3EE8       0  CODE    
-                text2                          007DFA  00003C  007E36      3EFD       0  CODE    
-                text5                          007E36  00007C  007EB2      3F1B       0  CODE    
-                text6                          007EB2  000084  007F36      3F59       0  CODE    
-                text1                          007F36  0000CA  008000      3F9B       0  CODE    
+                cstackCOMRAM                   000001  00001A  00001B         1       1  COMRAM  
+                reset_vec                      002000  000006  002006      1000       0  CODE    
+                idataCOMRAM                    002008  000001  002009      2008       0  CODE    
+                text3                          007C72  000012  007C84      3E39       0  CODE    
+                text4                          007C84  00001C  007CA0      3E42       0  CODE    
+                cinit                          007CA0  000028  007CC8      3E50       0  CODE    
+                text0                          007CC8  000036  007CFE      3E64       0  CODE    
+                text2                          007CFE  00003C  007D3A      3E7F       0  CODE    
+                text5                          007D3A  00007C  007DB6      3E9D       0  CODE    
+                text6                          007DB6  000084  007E3A      3EDB       0  CODE    
+                text1                          007E3A  0000CA  007F04      3F1D       0  CODE    
+                text8                          007F04  0000FC  008000      3F82       0  CODE    
                 idloc                          200000  000008  200008    200000       0  IDLOC   
                 config                         300000  00000E  30000E    300000       0  CONFIG  
 
@@ -152,24 +151,20 @@ UNUSED ADDRESS RANGES
         BANK5            000500-0005FF              100
         BANK6            000600-0006FF              100
         BANK7            000700-0007FF              100
-        BIGRAM           000016-0007FF              7EA
-        CODE             002004-002005                2
-                         00200D-002015                9
-                         002018-007D31             5D1A
-        COMRAM           000016-00005F               4A
-        CONST            002004-002005                2
-                         00200D-002015                9
-                         002018-007D31             5D1A
+        BIGRAM           00001B-0007FF              7E5
+        CODE             002009-002015                D
+                         002018-007C71             5C5A
+        COMRAM           00001B-00005F               45
+        CONST            002009-002015                D
+                         002018-007C71             5C5A
         EEDATA           F00000-F000FF              100
         FARRAM           000000-000000                1
-        MEDIUMCONST      002004-002005                2
-                         00200D-002015                9
-                         002018-007D31             5D1A
+        MEDIUMCONST      002009-002015                D
+                         002018-007C71             5C5A
         RAM              000060-0007FF              100
         SFR              000F53-000FFF                D
-        SMALLCONST       002004-002005                2
-                         00200D-002015                9
-                         002018-007D31              100
+        SMALLCONST       002009-002015                D
+                         002018-007C71              100
         STACK            000060-0007FF              7A0
 
                                   Symbol Table
@@ -295,7 +290,7 @@ __Hrparam                rparam       000000
 __Hsfr                   sfr          000000
 __Hsmallconst            smallconst   000000
 __Hspace_0               (abs)        30000E
-__Hspace_1               (abs)        000016
+__Hspace_1               (abs)        00001B
 __Hspace_2               (abs)        000000
 __Hstack                 stack        000000
 __Hstruct                struct       000000
@@ -381,9 +376,9 @@ __Ltext6                 text6        000000
 __Ltext7                 text7        000000
 __Ltext8                 text8        000000
 __S0                     (abs)        30000E
-__S1                     (abs)        000016
+__S1                     (abs)        00001B
 __S2                     (abs)        000000
-___awdiv                 text6        007EB2
+___awdiv                 text6        007DB6
 ___awdiv@counter         cstackCOMRAM 000005
 ___awdiv@dividend        cstackCOMRAM 000001
 ___awdiv@divisor         cstackCOMRAM 000003
@@ -395,36 +390,36 @@ ___param_bank            (abs)        000000
 ___rparam_used           (abs)        000001
 ___sp                    stack        000000
 __accesstop              (abs)        000060
-__activetblptr           (abs)        000000
-__end_of___awdiv         text6        007F36
-__end_of__initialization cinit        007DF4
-__end_of_adConvert       text8        007DA6
-__end_of_convertSensors  text7        007DD0
-__end_of_delay           text5        007EB2
-__end_of_initANA         text4        007D60
-__end_of_initOsc         text3        007D44
-__end_of_initPorts       text2        007E36
-__end_of_main            text0        007D82
-__end_of_pulseServos     text1        008000
-__initialization         cinit        007DD0
+__activetblptr           (abs)        000002
+__end_of___awdiv         text6        007E3A
+__end_of__initialization cinit        007CBE
+__end_of_checkMode       text8        008000
+__end_of_convertSensors  text7        002006
+__end_of_delay           text5        007DB6
+__end_of_initANA         text4        007CA0
+__end_of_initOsc         text3        007C84
+__end_of_initPorts       text2        007D3A
+__end_of_main            text0        007CFE
+__end_of_pulseServos     text1        007F04
+__initialization         cinit        007CA0
 __mediumconst            mediumconst  000000
-__pbssCOMRAM             bssCOMRAM    000014
-__pcinit                 cinit        007DD0
+__pbssCOMRAM             bssCOMRAM    00000F
+__pcinit                 cinit        007CA0
 __pcstackCOMRAM          cstackCOMRAM 000001
-__pdataCOMRAM            dataCOMRAM   00000F
+__pdataCOMRAM            dataCOMRAM   00001A
 __pidataCOMRAM           idataCOMRAM  002008
-__ptext0                 text0        007D60
-__ptext1                 text1        007F36
-__ptext2                 text2        007DFA
-__ptext3                 text3        007D32
-__ptext4                 text4        007D44
-__ptext5                 text5        007E36
-__ptext6                 text6        007EB2
-__ptext7                 text7        007DA6
-__ptext8                 text8        007D82
+__ptext0                 text0        007CC8
+__ptext1                 text1        007E3A
+__ptext2                 text2        007CFE
+__ptext3                 text3        007C72
+__ptext4                 text4        007C84
+__ptext5                 text5        007D3A
+__ptext6                 text6        007DB6
+__ptext7                 text7        002004
+__ptext8                 text8        007F04
 __ramtop                 ramtop       000800
 __size_of___awdiv        (abs)        000000
-__size_of_adConvert      (abs)        000000
+__size_of_checkMode      (abs)        000000
 __size_of_convertSensors (abs)        000000
 __size_of_delay          (abs)        000000
 __size_of_initANA        (abs)        000000
@@ -433,47 +428,56 @@ __size_of_initPorts      (abs)        000000
 __size_of_main           (abs)        000000
 __size_of_pulseServos    (abs)        000000
 __smallconst             smallconst   000000
-_adConvert               text8        007D82
-_arcPos                  dataCOMRAM   00000F
-_convertSensors          text7        007DA6
-_delay                   text5        007E36
-_initANA                 text4        007D44
-_initOsc                 text3        007D32
-_initPorts               text2        007DFA
-_main                    text0        007D60
+_arcPos                  bssCOMRAM    00000F
+_cDelay                  bssCOMRAM    000018
+_cMode                   bssCOMRAM    000019
+_checkMode               text8        007F04
+_checkMode$141           cstackCOMRAM 000001
+_convertSensors          text7        002004
+_delay                   text5        007D3A
+_initANA                 text4        007C84
+_initOsc                 text3        007C72
+_initPorts               text2        007CFE
+_isPressed               bssCOMRAM    000016
+_main                    text0        007CC8
+_modeSelect              bssCOMRAM    000017
 _nDelay                  bssCOMRAM    000014
-_pulseServos             text1        007F36
-adConvert@chan           cstackCOMRAM 000001
+_pulseServos             text1        007E3A
+_wasTheButtonLetGo       dataCOMRAM   00001A
+checkMode@cTempMode      cstackCOMRAM 000005
+checkMode@i              cstackCOMRAM 000003
+checkMode@i_139          cstackCOMRAM 000004
+checkMode@i_140          cstackCOMRAM 000006
 delay@i                  cstackCOMRAM 00000D
-end_of_initialization    cinit        007DF4
+end_of_initialization    cinit        007CBE
 intlevel0                text         000000
 intlevel1                text         000000
 intlevel2                text         000000
 intlevel3                text         000000
 pulseServos@i            cstackCOMRAM 000002
-pulseServos@i_140        cstackCOMRAM 000003
-pulseServos@i_141        cstackCOMRAM 000004
-pulseServos@i_142        cstackCOMRAM 000005
-pulseServos@i_143        cstackCOMRAM 000006
+pulseServos@i_152        cstackCOMRAM 000003
+pulseServos@i_153        cstackCOMRAM 000004
+pulseServos@i_154        cstackCOMRAM 000005
+pulseServos@i_155        cstackCOMRAM 000006
 stackhi                  (abs)        0007FF
 stacklo                  (abs)        000060
 start                    init         002000
-start_initialization     cinit        007DD0
+start_initialization     cinit        007CA0
 
 
 FUNCTION INFORMATION:
 
  *************** function _main *****************
  Defined at:
-		line 126 in file "Hand.c"
+		line 178 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
-                  2  106[None  ] int 
+                  2  139[None  ] int 
  Registers used:
-		wreg, status,2, status,0, cstack
+		wreg, fsr2l, fsr2h, status,2, status,0, prodl, prodh, cstack
  Tracked objects:
 		On entry : 
 		On exit  : 
@@ -486,6 +490,7 @@ FUNCTION INFORMATION:
 Total ram usage:        0 bytes
  Hardware stack levels required when called:    2
  This function calls:
+		_checkMode
 		_convertSensors
 		_delay
 		_initANA
@@ -499,7 +504,7 @@ Total ram usage:        0 bytes
 
  *************** function _pulseServos *****************
  Defined at:
-		line 70 in file "Hand.c"
+		line 116 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -619,7 +624,7 @@ Total ram usage:        0 bytes
 
  *************** function _delay *****************
  Defined at:
-		line 116 in file "Hand.c"
+		line 168 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -681,7 +686,7 @@ Total ram usage:        8 bytes
 
  *************** function _convertSensors *****************
  Defined at:
-		line 59 in file "Hand.c"
+		line 57 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -689,7 +694,7 @@ Total ram usage:        8 bytes
  Return value:  Size  Location     Type
                   1    wreg      void 
  Registers used:
-		wreg, status,2, status,0, cstack
+		None
  Tracked objects:
 		On entry : 
 		On exit  : 
@@ -701,40 +706,42 @@ Total ram usage:        8 bytes
       Totals:         0       0       0       0       0       0       0       0       0
 Total ram usage:        0 bytes
  Hardware stack levels used:    1
- Hardware stack levels required when called:    1
  This function calls:
-		_adConvert
+		Nothing
  This function is called by:
 		_main
  This function uses a non-reentrant model
 
 
- *************** function _adConvert *****************
+ *************** function _checkMode *****************
  Defined at:
-		line 38 in file "Hand.c"
+		line 70 in file "Hand.c"
  Parameters:    Size  Location     Type
-  chan            1    wreg     unsigned char 
+		None
  Auto vars:     Size  Location     Type
-  chan            1    0[COMRAM] unsigned char 
+  i               1    5[COMRAM] unsigned char 
+  i               1    3[COMRAM] unsigned char 
+  i               1    2[COMRAM] unsigned char 
+  cTempMode       1    4[COMRAM] unsigned char 
  Return value:  Size  Location     Type
                   1    wreg      unsigned char 
  Registers used:
-		wreg, status,2, status,0
+		wreg, fsr2l, fsr2h, status,2, status,0, prodl, prodh
  Tracked objects:
 		On entry : 
 		On exit  : 
 		Unchanged: 
  Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
       Params:         0       0       0       0       0       0       0       0       0
-      Locals:         1       0       0       0       0       0       0       0       0
+      Locals:         6       0       0       0       0       0       0       0       0
       Temps:          0       0       0       0       0       0       0       0       0
-      Totals:         1       0       0       0       0       0       0       0       0
-Total ram usage:        1 bytes
+      Totals:         6       0       0       0       0       0       0       0       0
+Total ram usage:        6 bytes
  Hardware stack levels used:    1
  This function calls:
 		Nothing
  This function is called by:
-		_convertSensors
+		_main
  This function uses a non-reentrant model
 
 
@@ -743,28 +750,28 @@ MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
 CHRP3.c
-		_initOsc       		CODE           	7D32	0000	19
-		_initPorts     		CODE           	7DFA	0000	61
-		_initANA       		CODE           	7D44	0000	29
+		_initOsc       		CODE           	7C72	0000	19
+		_initPorts     		CODE           	7CFE	0000	61
+		_initANA       		CODE           	7C84	0000	29
 
 CHRP3.c estimated size: 109
 
 Hand.c
-		_convertSensors		CODE           	7DA6	0000	43
-		_delay         		CODE           	7E36	0000	125
-		_main          		CODE           	7D60	0000	35
-		_adConvert     		CODE           	7D82	0000	37
-		_pulseServos   		CODE           	7F36	0000	203
+		_convertSensors		CODE           	2004	0000	3
+		_delay         		CODE           	7D3A	0000	125
+		_main          		CODE           	7CC8	0000	55
+		_checkMode     		CODE           	7F04	0000	253
+		_pulseServos   		CODE           	7E3A	0000	203
 
-Hand.c estimated size: 443
+Hand.c estimated size: 639
 
 shared
-		__initialization		CODE           	7DD0	0000	37
+		__initialization		CODE           	7CA0	0000	31
 
-shared estimated size: 37
+shared estimated size: 31
 
 C:\Program Files\Microchip\xc8\v1.42\sources\common\awdiv.c
-		___awdiv       		CODE           	7EB2	0000	133
+		___awdiv       		CODE           	7DB6	0000	133
 
 C:\Program Files\Microchip\xc8\v1.42\sources\common\awdiv.c estimated size: 133
 

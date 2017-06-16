@@ -16,10 +16,10 @@
 /*==============================================================================
     Variables
 ==============================================================================*/
-unsigned char arcPos[5] = {10, 115, 172, 210, 42};
+unsigned char arcPos[5] = {0, 0, 0, 0, 0};
 int nDelay;
 unsigned char cMode, cDelay; //0 is matching glove movements, 1 is commands
-bool modeSelect = false, isPressed = false;
+bool modeSelect = false, isPressed = false, wasTheButtonLetGo = true;
 /* Position for each finger. 0 represents open. 255 means fully closed.
  * THUMB: 0
  * INDEX: 1
@@ -56,11 +56,11 @@ unsigned char adConvert(unsigned char chan) {
 ==============================================================================*/
 void convertSensors() {
 
-    arcPos[0] = adConvert(SENSORTHUMB);
-    arcPos[1] = adConvert(SENSORINDEX);
-    arcPos[2] = adConvert(SENSORMIDDLE);
-    arcPos[3] = adConvert(SENSORRING);
-    arcPos[4] = adConvert(SENSORPINKIE);
+    //    arcPos[0] = adConvert(SENSORTHUMB);
+    //    arcPos[1] = adConvert(SENSORINDEX);
+    //    arcPos[2] = adConvert(SENSORMIDDLE);
+    //    arcPos[3] = adConvert(SENSORRING);
+    //    arcPos[4] = adConvert(SENSORPINKIE);
 
 }
 
@@ -68,35 +68,47 @@ void convertSensors() {
     Check to see if the mode needs to change
 ==============================================================================*/
 unsigned char checkMode() {
+    unsigned char cTempMode = cMode;
     if (S1 == 0) {
-        if (!modeSelect) {
+        isPressed = true;
+        if (!modeSelect && wasTheButtonLetGo) {
             cDelay++;
-            if (cDelay == 255) {
+            if (cDelay == 20) {
                 cDelay = 0;
                 modeSelect = true;
-                isPressed = true;
+                wasTheButtonLetGo = false;
+                for (unsigned char i = 0; i < 5; i++) {
+                    arcPos[i] = 0;
+                } //Straighten all fingers
             }
-        } else if (!isPressed) {
+        } else if (wasTheButtonLetGo) {
             cDelay++;
-            if (cDelay == 255) {
+            if (cDelay == 20) {
                 cDelay = 0;
                 modeSelect = false;
-            }
-            for (unsigned char i = 0; i < 5; i++) {
-                arcPos[i] = (cMode == i) ? 255 : 0; // Bend the finger that is equal to the mode; Straighten all the others.
+                wasTheButtonLetGo = false;
+                cTempMode--;
+                for (unsigned char i = 0; i < 5; i++) {
+                    arcPos[i] = 0;
+                } //Straighten all fingers
+            } else {
+                for (unsigned char i = 0; i < 5; i++) {
+                    arcPos[i] = (cTempMode == i) ? 255 : 0; // Bend the finger that is equal to the mode; Straighten all the others.
+                }
             }
         }
     }
 
     if (S1 == 1) {
-        if (isPressed == true) {
-            cMode++;
-            if (cMode == 5)cMode = 0;
+        if (isPressed == true && modeSelect) {
+            cTempMode++;
+            if (cTempMode == 5)cTempMode = 0;
         }
+        wasTheButtonLetGo = true;
         cDelay = 0;
         isPressed = false;
     }
-
+    return cTempMode;
 }
 
 /*==============================================================================
@@ -172,7 +184,7 @@ int main(void) {
     cDelay = 0;
     while (1) {
         switch (cMode) {
-            case 1:
+            case 0:
                 convertSensors();
                 break;
             default:

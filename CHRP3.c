@@ -19,14 +19,13 @@ void initOsc(void)
 	OSCCON = 0x70;				// Switch to 16MHz HFINTOSC
 	OSCCON2 = 0x10;				// Enable PLL, SOSC, PRI OSC drivers turned off
 	ACTCON = 0x90;				// Enable active clock tuning for USB operation
-	//while(!PLLRDY);				// Wait for PLL lock
+	while(!PLLRDY);				// Wait for PLL lock
 }
 
 // Initialize hardware ports and peripherals. Set starting conditions.
 
 void initPorts(void)
 {
-    // something here
 	LATA = 0b00000000;			// Clear Port A latches before configuring PORTA
 	ANSELA = 0b00000000;		// Make all Port A pins digital
 	TRISA = 0b00101111;			// Set runLED, IR LEDs as outputs in PORTA
@@ -45,22 +44,15 @@ void initPorts(void)
 	PORTA = 0;					// Turn off all PORTA outputs, turn on run LED
 	PORTB = 0;					// Turn off all PORTB LEDs
 	PORTC = 0;					// Turn off all PORTC outputs
-    
-    // Initialize user ports and peripherals.
-
-	//ANSELH = 0b00000000;		// Make all PORTB pins digital I/O
-
-	//OPTION_REG = 0b01010111;	// PORTB pull-ups on, TMR0 internal div 256
-	// Enable interrupts, if needed.
 }
 
-// Initialize analogue PORTA inputs. Call initANA after initPorts if analogue
-// inputs will be used. Enables all CHRP3 analogue channels.
+// Initialize analogue PORTA inputs. Call initANA after initPorts so analogue
+// inputs can be used. Enables all CHRP3 analogue channels.
 
 void initANA(void)
 {	
 	LATA = 0b00000000;			// Clear Port A latches before configuring PORTA
-	ANSELA = 0b0011111;		// Make RA0,1,2,3 and 5 analogue inputs
+	ANSELA = 0b0011111;         // Make RA0,1,2,3 and 5 analogue inputs (flex sensors)
 	ADCON0 = 0b00000000;		// Analogue channel AN0, A/D converter
 	ADCON1 = 0b00000000;		// VDD positive reference, VSS negative reference
 	ADCON2 = 0b00001110;		// 2TAD acquisition time, FOSC/64 conversion clock

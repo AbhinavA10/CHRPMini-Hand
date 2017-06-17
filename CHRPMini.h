@@ -53,21 +53,12 @@
 
 // Analogue-digital converter input channel definitions
 
-#define SENSORTHUMB     0b00000000		// Flex Sensor A-D input channel (Ch0)
-#define SENSORINDEX     0b00000100		// Flex Sensor A-D input channel (Ch1)
-#define SENSORMIDDLE    0b00001000		// Flex Sensor A-D input channel (Ch2)
-#define SENSORRING      0b00001100		// Flex Sensor A-D input channel (Ch3)
-#define SENSORPINKIE    0b00010000		// Flex Sensor A-D input channel (Ch4) - RA5 is actually ch4
+#define SENSORTHUMB     0b00000000		// Flex Sensor A-D input channel (Ch0) (AN0)
+#define SENSORINDEX     0b00000100		// Flex Sensor A-D input channel (Ch1) (AN1)
+#define SENSORMIDDLE    0b00001000		// Flex Sensor A-D input channel (Ch2) (AN2)
+#define SENSORRING      0b00001100		// Flex Sensor A-D input channel (Ch3) (AN3)
+#define SENSORPINKIE    0b00010000		// Flex Sensor A-D input channel (Ch4) (AN4)- RA5 is actually ch4
 
-//#define AN0			0b00000000		// Analogue channel 0 input
-//#define	ADQ1		0b00000000		// Q1 phototransistor A-D input channel (Ch0)
-//#define AN1			0b00000100		// A-D channel 1 input
-//#define	ADQ2		0b00000100		// Q2 phototransistor A-D input channel (Ch1)
-//#define AN2			0b00001000		// A-D channel 2 input
-//#define	ADVR1		0b00001000		// Potentiometer VR1 A-D input channel (Ch2)
-//#define AN3			0b00001100		// A-D channel 3 input
-//#define	ADT1		0b00001100		// Temperature sensor T1 A-D input channel (Ch3)
-//#define AN4			0b00010000		// A-D channel 4 input
 #define	ADVM		0b00010000		// Motor voltage divider A-D input channel (Ch4)
 #define ADTD		0b01110000		// PICmicro on-die temperature diode
 

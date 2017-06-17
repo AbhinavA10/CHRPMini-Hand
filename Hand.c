@@ -9,28 +9,65 @@
 #include    "stdbool.h"         // Include Boolean (true/false) definitions
 #include    "CHRPMini.h"        // Include CHRPMini constant symbols and functions
 
-// TODO Set linker ROM ranges to 'default,-0-1FFF,-2006-2007,-2016-2017' under "Memory model" pull-down.
-// TODO Set linker Code offset to '0x2000' under "Additional options" pull-down.
-
+// Have set linker ROM ranges to 'default,-0-1FFF,-2006-2007,-2016-2017' under "Memory model" pull-down.
+// Have set linker Code offset to '0x2000' under "Additional options" pull-down.
 
 /*==============================================================================
-    Variables
+    Finger Pathing
 ==============================================================================*/
-unsigned char arcPos[5] = {0, 0, 0, 0, 0};
-int nDelay;
-unsigned char cMode, cDelay; //0 is matching glove movements, 1 is commands
-bool modeSelect = false, isPressed = false, wasTheButtonLetGo = true;
-/* Position for each finger. 0 represents open. 255 means fully closed.
- * THUMB: 0
- * INDEX: 1
- * MIDDLE: 2
- * RING: 3
- * PINKIE: 4
+/*
+ * THUMB:   0
+ * INDEX:   1
+ * MIDDLE:  2
+ * RING:    3
+ * PINKIE:  4
  */
 
 /*==============================================================================
-    A/D conversion function. Pass the channel to be converted using one of the
-    definitions in CHRP3.h. Returns the most significant 8-bits of the result.
+    VARIABLES
+==============================================================================*/
+unsigned char arcPos[5]; //Position for each finger. 0 represents open. 255 means fully closed.
+int nDelay; //  for keeping track of the proper delay to pulse servos every 20ms
+unsigned char cMode, cDelay; //cDelay is for counting duration when mode select button is held 
+//MODES: 0 is matching glove movements, 1 is commands,
+bool modeSelect, isPressedForMode, buttonWasLetGo; // variables needed to properly navigate mode selection
+
+/*==============================================================================
+    SET POS
+        Function to individually set position of each servo to the passed value.
+        We are not able to set an entire array to different values, once it is initialized.
+        So to avoid recreating the array, this function was made to change the position
+        to hard-coded values.
+        This will allow us to have certain gestures on command.
+        Alt. Method: https://stackoverflow.com/questions/5732798/c-array-assignment-of-multiple-values
+==============================================================================*/
+void setPos(unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned char e) {
+    arcPos[0] = a;
+    arcPos[1] = b;
+    arcPos[2] = c;
+    arcPos[3] = d;
+    arcPos[4] = e;
+}
+
+/*==============================================================================
+    INIT VARIABLES
+        A function to set starting values for each variable.
+        Created so that setting starting values is made simple as it is all in 
+        one spot and not when they are created
+==============================================================================*/
+void initVariables() {
+    setPos(0, 0, 0, 0, 0); // starting position of servos is an open hand.
+    modeSelect = false;
+    isPressedForMode = false;
+    buttonWasLetGo = true;
+    cMode = 0;
+    cDelay = 0;
+}
+
+/*==============================================================================
+    AD CONVERT
+        A/D conversion function. Pass the channel to be converted using one of the
+        definitions in CHRP3.h. Returns the most significant 8-bits of the result.
 ==============================================================================*/
 unsigned char adConvert(unsigned char chan) {
     ADON = 1; // Turn A-D converter on
@@ -51,47 +88,47 @@ unsigned char adConvert(unsigned char chan) {
 }
 
 /*==============================================================================
-    Function to convert all analogue flex sensors to 8bit value by 
-    calling the A/D conversion function.
+    CONVERT SENSORS
+        Function to convert all analogue flex sensors to 8bit value by 
+        calling the A/D conversion function.
 ==============================================================================*/
 void convertSensors() {
-
-    //    arcPos[0] = adConvert(SENSORTHUMB);
-    //    arcPos[1] = adConvert(SENSORINDEX);
-    //    arcPos[2] = adConvert(SENSORMIDDLE);
-    //    arcPos[3] = adConvert(SENSORRING);
-    //    arcPos[4] = adConvert(SENSORPINKIE);
-
+    arcPos[0] = adConvert(SENSORTHUMB);
+    arcPos[1] = adConvert(SENSORINDEX);
+    arcPos[2] = adConvert(SENSORMIDDLE);
+    arcPos[3] = adConvert(SENSORRING);
+    arcPos[4] = adConvert(SENSORPINKIE);
 }
 
 /*==============================================================================
-    Check to see if the mode needs to change
+    CHECK MODE 
+        Function to check if the mode needs to change
+        If S1 is held, go into mode select. Each time S1 is pressed, switch mode.
+        Confirm mode, and leave mode select by holding S1 again.
 ==============================================================================*/
 unsigned char checkMode() {
     unsigned char cTempMode = cMode;
     if (S1 == 0) {
-        isPressed = true;
-        if (!modeSelect && wasTheButtonLetGo) {
+        isPressedForMode = true;
+        if (!modeSelect && buttonWasLetGo) { // user is holding button to enter mode selection
             cDelay++;
             if (cDelay == 20) {
                 cDelay = 0;
                 modeSelect = true;
-                wasTheButtonLetGo = false;
+                buttonWasLetGo = false;
                 for (unsigned char i = 0; i < 5; i++) {
-                    arcPos[i] = 0;
-                } //Straighten all fingers
+                    arcPos[i] = (cTempMode == i) ? 255 : 0; // Bend the finger that is equal to the mode; Straighten all the others.
+                }
             }
-        } else if (wasTheButtonLetGo) {
+        } else if (buttonWasLetGo) {
             cDelay++;
-            if (cDelay == 20) {
+            if (cDelay == 20) { // user is holding to leave mode select
                 cDelay = 0;
                 modeSelect = false;
-                wasTheButtonLetGo = false;
+                buttonWasLetGo = false;
                 cTempMode--;
-                for (unsigned char i = 0; i < 5; i++) {
-                    arcPos[i] = 0;
-                } //Straighten all fingers
-            } else {
+                setPos(0, 0, 0, 0, 0); //Straighten all fingers
+            } else { // user has pressed the button to change the mode
                 for (unsigned char i = 0; i < 5; i++) {
                     arcPos[i] = (cTempMode == i) ? 255 : 0; // Bend the finger that is equal to the mode; Straighten all the others.
                 }
@@ -99,34 +136,35 @@ unsigned char checkMode() {
         }
     }
 
-    if (S1 == 1) {
-        if (isPressed == true && modeSelect) {
+    if (S1 == 1) { // mode is changed after the button is let go. This is done so that the user is able to leave mode select.
+        if (isPressedForMode && modeSelect) {
             cTempMode++;
             if (cTempMode == 5)cTempMode = 0;
         }
-        wasTheButtonLetGo = true;
+        buttonWasLetGo = true;
         cDelay = 0;
-        isPressed = false;
+        isPressedForMode = false;
     }
     return cTempMode;
 }
 
 /*==============================================================================
-    Servo function to pulse all 5 servos.
+    PULSE SERVOS 
+        Servo function to pulse all 5 servos.
 ==============================================================================*/
 void pulseServos() {
-
-    /*
-     * Position is  between 0 and 255
-     * Servo code
-     * 1-2ms on, 20ms period. 1ms = 90 degrees, 2 ms = -90 degrees
+    /*  Servo specifications
+     * The servo turns 180 degrees. Below values were found by trail and error
+     * as the datasheet was a little off.
+     * 0.54ms to 2.07ms on. 20ms period.
      */
 
     //Thumb Finger
     SERVOTHUMB = 1; //Turn it on
-    __delay_us(540); //540 works well
+    __delay_us(540); //540 works well to give a -90 degree pulse.
     for (unsigned char i = arcPos[0]; i != 0; i--) {
-        __delay_us(6); //6 for SG90
+        __delay_us(6); //For the SG90 servo, a 6us delay for each position
+        // allows a max pulse of 2.07ms for +90 degrees.
     }
     SERVOTHUMB = 0; //Turn it off
 
@@ -164,40 +202,87 @@ void pulseServos() {
 }
 
 /*==============================================================================
- Delay function to delay by the correct amount of time for the time delay
+    DELAY
+        Delay function to delay by the correct amount of time such that pulses between
+        each servo is always 20ms.
+        Takes the goal of a 20ms pulse, subtracts guaranteed servo pulses of 0.54ms
+        and then also subtracts any extra pulses for each position. (-2500) was 
+        added as an adjustment factor to account for clock cycles in other code.
 ==============================================================================*/
 void delay() {
-    nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[0] - arcPos[1] - arcPos[2] - arcPos[3] - arcPos[4]) / 6); // - 540*5 - arcPos[0] - arcPos[1] - arcPos[2] - arcPos[3] - arcPos[4]);
+    nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[0] - arcPos[1] - arcPos[2] - arcPos[3] - arcPos[4]) / 6);
     for (int i = nDelay; i != 0; i--) {
         __delay_us(6);
     }
 }
 
 /*==============================================================================
- Main program code.
+ MAIN PROGRAM CODE.
 ==============================================================================*/
+unsigned char cGesture;
+unsigned char isPressedForGesture;
+
 int main(void) {
     initOsc(); // Initialize oscillator and wait for it to stabilize
     initPorts(); // Initialize CHRP3 I/O and peripherals
     initANA(); // Initialize Port A analogue inputs
-    cMode = 0;
-    cDelay = 0;
+    initVariables(); // Initialize all variables 
     while (1) {
         switch (cMode) {
-            case 0:
-                convertSensors();
+            case 0: // matching glove movements
+                //convertSensors();
+                break;
+            case 1: // commands
+                /*
+                 * We are able to still change the gesture using the same button
+                 * because entering mode select requires the user to hold the button 
+                 * for approximately 4 seconds.
+                 */
+                if (S1 == 0 && !modeSelect) {
+                    isPressedForGesture = true;
+                }
+                if (S1 == 1 && isPressedForGesture && !modeSelect) { // gesture changes when button is let go
+                    isPressedForGesture = false;
+                    cGesture++;
+                    if (cGesture == 9)cGesture = 0;
+                    switch (cGesture) {
+                        case 0:
+                            setPos(0, 0, 0, 0, 0); // Open hand
+                            break;
+                        case 1:
+                            setPos(255, 255, 255, 255, 255); // Fist
+                            break;
+                        case 2:
+                            setPos(0, 0, 255, 255, 0); // Spider-man
+                            break;
+                        case 3:
+                            setPos(0, 255, 255, 255, 0); // Hang Loose
+                            break;
+                        case 4:
+                            setPos(200, 0, 0, 255, 255); // Peace sign
+                            break;
+                        case 5:
+                            setPos(200, 200, 0, 0, 0); // Poifect
+                            break;
+                        case 6:
+                            setPos(0, 255, 255, 255, 255); // Thumbs Up
+                            break;
+                        case 7:
+                            setPos(255, 0, 255, 255, 255); // Index pointing
+                            break;
+                        case 8:
+                            setPos(255, 0, 255, 255, 0); // Rock On
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 break;
             default:
                 break;
         }
         pulseServos();
-        //__delay_ms(14); // need to fix this delay
-        //__delay_us(4500);
         delay();
         cMode = checkMode();
-        if (S1 == 0) // If S1 held, go into mode select. Each time S1 is pressed, switch mode. Confirm mode by holding.
-        {
-
-        }
     }
 }

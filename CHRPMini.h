@@ -53,11 +53,11 @@
 
 // Analogue-digital converter input channel definitions
 
-#define SENSORTHUMB     0b00000000		// Flex Sensor A-D input channel (Ch0) (AN0)
-#define SENSORINDEX     0b00000100		// Flex Sensor A-D input channel (Ch1) (AN1)
-#define SENSORMIDDLE    0b00001000		// Flex Sensor A-D input channel (Ch2) (AN2)
-#define SENSORRING      0b00001100		// Flex Sensor A-D input channel (Ch3) (AN3)
-#define SENSORPINKIE    0b00010000		// Flex Sensor A-D input channel (Ch4) (AN4)- RA5 is actually ch4
+#define SENSORTHUMB     0b00000000		// Flex Sensor A-D input channel (Ch0) on AN0/RA0
+#define SENSORINDEX     0b00000100		// Flex Sensor A-D input channel (Ch1) on AN1/RA1
+#define SENSORMIDDLE    0b00001000		// Flex Sensor A-D input channel (Ch2) on AN2/RA2
+#define SENSORRING      0b00001100		// Flex Sensor A-D input channel (Ch3) on AN3/RA3
+#define SENSORPINKIE    0b00010000		// Flex Sensor A-D input channel (Ch4) on AN4/RA5
 
 #define	ADVM		0b00010000		// Motor voltage divider A-D input channel (Ch4)
 #define ADTD		0b01110000		// PICmicro on-die temperature diode

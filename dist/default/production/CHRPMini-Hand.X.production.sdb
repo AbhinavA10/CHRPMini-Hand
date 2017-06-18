@@ -31,19 +31,19 @@
 [v _initPorts initPorts `(v  1 e 1 0 ]
 "52
 [v _initANA initANA `(v  1 e 1 0 ]
-"44 C:\Users\Abhi\Documents\MPLAB\Grade11\Projects\CHRPMini-Hand.X\Hand.c
+"43 C:\Users\Abhi\Documents\MPLAB\Grade11\Projects\CHRPMini-Hand.X\Hand.c
 [v _setPos setPos `(v  1 e 1 0 ]
-"58
+"57
 [v _initVariables initVariables `(v  1 e 1 0 ]
-"72
-[v _adConvert adConvert `(uc  1 e 1 0 ]
-"109
+"94
+[v _convertSensors convertSensors `(v  1 e 1 0 ]
+"108
 [v _checkMode checkMode `(uc  1 e 1 0 ]
-"157
+"154
 [v _pulseServos pulseServos `(v  1 e 1 0 ]
-"214
+"211
 [v _delay delay `(v  1 e 1 0 ]
-"227
+"221
 [v _main main `(i  1 e 2 0 ]
 "225 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic18f25k50.h
 [v _ANSELA ANSELA `VEuc  1 e 1 @3931 ]
@@ -129,54 +129,41 @@
 "29 C:\Users\Abhi\Documents\MPLAB\Grade11\Projects\CHRPMini-Hand.X\Hand.c
 [v _arcPos arcPos `[5]uc  1 e 5 0 ]
 "30
-[v _nDelay nDelay `i  1 e 2 0 ]
-"31
 [v _cMode cMode `uc  1 e 1 0 ]
 [v _cDelay cDelay `uc  1 e 1 0 ]
-"33
+"31
+[v _cGesture cGesture `uc  1 e 1 0 ]
+"32
 [v _modeSelect modeSelect `uc  1 e 1 0 ]
 [v _isPressedForMode isPressedForMode `uc  1 e 1 0 ]
-[v _buttonWasLetGo buttonWasLetGo `uc  1 e 1 0 ]
-"224
-[v _cGesture cGesture `uc  1 e 1 0 ]
-"225
 [v _isPressedForGesture isPressedForGesture `uc  1 e 1 0 ]
-"227
+[v _buttonWasLetGo buttonWasLetGo `uc  1 e 1 0 ]
+"33
+[v _nDelay nDelay `i  1 e 2 0 ]
+"221
 [v _main main `(i  1 e 2 0 ]
 {
-"290
+"284
 } 0
-"157
+"154
 [v _pulseServos pulseServos `(v  1 e 1 0 ]
 {
-"200
+"197
 [v pulseServos@i_166 i `uc  1 a 1 5 ]
-"192
+"189
 [v pulseServos@i_165 i `uc  1 a 1 4 ]
-"184
+"181
 [v pulseServos@i_164 i `uc  1 a 1 3 ]
-"176
+"173
 [v pulseServos@i_163 i `uc  1 a 1 2 ]
-"167
+"164
 [v pulseServos@i i `uc  1 a 1 1 ]
-"204
+"201
 } 0
-"58
+"57
 [v _initVariables initVariables `(v  1 e 1 0 ]
 {
-"65
-} 0
-"44
-[v _setPos setPos `(v  1 e 1 0 ]
-{
-[v setPos@a a `uc  1 a 1 wreg ]
-[v setPos@a a `uc  1 a 1 wreg ]
-[v setPos@b b `uc  1 p 1 0 ]
-[v setPos@c c `uc  1 p 1 1 ]
-[v setPos@d d `uc  1 p 1 2 ]
-[v setPos@e e `uc  1 p 1 3 ]
-[v setPos@a a `uc  1 a 1 4 ]
-"50
+"64
 } 0
 "27 C:\Users\Abhi\Documents\MPLAB\Grade11\Projects\CHRPMini-Hand.X\CHRP3.c
 [v _initPorts initPorts `(v  1 e 1 0 ]
@@ -193,12 +180,12 @@
 {
 "60
 } 0
-"214 C:\Users\Abhi\Documents\MPLAB\Grade11\Projects\CHRPMini-Hand.X\Hand.c
+"211 C:\Users\Abhi\Documents\MPLAB\Grade11\Projects\CHRPMini-Hand.X\Hand.c
 [v _delay delay `(v  1 e 1 0 ]
 {
-"216
+"213
 [v delay@i i `i  1 a 2 12 ]
-"219
+"216
 } 0
 "8 C:\Program Files (x86)\Microchip\xc8\v1.41\sources\common\awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
@@ -213,16 +200,31 @@
 [v ___awdiv@divisor divisor `i  1 p 2 2 ]
 "42
 } 0
-"109 C:\Users\Abhi\Documents\MPLAB\Grade11\Projects\CHRPMini-Hand.X\Hand.c
+"94 C:\Users\Abhi\Documents\MPLAB\Grade11\Projects\CHRPMini-Hand.X\Hand.c
+[v _convertSensors convertSensors `(v  1 e 1 0 ]
+{
+"100
+} 0
+"108
 [v _checkMode checkMode `(uc  1 e 1 0 ]
 {
-"134
-[v checkMode@i_151 i `uc  1 a 1 6 ]
-"130
-[v checkMode@i_150 i `uc  1 a 1 4 ]
-"119
-[v checkMode@i i `uc  1 a 1 5 ]
-"110
-[v checkMode@cTempMode cTempMode `uc  1 a 1 7 ]
-"151
+"131
+[v checkMode@i_151 i `uc  1 a 1 10 ]
+"118
+[v checkMode@i i `uc  1 a 1 9 ]
+"109
+[v checkMode@cTempMode cTempMode `uc  1 a 1 11 ]
+"148
+} 0
+"43
+[v _setPos setPos `(v  1 e 1 0 ]
+{
+[v setPos@a a `uc  1 a 1 wreg ]
+[v setPos@a a `uc  1 a 1 wreg ]
+[v setPos@b b `uc  1 p 1 0 ]
+[v setPos@c c `uc  1 p 1 1 ]
+[v setPos@d d `uc  1 p 1 2 ]
+[v setPos@e e `uc  1 p 1 3 ]
+[v setPos@a a `uc  1 a 1 4 ]
+"49
 } 0

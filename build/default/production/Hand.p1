@@ -5078,21 +5078,25 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _arcPos `uc ~T0 @X0 -> 5 `i e ]
 [; ;Hand.c: 29: unsigned char arcPos[5];
 "30
-[v _nDelay `i ~T0 @X0 1 e ]
-[; ;Hand.c: 30: int nDelay;
-"31
 [v _cMode `uc ~T0 @X0 1 e ]
 [v _cDelay `uc ~T0 @X0 1 e ]
-[; ;Hand.c: 31: unsigned char cMode, cDelay;
-"33
+[; ;Hand.c: 30: unsigned char cMode, cDelay;
+"31
+[v _cGesture `uc ~T0 @X0 1 e ]
+[; ;Hand.c: 31: unsigned char cGesture;
+"32
 [v _modeSelect `uc ~T0 @X0 1 e ]
 [v _isPressedForMode `uc ~T0 @X0 1 e ]
+[v _isPressedForGesture `uc ~T0 @X0 1 e ]
 [v _buttonWasLetGo `uc ~T0 @X0 1 e ]
-[; ;Hand.c: 33: bool modeSelect, isPressedForMode, buttonWasLetGo;
-"44
+[; ;Hand.c: 32: bool modeSelect, isPressedForMode, isPressedForGesture, buttonWasLetGo;
+"33
+[v _nDelay `i ~T0 @X0 1 e ]
+[; ;Hand.c: 33: int nDelay;
+"43
 [v _setPos `(v ~T0 @X0 1 ef5`uc`uc`uc`uc`uc ]
 {
-[; ;Hand.c: 44: void setPos(unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned char e) {
+[; ;Hand.c: 43: void setPos(unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned char e) {
 [e :U _setPos ]
 [v _a `uc ~T0 @X0 1 r1 ]
 [v _b `uc ~T0 @X0 1 r2 ]
@@ -5100,69 +5104,72 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _d `uc ~T0 @X0 1 r4 ]
 [v _e `uc ~T0 @X0 1 r5 ]
 [f ]
-[; ;Hand.c: 45: arcPos[0] = a;
-"45
+[; ;Hand.c: 44: arcPos[0] = a;
+"44
 [e = *U + &U _arcPos * -> -> -> 0 `i `ui `ux -> -> # *U &U _arcPos `ui `ux _a ]
-[; ;Hand.c: 46: arcPos[1] = b;
-"46
+[; ;Hand.c: 45: arcPos[1] = b;
+"45
 [e = *U + &U _arcPos * -> -> -> 1 `i `ui `ux -> -> # *U &U _arcPos `ui `ux _b ]
-[; ;Hand.c: 47: arcPos[2] = c;
-"47
+[; ;Hand.c: 46: arcPos[2] = c;
+"46
 [e = *U + &U _arcPos * -> -> -> 2 `i `ui `ux -> -> # *U &U _arcPos `ui `ux _c ]
-[; ;Hand.c: 48: arcPos[3] = d;
-"48
+[; ;Hand.c: 47: arcPos[3] = d;
+"47
 [e = *U + &U _arcPos * -> -> -> 3 `i `ui `ux -> -> # *U &U _arcPos `ui `ux _d ]
-[; ;Hand.c: 49: arcPos[4] = e;
-"49
+[; ;Hand.c: 48: arcPos[4] = e;
+"48
 [e = *U + &U _arcPos * -> -> -> 4 `i `ui `ux -> -> # *U &U _arcPos `ui `ux _e ]
-[; ;Hand.c: 50: }
-"50
+[; ;Hand.c: 49: }
+"49
 [e :UE 603 ]
 }
-"58
+"57
 [v _initVariables `(v ~T0 @X0 1 ef ]
 {
-[; ;Hand.c: 58: void initVariables() {
+[; ;Hand.c: 57: void initVariables() {
 [e :U _initVariables ]
 [f ]
-[; ;Hand.c: 59: setPos(0, 0, 0, 0, 0);
-"59
+[; ;Hand.c: 58: setPos(0, 0, 0, 0, 0);
+"58
 [e ( _setPos (4 , , , , -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
-[; ;Hand.c: 60: modeSelect = 0;
-"60
+[; ;Hand.c: 59: modeSelect = 0;
+"59
 [e = _modeSelect -> -> 0 `i `uc ]
-[; ;Hand.c: 61: isPressedForMode = 0;
-"61
+[; ;Hand.c: 60: isPressedForMode = 0;
+"60
 [e = _isPressedForMode -> -> 0 `i `uc ]
-[; ;Hand.c: 62: buttonWasLetGo = 1;
-"62
+[; ;Hand.c: 61: buttonWasLetGo = 1;
+"61
 [e = _buttonWasLetGo -> -> 1 `i `uc ]
-[; ;Hand.c: 63: cMode = 0;
-"63
+[; ;Hand.c: 62: cMode = 0;
+"62
 [e = _cMode -> -> 0 `i `uc ]
-[; ;Hand.c: 64: cDelay = 0;
-"64
+[; ;Hand.c: 63: cDelay = 0;
+"63
 [e = _cDelay -> -> 0 `i `uc ]
-[; ;Hand.c: 65: }
-"65
+[; ;Hand.c: 64: }
+"64
 [e :UE 604 ]
 }
-"72
+"71
 [v _adConvert `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;Hand.c: 72: unsigned char adConvert(unsigned char chan) {
+[; ;Hand.c: 71: unsigned char adConvert(unsigned char chan) {
 [e :U _adConvert ]
 [v _chan `uc ~T0 @X0 1 r1 ]
 [f ]
-[; ;Hand.c: 73: ADON = 1;
-"73
+[; ;Hand.c: 72: ADON = 1;
+"72
 [e = _ADON -> -> 1 `i `b ]
-[; ;Hand.c: 74: ADCON0 = (ADCON0 & 0b11000011);
-"74
+[; ;Hand.c: 73: ADCON0 = (ADCON0 & 0b11000011);
+"73
 [e = _ADCON0 -> & -> _ADCON0 `i -> 195 `i `uc ]
-[; ;Hand.c: 75: ADCON0 = (ADCON0 | chan);
-"75
+[; ;Hand.c: 74: ADCON0 = (ADCON0 | chan);
+"74
 [e = _ADCON0 -> | -> _ADCON0 `i -> _chan `i `uc ]
+[; ;Hand.c: 76: __nop();
+"76
+[e ( ___nop ..  ]
 [; ;Hand.c: 77: __nop();
 "77
 [e ( ___nop ..  ]
@@ -5172,94 +5179,76 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;Hand.c: 79: __nop();
 "79
 [e ( ___nop ..  ]
-[; ;Hand.c: 80: __nop();
-"80
-[e ( ___nop ..  ]
-[; ;Hand.c: 82: GO = 1;
-"82
+[; ;Hand.c: 81: GO = 1;
+"81
 [e = _GO -> -> 1 `i `b ]
-[; ;Hand.c: 84: while (GO);
-"84
+[; ;Hand.c: 83: while (GO);
+"83
 [e $U 606  ]
 [e :U 607 ]
 [e :U 606 ]
 [e $ _GO 607  ]
 [e :U 608 ]
-[; ;Hand.c: 86: ADON = 0;
-"86
+[; ;Hand.c: 85: ADON = 0;
+"85
 [e = _ADON -> -> 0 `i `b ]
-[; ;Hand.c: 87: return (ADRESH);
-"87
+[; ;Hand.c: 86: return (ADRESH);
+"86
 [e ) _ADRESH ]
 [e $UE 605  ]
-[; ;Hand.c: 88: }
-"88
+[; ;Hand.c: 87: }
+"87
 [e :UE 605 ]
 }
-"95
+"94
 [v _convertSensors `(v ~T0 @X0 1 ef ]
 {
-[; ;Hand.c: 95: void convertSensors() {
+[; ;Hand.c: 94: void convertSensors() {
 [e :U _convertSensors ]
 [f ]
-[; ;Hand.c: 96: arcPos[0] = adConvert(0b00000000);
-"96
-[e = *U + &U _arcPos * -> -> -> 0 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ( _adConvert (1 -> -> 0 `i `uc ]
-[; ;Hand.c: 97: arcPos[1] = adConvert(0b00000100);
-"97
-[e = *U + &U _arcPos * -> -> -> 1 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ( _adConvert (1 -> -> 4 `i `uc ]
-[; ;Hand.c: 98: arcPos[2] = adConvert(0b00001000);
-"98
-[e = *U + &U _arcPos * -> -> -> 2 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ( _adConvert (1 -> -> 8 `i `uc ]
-[; ;Hand.c: 99: arcPos[3] = adConvert(0b00001100);
-"99
-[e = *U + &U _arcPos * -> -> -> 3 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ( _adConvert (1 -> -> 12 `i `uc ]
-[; ;Hand.c: 100: arcPos[4] = adConvert(0b00010000);
+[; ;Hand.c: 100: }
 "100
-[e = *U + &U _arcPos * -> -> -> 4 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ( _adConvert (1 -> -> 16 `i `uc ]
-[; ;Hand.c: 101: }
-"101
 [e :UE 609 ]
 }
-"109
+"108
 [v _checkMode `(uc ~T0 @X0 1 ef ]
 {
-[; ;Hand.c: 109: unsigned char checkMode() {
+[; ;Hand.c: 108: unsigned char checkMode() {
 [e :U _checkMode ]
 [f ]
-"110
+"109
 [v _cTempMode `uc ~T0 @X0 1 a ]
-[; ;Hand.c: 110: unsigned char cTempMode = cMode;
+[; ;Hand.c: 109: unsigned char cTempMode = cMode;
 [e = _cTempMode _cMode ]
-[; ;Hand.c: 111: if (PORTEbits.RE3 == 0) {
-"111
+[; ;Hand.c: 110: if (PORTEbits.RE3 == 0) {
+"110
 [e $ ! == -> . . _PORTEbits 0 1 `i -> 0 `i 611  ]
 {
-[; ;Hand.c: 112: isPressedForMode = 1;
-"112
+[; ;Hand.c: 111: isPressedForMode = 1;
+"111
 [e = _isPressedForMode -> -> 1 `i `uc ]
-[; ;Hand.c: 113: if (!modeSelect && buttonWasLetGo) {
-"113
+[; ;Hand.c: 112: if (!modeSelect && buttonWasLetGo) {
+"112
 [e $ ! && ! != -> _modeSelect `i -> -> -> 0 `i `uc `i != -> _buttonWasLetGo `i -> -> -> 0 `i `uc `i 612  ]
 {
-[; ;Hand.c: 114: cDelay++;
-"114
+[; ;Hand.c: 113: cDelay++;
+"113
 [e ++ _cDelay -> -> 1 `i `uc ]
-[; ;Hand.c: 115: if (cDelay == 20) {
-"115
+[; ;Hand.c: 114: if (cDelay == 20) {
+"114
 [e $ ! == -> _cDelay `i -> 20 `i 613  ]
 {
-[; ;Hand.c: 116: cDelay = 0;
-"116
+[; ;Hand.c: 115: cDelay = 0;
+"115
 [e = _cDelay -> -> 0 `i `uc ]
-[; ;Hand.c: 117: modeSelect = 1;
-"117
+[; ;Hand.c: 116: modeSelect = 1;
+"116
 [e = _modeSelect -> -> 1 `i `uc ]
-[; ;Hand.c: 118: buttonWasLetGo = 0;
-"118
+[; ;Hand.c: 117: buttonWasLetGo = 0;
+"117
 [e = _buttonWasLetGo -> -> 0 `i `uc ]
-[; ;Hand.c: 119: for (unsigned char i = 0; i < 5; i++) {
-"119
+[; ;Hand.c: 118: for (unsigned char i = 0; i < 5; i++) {
+"118
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
@@ -5267,561 +5256,540 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 615  ]
 [e :U 614 ]
 {
-[; ;Hand.c: 120: arcPos[i] = (cTempMode == i) ? 255 : 0;
-"120
-[e = *U + &U _arcPos * -> _i `ux -> -> # *U &U _arcPos `ui `ux -> ? == -> _cTempMode `i -> _i `i : -> 255 `i -> 0 `i `uc ]
-"121
-}
+[; ;Hand.c: 119: arcPos[i] = (cTempMode == i) ? 255 : 0;
 "119
+[e = *U + &U _arcPos * -> _i `ux -> -> # *U &U _arcPos `ui `ux -> ? == -> _cTempMode `i -> _i `i : -> 255 `i -> 0 `i `uc ]
+"120
+}
+"118
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 5 `i 614  ]
 [e :U 615 ]
+"120
+}
 "121
 }
+[e :U 613 ]
 "122
 }
-[e :U 613 ]
-"123
-}
+[; ;Hand.c: 120: }
 [; ;Hand.c: 121: }
-[; ;Hand.c: 122: }
-[; ;Hand.c: 123: } else if (buttonWasLetGo) {
+[; ;Hand.c: 122: } else if (buttonWasLetGo) {
 [e $U 617  ]
 [e :U 612 ]
 [e $ ! != -> _buttonWasLetGo `i -> -> -> 0 `i `uc `i 618  ]
 {
-[; ;Hand.c: 124: cDelay++;
-"124
+[; ;Hand.c: 123: cDelay++;
+"123
 [e ++ _cDelay -> -> 1 `i `uc ]
-[; ;Hand.c: 125: if (cDelay == 20) {
-"125
+[; ;Hand.c: 124: if (cDelay == 20) {
+"124
 [e $ ! == -> _cDelay `i -> 20 `i 619  ]
 {
-[; ;Hand.c: 126: cDelay = 0;
-"126
+[; ;Hand.c: 125: cDelay = 0;
+"125
 [e = _cDelay -> -> 0 `i `uc ]
-[; ;Hand.c: 127: modeSelect = 0;
-"127
+[; ;Hand.c: 126: modeSelect = 0;
+"126
 [e = _modeSelect -> -> 0 `i `uc ]
-[; ;Hand.c: 128: buttonWasLetGo = 0;
-"128
+[; ;Hand.c: 127: buttonWasLetGo = 0;
+"127
 [e = _buttonWasLetGo -> -> 0 `i `uc ]
-[; ;Hand.c: 129: cTempMode--;
-"129
+[; ;Hand.c: 128: cTempMode--;
+"128
 [e -- _cTempMode -> -> 1 `i `uc ]
-[; ;Hand.c: 130: for (unsigned char i = 0; i < 5; i++) {
+[; ;Hand.c: 129: setPos(0, 0, 0, 0, 0);
+"129
+[e ( _setPos (4 , , , , -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
 "130
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 5 `i 620  ]
-[e $U 621  ]
-[e :U 620 ]
-{
-[; ;Hand.c: 131: arcPos[i] = 0;
-"131
-[e = *U + &U _arcPos * -> _i `ux -> -> # *U &U _arcPos `ui `ux -> -> 0 `i `uc ]
-"132
 }
-"130
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 5 `i 620  ]
-[e :U 621 ]
-"132
-}
-"133
-}
-[; ;Hand.c: 132: }
-[; ;Hand.c: 133: } else {
-[e $U 623  ]
+[; ;Hand.c: 130: } else {
+[e $U 620  ]
 [e :U 619 ]
 {
-[; ;Hand.c: 134: for (unsigned char i = 0; i < 5; i++) {
-"134
+[; ;Hand.c: 131: for (unsigned char i = 0; i < 5; i++) {
+"131
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 5 `i 624  ]
-[e $U 625  ]
-[e :U 624 ]
+[e $ < -> _i `i -> 5 `i 621  ]
+[e $U 622  ]
+[e :U 621 ]
 {
-[; ;Hand.c: 135: arcPos[i] = (cTempMode == i) ? 255 : 0;
-"135
+[; ;Hand.c: 132: arcPos[i] = (cTempMode == i) ? 255 : 0;
+"132
 [e = *U + &U _arcPos * -> _i `ux -> -> # *U &U _arcPos `ui `ux -> ? == -> _cTempMode `i -> _i `i : -> 255 `i -> 0 `i `uc ]
-"136
+"133
+}
+"131
+[e ++ _i -> -> 1 `i `uc ]
+[e $ < -> _i `i -> 5 `i 621  ]
+[e :U 622 ]
+"133
 }
 "134
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 5 `i 624  ]
-[e :U 625 ]
-"136
 }
-"137
-}
-[e :U 623 ]
-"138
+[e :U 620 ]
+"135
 }
 [e :U 618 ]
-"139
+"136
 [e :U 617 ]
 }
 [e :U 611 ]
+[; ;Hand.c: 133: }
+[; ;Hand.c: 134: }
+[; ;Hand.c: 135: }
 [; ;Hand.c: 136: }
-[; ;Hand.c: 137: }
-[; ;Hand.c: 138: }
-[; ;Hand.c: 139: }
-[; ;Hand.c: 141: if (PORTEbits.RE3 == 1) {
-"141
-[e $ ! == -> . . _PORTEbits 0 1 `i -> 1 `i 627  ]
+[; ;Hand.c: 138: if (PORTEbits.RE3 == 1) {
+"138
+[e $ ! == -> . . _PORTEbits 0 1 `i -> 1 `i 624  ]
 {
-[; ;Hand.c: 142: if (isPressedForMode && modeSelect) {
-"142
-[e $ ! && != -> _isPressedForMode `i -> -> -> 0 `i `uc `i != -> _modeSelect `i -> -> -> 0 `i `uc `i 628  ]
+[; ;Hand.c: 139: if (isPressedForMode && modeSelect) {
+"139
+[e $ ! && != -> _isPressedForMode `i -> -> -> 0 `i `uc `i != -> _modeSelect `i -> -> -> 0 `i `uc `i 625  ]
 {
-[; ;Hand.c: 143: cTempMode++;
-"143
+[; ;Hand.c: 140: cTempMode++;
+"140
 [e ++ _cTempMode -> -> 1 `i `uc ]
-[; ;Hand.c: 144: if (cTempMode == 5)cTempMode = 0;
-"144
-[e $ ! == -> _cTempMode `i -> 5 `i 629  ]
+[; ;Hand.c: 141: if (cTempMode == 5)cTempMode = 0;
+"141
+[e $ ! == -> _cTempMode `i -> 5 `i 626  ]
 [e = _cTempMode -> -> 0 `i `uc ]
-[e :U 629 ]
-"145
+[e :U 626 ]
+"142
 }
-[e :U 628 ]
-[; ;Hand.c: 145: }
-[; ;Hand.c: 146: buttonWasLetGo = 1;
-"146
+[e :U 625 ]
+[; ;Hand.c: 142: }
+[; ;Hand.c: 143: buttonWasLetGo = 1;
+"143
 [e = _buttonWasLetGo -> -> 1 `i `uc ]
-[; ;Hand.c: 147: cDelay = 0;
-"147
+[; ;Hand.c: 144: cDelay = 0;
+"144
 [e = _cDelay -> -> 0 `i `uc ]
-[; ;Hand.c: 148: isPressedForMode = 0;
-"148
+[; ;Hand.c: 145: isPressedForMode = 0;
+"145
 [e = _isPressedForMode -> -> 0 `i `uc ]
-"149
+"146
 }
-[e :U 627 ]
-[; ;Hand.c: 149: }
-[; ;Hand.c: 150: return cTempMode;
-"150
+[e :U 624 ]
+[; ;Hand.c: 146: }
+[; ;Hand.c: 147: return cTempMode;
+"147
 [e ) _cTempMode ]
 [e $UE 610  ]
-[; ;Hand.c: 151: }
-"151
+[; ;Hand.c: 148: }
+"148
 [e :UE 610 ]
 }
-"157
+"154
 [v _pulseServos `(v ~T0 @X0 1 ef ]
 {
-[; ;Hand.c: 157: void pulseServos() {
+[; ;Hand.c: 154: void pulseServos() {
 [e :U _pulseServos ]
 [f ]
-[; ;Hand.c: 165: LATBbits.LATB7 = 1;
-"165
+[; ;Hand.c: 162: LATBbits.LATB7 = 1;
+"162
 [e = . . _LATBbits 0 7 -> -> 1 `i `uc ]
-[; ;Hand.c: 166: _delay((unsigned long)((540)*(48000000/4000000.0)));
-"166
+[; ;Hand.c: 163: _delay((unsigned long)((540)*(48000000/4000000.0)));
+"163
 [e ( __delay (1 -> * -> -> 540 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-[; ;Hand.c: 167: for (unsigned char i = arcPos[0]; i != 0; i--) {
-"167
+[; ;Hand.c: 164: for (unsigned char i = arcPos[0]; i != 0; i--) {
+"164
 {
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i *U + &U _arcPos * -> -> -> 0 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ]
+[e $ != -> _i `i -> 0 `i 628  ]
+[e $U 629  ]
+[e :U 628 ]
+{
+[; ;Hand.c: 165: _delay((unsigned long)((6)*(48000000/4000000.0)));
+"165
+[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
+"167
+}
+"164
+[e -- _i -> -> 1 `i `uc ]
+[e $ != -> _i `i -> 0 `i 628  ]
+[e :U 629 ]
+"167
+}
+[; ;Hand.c: 167: }
+[; ;Hand.c: 168: LATBbits.LATB7 = 0;
+"168
+[e = . . _LATBbits 0 7 -> -> 0 `i `uc ]
+[; ;Hand.c: 171: LATBbits.LATB6 = 1;
+"171
+[e = . . _LATBbits 0 6 -> -> 1 `i `uc ]
+[; ;Hand.c: 172: _delay((unsigned long)((540)*(48000000/4000000.0)));
+"172
+[e ( __delay (1 -> * -> -> 540 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
+[; ;Hand.c: 173: for (unsigned char i = arcPos[1]; i != 0; i--) {
+"173
+{
+[v _i `uc ~T0 @X0 1 a ]
+[e = _i *U + &U _arcPos * -> -> -> 1 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ]
 [e $ != -> _i `i -> 0 `i 631  ]
 [e $U 632  ]
 [e :U 631 ]
 {
-[; ;Hand.c: 168: _delay((unsigned long)((6)*(48000000/4000000.0)));
-"168
+[; ;Hand.c: 174: _delay((unsigned long)((6)*(48000000/4000000.0)));
+"174
 [e ( __delay (1 -> * -> -> 6 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-"170
+"175
 }
-"167
+"173
 [e -- _i -> -> 1 `i `uc ]
 [e $ != -> _i `i -> 0 `i 631  ]
 [e :U 632 ]
-"170
-}
-[; ;Hand.c: 170: }
-[; ;Hand.c: 171: LATBbits.LATB7 = 0;
-"171
-[e = . . _LATBbits 0 7 -> -> 0 `i `uc ]
-[; ;Hand.c: 174: LATBbits.LATB6 = 1;
-"174
-[e = . . _LATBbits 0 6 -> -> 1 `i `uc ]
-[; ;Hand.c: 175: _delay((unsigned long)((540)*(48000000/4000000.0)));
 "175
-[e ( __delay (1 -> * -> -> 540 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-[; ;Hand.c: 176: for (unsigned char i = arcPos[1]; i != 0; i--) {
+}
+[; ;Hand.c: 175: }
+[; ;Hand.c: 176: LATBbits.LATB6 = 0;
 "176
+[e = . . _LATBbits 0 6 -> -> 0 `i `uc ]
+[; ;Hand.c: 179: LATBbits.LATB5 = 1;
+"179
+[e = . . _LATBbits 0 5 -> -> 1 `i `uc ]
+[; ;Hand.c: 180: _delay((unsigned long)((540)*(48000000/4000000.0)));
+"180
+[e ( __delay (1 -> * -> -> 540 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
+[; ;Hand.c: 181: for (unsigned char i = arcPos[2]; i != 0; i--) {
+"181
 {
 [v _i `uc ~T0 @X0 1 a ]
-[e = _i *U + &U _arcPos * -> -> -> 1 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ]
+[e = _i *U + &U _arcPos * -> -> -> 2 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ]
 [e $ != -> _i `i -> 0 `i 634  ]
 [e $U 635  ]
 [e :U 634 ]
 {
-[; ;Hand.c: 177: _delay((unsigned long)((6)*(48000000/4000000.0)));
-"177
+[; ;Hand.c: 182: _delay((unsigned long)((6)*(48000000/4000000.0)));
+"182
 [e ( __delay (1 -> * -> -> 6 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-"178
+"183
 }
-"176
+"181
 [e -- _i -> -> 1 `i `uc ]
 [e $ != -> _i `i -> 0 `i 634  ]
 [e :U 635 ]
-"178
-}
-[; ;Hand.c: 178: }
-[; ;Hand.c: 179: LATBbits.LATB6 = 0;
-"179
-[e = . . _LATBbits 0 6 -> -> 0 `i `uc ]
-[; ;Hand.c: 182: LATBbits.LATB5 = 1;
-"182
-[e = . . _LATBbits 0 5 -> -> 1 `i `uc ]
-[; ;Hand.c: 183: _delay((unsigned long)((540)*(48000000/4000000.0)));
 "183
-[e ( __delay (1 -> * -> -> 540 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-[; ;Hand.c: 184: for (unsigned char i = arcPos[2]; i != 0; i--) {
+}
+[; ;Hand.c: 183: }
+[; ;Hand.c: 184: LATBbits.LATB5 = 0;
 "184
+[e = . . _LATBbits 0 5 -> -> 0 `i `uc ]
+[; ;Hand.c: 187: LATBbits.LATB4 = 1;
+"187
+[e = . . _LATBbits 0 4 -> -> 1 `i `uc ]
+[; ;Hand.c: 188: _delay((unsigned long)((540)*(48000000/4000000.0)));
+"188
+[e ( __delay (1 -> * -> -> 540 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
+[; ;Hand.c: 189: for (unsigned char i = arcPos[3]; i != 0; i--) {
+"189
 {
 [v _i `uc ~T0 @X0 1 a ]
-[e = _i *U + &U _arcPos * -> -> -> 2 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ]
+[e = _i *U + &U _arcPos * -> -> -> 3 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ]
 [e $ != -> _i `i -> 0 `i 637  ]
 [e $U 638  ]
 [e :U 637 ]
 {
-[; ;Hand.c: 185: _delay((unsigned long)((6)*(48000000/4000000.0)));
-"185
+[; ;Hand.c: 190: _delay((unsigned long)((6)*(48000000/4000000.0)));
+"190
 [e ( __delay (1 -> * -> -> 6 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-"186
+"191
 }
-"184
+"189
 [e -- _i -> -> 1 `i `uc ]
 [e $ != -> _i `i -> 0 `i 637  ]
 [e :U 638 ]
-"186
-}
-[; ;Hand.c: 186: }
-[; ;Hand.c: 187: LATBbits.LATB5 = 0;
-"187
-[e = . . _LATBbits 0 5 -> -> 0 `i `uc ]
-[; ;Hand.c: 190: LATBbits.LATB4 = 1;
-"190
-[e = . . _LATBbits 0 4 -> -> 1 `i `uc ]
-[; ;Hand.c: 191: _delay((unsigned long)((540)*(48000000/4000000.0)));
 "191
-[e ( __delay (1 -> * -> -> 540 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-[; ;Hand.c: 192: for (unsigned char i = arcPos[3]; i != 0; i--) {
+}
+[; ;Hand.c: 191: }
+[; ;Hand.c: 192: LATBbits.LATB4 = 0;
 "192
+[e = . . _LATBbits 0 4 -> -> 0 `i `uc ]
+[; ;Hand.c: 195: LATBbits.LATB2 = 1;
+"195
+[e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
+[; ;Hand.c: 196: _delay((unsigned long)((540)*(48000000/4000000.0)));
+"196
+[e ( __delay (1 -> * -> -> 540 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
+[; ;Hand.c: 197: for (unsigned char i = arcPos[4]; i != 0; i--) {
+"197
 {
 [v _i `uc ~T0 @X0 1 a ]
-[e = _i *U + &U _arcPos * -> -> -> 3 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ]
+[e = _i *U + &U _arcPos * -> -> -> 4 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ]
 [e $ != -> _i `i -> 0 `i 640  ]
 [e $U 641  ]
 [e :U 640 ]
 {
-[; ;Hand.c: 193: _delay((unsigned long)((6)*(48000000/4000000.0)));
-"193
+[; ;Hand.c: 198: _delay((unsigned long)((6)*(48000000/4000000.0)));
+"198
 [e ( __delay (1 -> * -> -> 6 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-"194
+"199
 }
-"192
+"197
 [e -- _i -> -> 1 `i `uc ]
 [e $ != -> _i `i -> 0 `i 640  ]
 [e :U 641 ]
-"194
-}
-[; ;Hand.c: 194: }
-[; ;Hand.c: 195: LATBbits.LATB4 = 0;
-"195
-[e = . . _LATBbits 0 4 -> -> 0 `i `uc ]
-[; ;Hand.c: 198: LATBbits.LATB2 = 1;
-"198
-[e = . . _LATBbits 0 2 -> -> 1 `i `uc ]
-[; ;Hand.c: 199: _delay((unsigned long)((540)*(48000000/4000000.0)));
 "199
-[e ( __delay (1 -> * -> -> 540 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-[; ;Hand.c: 200: for (unsigned char i = arcPos[4]; i != 0; i--) {
-"200
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i *U + &U _arcPos * -> -> -> 4 `i `ui `ux -> -> # *U &U _arcPos `ui `ux ]
-[e $ != -> _i `i -> 0 `i 643  ]
-[e $U 644  ]
-[e :U 643 ]
-{
-[; ;Hand.c: 201: _delay((unsigned long)((6)*(48000000/4000000.0)));
-"201
-[e ( __delay (1 -> * -> -> 6 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-"202
 }
+[; ;Hand.c: 199: }
+[; ;Hand.c: 200: LATBbits.LATB2 = 0;
 "200
-[e -- _i -> -> 1 `i `uc ]
-[e $ != -> _i `i -> 0 `i 643  ]
-[e :U 644 ]
-"202
-}
-[; ;Hand.c: 202: }
-[; ;Hand.c: 203: LATBbits.LATB2 = 0;
-"203
 [e = . . _LATBbits 0 2 -> -> 0 `i `uc ]
-[; ;Hand.c: 204: }
-"204
-[e :UE 630 ]
+[; ;Hand.c: 201: }
+"201
+[e :UE 627 ]
 }
-"214
+"211
 [v _delay `(v ~T0 @X0 1 ef ]
 {
-[; ;Hand.c: 214: void delay() {
+[; ;Hand.c: 211: void delay() {
 [e :U _delay ]
 [f ]
-[; ;Hand.c: 215: nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[0] - arcPos[1] - arcPos[2] - arcPos[3] - arcPos[4]) / 6);
-"215
+[; ;Hand.c: 212: nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[0] - arcPos[1] - arcPos[2] - arcPos[3] - arcPos[4]) / 6);
+"212
 [e = _nDelay / - - - - - - - -> 20000 `i -> 2500 `i * -> 540 `i -> 5 `i -> *U + &U _arcPos * -> -> -> 0 `i `ui `ux -> -> # *U &U _arcPos `ui `ux `i -> *U + &U _arcPos * -> -> -> 1 `i `ui `ux -> -> # *U &U _arcPos `ui `ux `i -> *U + &U _arcPos * -> -> -> 2 `i `ui `ux -> -> # *U &U _arcPos `ui `ux `i -> *U + &U _arcPos * -> -> -> 3 `i `ui `ux -> -> # *U &U _arcPos `ui `ux `i -> *U + &U _arcPos * -> -> -> 4 `i `ui `ux -> -> # *U &U _arcPos `ui `ux `i -> 6 `i ]
-[; ;Hand.c: 216: for (int i = nDelay; i != 0; i--) {
-"216
+[; ;Hand.c: 213: for (int i = nDelay; i != 0; i--) {
+"213
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i _nDelay ]
-[e $ != _i -> 0 `i 647  ]
-[e $U 648  ]
-[e :U 647 ]
+[e $ != _i -> 0 `i 644  ]
+[e $U 645  ]
+[e :U 644 ]
 {
-[; ;Hand.c: 217: _delay((unsigned long)((6)*(48000000/4000000.0)));
-"217
+[; ;Hand.c: 214: _delay((unsigned long)((6)*(48000000/4000000.0)));
+"214
 [e ( __delay (1 -> * -> -> 6 `i `d / -> -> 48000000 `l `d .4000000.0 `ul ]
-"218
+"215
 }
-"216
+"213
 [e -- _i -> 1 `i ]
-[e $ != _i -> 0 `i 647  ]
-[e :U 648 ]
-"218
+[e $ != _i -> 0 `i 644  ]
+[e :U 645 ]
+"215
 }
-[; ;Hand.c: 218: }
-[; ;Hand.c: 219: }
-"219
-[e :UE 646 ]
+[; ;Hand.c: 215: }
+[; ;Hand.c: 216: }
+"216
+[e :UE 643 ]
 }
-"224
-[v _cGesture `uc ~T0 @X0 1 e ]
-[; ;Hand.c: 224: unsigned char cGesture;
-"225
-[v _isPressedForGesture `uc ~T0 @X0 1 e ]
-[; ;Hand.c: 225: unsigned char isPressedForGesture;
-"227
+"221
 [v _main `(i ~T0 @X0 1 ef ]
 {
-[; ;Hand.c: 227: int main(void) {
+[; ;Hand.c: 221: int main(void) {
 [e :U _main ]
 [f ]
-[; ;Hand.c: 228: initOsc();
-"228
+[; ;Hand.c: 222: initOsc();
+"222
 [e ( _initOsc ..  ]
-[; ;Hand.c: 229: initPorts();
-"229
+[; ;Hand.c: 223: initPorts();
+"223
 [e ( _initPorts ..  ]
-[; ;Hand.c: 230: initANA();
-"230
+[; ;Hand.c: 224: initANA();
+"224
 [e ( _initANA ..  ]
-[; ;Hand.c: 231: initVariables();
-"231
+[; ;Hand.c: 225: initVariables();
+"225
 [e ( _initVariables ..  ]
-[; ;Hand.c: 232: while (1) {
-"232
-[e :U 652 ]
+[; ;Hand.c: 226: while (1) {
+"226
+[e :U 649 ]
 {
-[; ;Hand.c: 233: switch (cMode) {
-"233
-[e $U 655  ]
+[; ;Hand.c: 227: switch (cMode) {
+"227
+[e $U 652  ]
 {
-[; ;Hand.c: 234: case 0:
-"234
-[e :U 656 ]
-[; ;Hand.c: 236: break;
-"236
-[e $U 654  ]
-[; ;Hand.c: 237: case 1:
+[; ;Hand.c: 228: case 0:
+"228
+[e :U 653 ]
+[; ;Hand.c: 229: convertSensors();
+"229
+[e ( _convertSensors ..  ]
+[; ;Hand.c: 230: break;
+"230
+[e $U 651  ]
+[; ;Hand.c: 231: case 1:
+"231
+[e :U 654 ]
+[; ;Hand.c: 237: if (PORTEbits.RE3 == 0 && !modeSelect) {
 "237
-[e :U 657 ]
-[; ;Hand.c: 243: if (PORTEbits.RE3 == 0 && !modeSelect) {
-"243
-[e $ ! && == -> . . _PORTEbits 0 1 `i -> 0 `i ! != -> _modeSelect `i -> -> -> 0 `i `uc `i 658  ]
+[e $ ! && == -> . . _PORTEbits 0 1 `i -> 0 `i ! != -> _modeSelect `i -> -> -> 0 `i `uc `i 655  ]
 {
-[; ;Hand.c: 244: isPressedForGesture = 1;
-"244
+[; ;Hand.c: 238: isPressedForGesture = 1;
+"238
 [e = _isPressedForGesture -> -> 1 `i `uc ]
-"245
+"239
 }
-[e :U 658 ]
-[; ;Hand.c: 245: }
-[; ;Hand.c: 246: if (PORTEbits.RE3 == 1 && isPressedForGesture&&!modeSelect) {
-"246
-[e $ ! && && == -> . . _PORTEbits 0 1 `i -> 1 `i != -> _isPressedForGesture `i -> -> -> 0 `i `uc `i ! != -> _modeSelect `i -> -> -> 0 `i `uc `i 659  ]
+[e :U 655 ]
+[; ;Hand.c: 239: }
+[; ;Hand.c: 240: if (PORTEbits.RE3 == 1 && isPressedForGesture && !modeSelect) {
+"240
+[e $ ! && && == -> . . _PORTEbits 0 1 `i -> 1 `i != -> _isPressedForGesture `i -> -> -> 0 `i `uc `i ! != -> _modeSelect `i -> -> -> 0 `i `uc `i 656  ]
 {
-[; ;Hand.c: 247: isPressedForGesture = 0;
-"247
+[; ;Hand.c: 241: isPressedForGesture = 0;
+"241
 [e = _isPressedForGesture -> -> 0 `i `uc ]
-[; ;Hand.c: 248: cGesture++;
-"248
+[; ;Hand.c: 242: cGesture++;
+"242
 [e ++ _cGesture -> -> 1 `i `uc ]
-[; ;Hand.c: 249: if (cGesture == 9)cGesture = 0;
-"249
-[e $ ! == -> _cGesture `i -> 9 `i 660  ]
+[; ;Hand.c: 243: if (cGesture == 9)cGesture = 0;
+"243
+[e $ ! == -> _cGesture `i -> 9 `i 657  ]
 [e = _cGesture -> -> 0 `i `uc ]
-[e :U 660 ]
-[; ;Hand.c: 250: switch (cGesture) {
-"250
-[e $U 662  ]
+[e :U 657 ]
+[; ;Hand.c: 244: switch (cGesture) {
+"244
+[e $U 659  ]
 {
-[; ;Hand.c: 251: case 0:
-"251
-[e :U 663 ]
-[; ;Hand.c: 252: setPos(0, 0, 0, 0, 0);
-"252
+[; ;Hand.c: 245: case 0:
+"245
+[e :U 660 ]
+[; ;Hand.c: 246: setPos(0, 0, 0, 0, 0);
+"246
 [e ( _setPos (4 , , , , -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
+[; ;Hand.c: 247: break;
+"247
+[e $U 658  ]
+[; ;Hand.c: 248: case 1:
+"248
+[e :U 661 ]
+[; ;Hand.c: 249: setPos(255, 255, 255, 255, 255);
+"249
+[e ( _setPos (4 , , , , -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc ]
+[; ;Hand.c: 250: break;
+"250
+[e $U 658  ]
+[; ;Hand.c: 251: case 2:
+"251
+[e :U 662 ]
+[; ;Hand.c: 252: setPos(0, 0, 255, 255, 0);
+"252
+[e ( _setPos (4 , , , , -> -> 0 `i `uc -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 0 `i `uc ]
 [; ;Hand.c: 253: break;
 "253
-[e $U 661  ]
-[; ;Hand.c: 254: case 1:
+[e $U 658  ]
+[; ;Hand.c: 254: case 3:
 "254
-[e :U 664 ]
-[; ;Hand.c: 255: setPos(255, 255, 255, 255, 255);
+[e :U 663 ]
+[; ;Hand.c: 255: setPos(0, 255, 255, 255, 0);
 "255
-[e ( _setPos (4 , , , , -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc ]
+[e ( _setPos (4 , , , , -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 0 `i `uc ]
 [; ;Hand.c: 256: break;
 "256
-[e $U 661  ]
-[; ;Hand.c: 257: case 2:
+[e $U 658  ]
+[; ;Hand.c: 257: case 4:
 "257
-[e :U 665 ]
-[; ;Hand.c: 258: setPos(0, 0, 255, 255, 0);
+[e :U 664 ]
+[; ;Hand.c: 258: setPos(200, 0, 0, 255, 255);
 "258
-[e ( _setPos (4 , , , , -> -> 0 `i `uc -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 0 `i `uc ]
+[e ( _setPos (4 , , , , -> -> 200 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc ]
 [; ;Hand.c: 259: break;
 "259
-[e $U 661  ]
-[; ;Hand.c: 260: case 3:
+[e $U 658  ]
+[; ;Hand.c: 260: case 5:
 "260
-[e :U 666 ]
-[; ;Hand.c: 261: setPos(0, 255, 255, 255, 0);
+[e :U 665 ]
+[; ;Hand.c: 261: setPos(200, 200, 0, 0, 0);
 "261
-[e ( _setPos (4 , , , , -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 0 `i `uc ]
+[e ( _setPos (4 , , , , -> -> 200 `i `uc -> -> 200 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
 [; ;Hand.c: 262: break;
 "262
-[e $U 661  ]
-[; ;Hand.c: 263: case 4:
+[e $U 658  ]
+[; ;Hand.c: 263: case 6:
 "263
-[e :U 667 ]
-[; ;Hand.c: 264: setPos(200, 0, 0, 255, 255);
+[e :U 666 ]
+[; ;Hand.c: 264: setPos(0, 255, 255, 255, 255);
 "264
-[e ( _setPos (4 , , , , -> -> 200 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc ]
+[e ( _setPos (4 , , , , -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc ]
 [; ;Hand.c: 265: break;
 "265
-[e $U 661  ]
-[; ;Hand.c: 266: case 5:
+[e $U 658  ]
+[; ;Hand.c: 266: case 7:
 "266
-[e :U 668 ]
-[; ;Hand.c: 267: setPos(200, 200, 0, 0, 0);
+[e :U 667 ]
+[; ;Hand.c: 267: setPos(255, 0, 255, 255, 255);
 "267
-[e ( _setPos (4 , , , , -> -> 200 `i `uc -> -> 200 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc -> -> 0 `i `uc ]
+[e ( _setPos (4 , , , , -> -> 255 `i `uc -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc ]
 [; ;Hand.c: 268: break;
 "268
-[e $U 661  ]
-[; ;Hand.c: 269: case 6:
+[e $U 658  ]
+[; ;Hand.c: 269: case 8:
 "269
-[e :U 669 ]
-[; ;Hand.c: 270: setPos(0, 255, 255, 255, 255);
+[e :U 668 ]
+[; ;Hand.c: 270: setPos(255, 0, 255, 255, 0);
 "270
-[e ( _setPos (4 , , , , -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc ]
+[e ( _setPos (4 , , , , -> -> 255 `i `uc -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 0 `i `uc ]
 [; ;Hand.c: 271: break;
 "271
-[e $U 661  ]
-[; ;Hand.c: 272: case 7:
+[e $U 658  ]
+[; ;Hand.c: 272: default:
 "272
-[e :U 670 ]
-[; ;Hand.c: 273: setPos(255, 0, 255, 255, 255);
+[e :U 669 ]
+[; ;Hand.c: 273: break;
 "273
-[e ( _setPos (4 , , , , -> -> 255 `i `uc -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc ]
-[; ;Hand.c: 274: break;
+[e $U 658  ]
 "274
-[e $U 661  ]
-[; ;Hand.c: 275: case 8:
-"275
-[e :U 671 ]
-[; ;Hand.c: 276: setPos(255, 0, 255, 255, 0);
-"276
-[e ( _setPos (4 , , , , -> -> 255 `i `uc -> -> 0 `i `uc -> -> 255 `i `uc -> -> 255 `i `uc -> -> 0 `i `uc ]
-[; ;Hand.c: 277: break;
-"277
-[e $U 661  ]
-[; ;Hand.c: 278: default:
-"278
-[e :U 672 ]
-[; ;Hand.c: 279: break;
-"279
-[e $U 661  ]
-"280
 }
-[; ;Hand.c: 280: }
-[e $U 661  ]
-"250
-[e :U 662 ]
-[e [\ _cGesture , $ -> -> 0 `i `uc 663
- , $ -> -> 1 `i `uc 664
- , $ -> -> 2 `i `uc 665
- , $ -> -> 3 `i `uc 666
- , $ -> -> 4 `i `uc 667
- , $ -> -> 5 `i `uc 668
- , $ -> -> 6 `i `uc 669
- , $ -> -> 7 `i `uc 670
- , $ -> -> 8 `i `uc 671
- 672 ]
-"280
-[e :U 661 ]
-"281
-}
+[; ;Hand.c: 274: }
+[e $U 658  ]
+"244
 [e :U 659 ]
-[; ;Hand.c: 281: }
-[; ;Hand.c: 282: break;
-"282
-[e $U 654  ]
-[; ;Hand.c: 283: default:
-"283
-[e :U 673 ]
-[; ;Hand.c: 284: break;
-"284
-[e $U 654  ]
-"285
+[e [\ _cGesture , $ -> -> 0 `i `uc 660
+ , $ -> -> 1 `i `uc 661
+ , $ -> -> 2 `i `uc 662
+ , $ -> -> 3 `i `uc 663
+ , $ -> -> 4 `i `uc 664
+ , $ -> -> 5 `i `uc 665
+ , $ -> -> 6 `i `uc 666
+ , $ -> -> 7 `i `uc 667
+ , $ -> -> 8 `i `uc 668
+ 669 ]
+"274
+[e :U 658 ]
+"275
 }
-[; ;Hand.c: 285: }
-[e $U 654  ]
-"233
-[e :U 655 ]
-[e [\ _cMode , $ -> -> 0 `i `uc 656
- , $ -> -> 1 `i `uc 657
- 673 ]
-"285
-[e :U 654 ]
-[; ;Hand.c: 286: pulseServos();
-"286
-[e ( _pulseServos ..  ]
-[; ;Hand.c: 287: delay();
-"287
-[e ( _delay ..  ]
-[; ;Hand.c: 288: cMode = checkMode();
-"288
-[e = _cMode ( _checkMode ..  ]
-"289
+[e :U 656 ]
+[; ;Hand.c: 275: }
+[; ;Hand.c: 276: break;
+"276
+[e $U 651  ]
+[; ;Hand.c: 277: default:
+"277
+[e :U 670 ]
+[; ;Hand.c: 278: break;
+"278
+[e $U 651  ]
+"279
 }
+[; ;Hand.c: 279: }
+[e $U 651  ]
+"227
+[e :U 652 ]
+[e [\ _cMode , $ -> -> 0 `i `uc 653
+ , $ -> -> 1 `i `uc 654
+ 670 ]
+"279
 [e :U 651 ]
-"232
-[e $U 652  ]
-[e :U 653 ]
-[; ;Hand.c: 289: }
-[; ;Hand.c: 290: }
-"290
-[e :UE 650 ]
+[; ;Hand.c: 280: pulseServos();
+"280
+[e ( _pulseServos ..  ]
+[; ;Hand.c: 281: delay();
+"281
+[e ( _delay ..  ]
+[; ;Hand.c: 282: cMode = checkMode();
+"282
+[e = _cMode ( _checkMode ..  ]
+"283
+}
+[e :U 648 ]
+"226
+[e $U 649  ]
+[e :U 650 ]
+[; ;Hand.c: 283: }
+[; ;Hand.c: 284: }
+"284
+[e :UE 647 ]
 }

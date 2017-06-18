@@ -6679,12 +6679,12 @@ void initANA(void);
 
 # 29 "Hand.c"
 unsigned char arcPos[5];
-int nDelay;
 unsigned char cMode, cDelay;
+unsigned char cGesture;
+bool modeSelect, isPressedForMode, isPressedForGesture, buttonWasLetGo;
+int nDelay;
 
-bool modeSelect, isPressedForMode, buttonWasLetGo;
-
-# 44
+# 43
 void setPos(unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned char e) {
 arcPos[0] = a;
 arcPos[1] = b;
@@ -6693,7 +6693,7 @@ arcPos[3] = d;
 arcPos[4] = e;
 }
 
-# 58
+# 57
 void initVariables() {
 setPos(0, 0, 0, 0, 0);
 modeSelect = 0;
@@ -6703,7 +6703,7 @@ cMode = 0;
 cDelay = 0;
 }
 
-# 72
+# 71
 unsigned char adConvert(unsigned char chan) {
 ADON = 1;
 ADCON0 = (ADCON0 & 0b11000011);
@@ -6722,16 +6722,13 @@ ADON = 0;
 return (ADRESH);
 }
 
-# 95
+# 94
 void convertSensors() {
-arcPos[0] = adConvert(0b00000000);
-arcPos[1] = adConvert(0b00000100);
-arcPos[2] = adConvert(0b00001000);
-arcPos[3] = adConvert(0b00001100);
-arcPos[4] = adConvert(0b00010000);
+
+# 100
 }
 
-# 109
+# 108
 unsigned char checkMode() {
 unsigned char cTempMode = cMode;
 if (PORTEbits.RE3 == 0) {
@@ -6753,9 +6750,7 @@ cDelay = 0;
 modeSelect = 0;
 buttonWasLetGo = 0;
 cTempMode--;
-for (unsigned char i = 0; i < 5; i++) {
-arcPos[i] = 0;
-}
+setPos(0, 0, 0, 0, 0);
 } else {
 for (unsigned char i = 0; i < 5; i++) {
 arcPos[i] = (cTempMode == i) ? 255 : 0;
@@ -6776,10 +6771,10 @@ isPressedForMode = 0;
 return cTempMode;
 }
 
-# 157
+# 154
 void pulseServos() {
 
-# 165
+# 162
 LATBbits.LATB7 = 1;
 _delay((unsigned long)((540)*(48000000/4000000.0)));
 for (unsigned char i = arcPos[0]; i != 0; i--) {
@@ -6821,7 +6816,7 @@ _delay((unsigned long)((6)*(48000000/4000000.0)));
 LATBbits.LATB2 = 0;
 }
 
-# 214
+# 211
 void delay() {
 nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[0] - arcPos[1] - arcPos[2] - arcPos[3] - arcPos[4]) / 6);
 for (int i = nDelay; i != 0; i--) {
@@ -6829,10 +6824,7 @@ _delay((unsigned long)((6)*(48000000/4000000.0)));
 }
 }
 
-# 224
-unsigned char cGesture;
-unsigned char isPressedForGesture;
-
+# 221
 int main(void) {
 initOsc();
 initPorts();
@@ -6841,15 +6833,15 @@ initVariables();
 while (1) {
 switch (cMode) {
 case 0:
-
+convertSensors();
 break;
 case 1:
 
-# 243
+# 237
 if (PORTEbits.RE3 == 0 && !modeSelect) {
 isPressedForGesture = 1;
 }
-if (PORTEbits.RE3 == 1 && isPressedForGesture&&!modeSelect) {
+if (PORTEbits.RE3 == 1 && isPressedForGesture && !modeSelect) {
 isPressedForGesture = 0;
 cGesture++;
 if (cGesture == 9)cGesture = 0;

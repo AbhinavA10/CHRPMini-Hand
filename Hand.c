@@ -27,19 +27,18 @@
     VARIABLES
 ==============================================================================*/
 unsigned char arcPos[5]; //Position for each finger. 0 represents open. 255 means fully closed.
-int nDelay; //  for keeping track of the proper delay to pulse servos every 20ms
 unsigned char cMode, cDelay; //cDelay is for counting duration when mode select button is held 
-//MODES: 0 is matching glove movements, 1 is commands,
-bool modeSelect, isPressedForMode, buttonWasLetGo; // variables needed to properly navigate mode selection
+unsigned char cGesture; // variable for command number
+bool modeSelect, isPressedForMode, isPressedForGesture, buttonWasLetGo; // variables needed to properly navigate mode selection
+int nDelay; //  for keeping track of the proper delay to pulse servos every 20ms
 
 /*==============================================================================
     SET POS
         Function to individually set position of each servo to the passed value.
         We are not able to set an entire array to different values, once it is initialized.
-        So to avoid recreating the array, this function was made to change the position
-        to hard-coded values.
+        So to avoid recreating the array, or importing <algorithm> this function
+        was made to change the position to hard-coded values.
         This will allow us to have certain gestures on command.
-        Alt. Method: https://stackoverflow.com/questions/5732798/c-array-assignment-of-multiple-values
 ==============================================================================*/
 void setPos(unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned char e) {
     arcPos[0] = a;
@@ -93,11 +92,11 @@ unsigned char adConvert(unsigned char chan) {
         calling the A/D conversion function.
 ==============================================================================*/
 void convertSensors() {
-    arcPos[0] = adConvert(SENSORTHUMB);
-    arcPos[1] = adConvert(SENSORINDEX);
-    arcPos[2] = adConvert(SENSORMIDDLE);
-    arcPos[3] = adConvert(SENSORRING);
-    arcPos[4] = adConvert(SENSORPINKIE);
+    //arcPos[0] = adConvert(SENSORTHUMB);
+    //arcPos[1] = adConvert(SENSORINDEX);
+    // arcPos[2] = adConvert(SENSORMIDDLE);
+    //arcPos[3] = adConvert(SENSORRING);
+    //arcPos[4] = adConvert(SENSORPINKIE);
 }
 
 /*==============================================================================
@@ -219,9 +218,6 @@ void delay() {
 /*==============================================================================
  MAIN PROGRAM CODE.
 ==============================================================================*/
-unsigned char cGesture;
-unsigned char isPressedForGesture;
-
 int main(void) {
     initOsc(); // Initialize oscillator and wait for it to stabilize
     initPorts(); // Initialize CHRP3 I/O and peripherals
@@ -230,13 +226,13 @@ int main(void) {
     while (1) {
         switch (cMode) {
             case 0: // matching glove movements
-                //convertSensors();
+                convertSensors();
                 break;
             case 1: // commands
                 /*
                  * We are able to still change the gesture using the same button
                  * because entering mode select requires the user to hold the button 
-                 * for approximately 4 seconds.
+                 * for approximately 3 seconds.
                  */
                 if (S1 == 0 && !modeSelect) {
                     isPressedForGesture = true;
@@ -262,7 +258,7 @@ int main(void) {
                             setPos(200, 0, 0, 255, 255); // Peace sign
                             break;
                         case 5:
-                            setPos(200, 200, 0, 0, 0); // Poifect
+                            setPos(200, 200, 0, 0, 0); // A-OK
                             break;
                         case 6:
                             setPos(0, 255, 255, 255, 255); // Thumbs Up

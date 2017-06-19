@@ -27,7 +27,7 @@
     VARIABLES
 ==============================================================================*/
 unsigned char arcPos[5]; //Position for each finger. 0 represents open. 255 means fully closed.
-unsigned char cMode, cDelay; //cDelay is for counting duration when mode select button is held 
+unsigned char cMode, cDelay, cCountFingerCycle, cCycleIncrement; //cDelay is for counting duration when mode select button is held 
 unsigned char cGesture; // variable for command number
 bool modeSelect, isPressedForMode, isPressedForGesture, buttonWasLetGo; // variables needed to properly navigate mode selection
 int nDelay; //  for keeping track of the proper delay to pulse servos every 20ms
@@ -58,9 +58,12 @@ void initVariables() {
     setPos(0, 0, 0, 0, 0); // starting position of servos is an open hand.
     modeSelect = false;
     isPressedForMode = false;
+    isPressedForGesture = false;
     buttonWasLetGo = true;
     cMode = 0;
     cDelay = 0;
+    cCountFingerCycle = 5;
+    cCycleIncrement = 5;
 }
 
 /*==============================================================================
@@ -94,9 +97,83 @@ unsigned char adConvert(unsigned char chan) {
 void convertSensors() {
     //arcPos[0] = adConvert(SENSORTHUMB);
     //arcPos[1] = adConvert(SENSORINDEX);
-    // arcPos[2] = adConvert(SENSORMIDDLE);
+    //arcPos[2] = adConvert(SENSORMIDDLE);
     //arcPos[3] = adConvert(SENSORRING);
     //arcPos[4] = adConvert(SENSORPINKIE);
+    unsigned char cMax = 0;
+    if (arcPos[2] > (arcPos[0] && arcPos[1] && arcPos[3] && arcPos[4])) {
+        for (unsigned char i = 0; i < 5/*too lazy to look up array size*/; i++) {
+            if (arcPos[i] > cMax && i != 2) {
+                arcPos[i] = cMax;
+            }
+        }
+        arcPos[2] = cMax;
+    }
+}
+
+/*==============================================================================
+    COMMANDS
+        Function to switch between preprogrammed finger positions
+        using the button.
+==============================================================================*/
+void commands() {
+    /*
+     * We are able to still change the gesture using the same button
+     * because entering mode select requires the user to hold the button 
+     * for approximately 3 seconds.
+     */
+    if (S1 == 0 && !modeSelect) {
+        isPressedForGesture = true;
+    }
+    if (S1 == 1 && isPressedForGesture && !modeSelect) { // gesture changes when button is let go
+        isPressedForGesture = false;
+        cGesture++;
+        if (cGesture == 9)cGesture = 0;
+        switch (cGesture) {
+            case 0:
+                setPos(0, 0, 0, 0, 0); // Open hand
+                break;
+            case 1:
+                setPos(255, 255, 255, 255, 255); // Fist
+                break;
+            case 2:
+                setPos(0, 0, 255, 255, 0); // Spider-man
+                break;
+            case 3:
+                setPos(0, 255, 255, 255, 0); // Hang Loose
+                break;
+            case 4:
+                setPos(200, 0, 0, 255, 255); // Peace sign ?
+                break;
+            case 5:
+                setPos(200, 200, 0, 0, 0); // A-OK
+                break;
+            case 6:
+                setPos(0, 255, 255, 255, 255); // Thumbs Up
+                break;
+            case 7:
+                setPos(255, 0, 255, 255, 255); // Index pointing
+                break;
+            case 8:
+                setPos(255, 0, 255, 255, 0); // Rock On
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+/*==============================================================================
+    HEY KID, WANT SOME CANDY?
+        Function to lure small children towards the van.
+        (SPOILER: Kid doesn't actually get candy. We can't afford that)
+==============================================================================*/
+void heyKidWantSomeCandy() {
+    setPos(255, cCountFingerCycle, 255, 255, 255);
+    cCountFingerCycle += cCycleIncrement;
+    if (cCountFingerCycle == 255 || cCountFingerCycle == 0) {
+        cCycleIncrement *= -1;
+    }
 }
 
 /*==============================================================================
@@ -224,58 +301,20 @@ int main(void) {
     initANA(); // Initialize Port A analogue inputs
     initVariables(); // Initialize all variables 
     while (1) {
-        switch (cMode) {
-            case 0: // matching glove movements
-                convertSensors();
-                break;
-            case 1: // commands
-                /*
-                 * We are able to still change the gesture using the same button
-                 * because entering mode select requires the user to hold the button 
-                 * for approximately 3 seconds.
-                 */
-                if (S1 == 0 && !modeSelect) {
-                    isPressedForGesture = true;
-                }
-                if (S1 == 1 && isPressedForGesture && !modeSelect) { // gesture changes when button is let go
-                    isPressedForGesture = false;
-                    cGesture++;
-                    if (cGesture == 9)cGesture = 0;
-                    switch (cGesture) {
-                        case 0:
-                            setPos(0, 0, 0, 0, 0); // Open hand
-                            break;
-                        case 1:
-                            setPos(255, 255, 255, 255, 255); // Fist
-                            break;
-                        case 2:
-                            setPos(0, 0, 255, 255, 0); // Spider-man
-                            break;
-                        case 3:
-                            setPos(0, 255, 255, 255, 0); // Hang Loose
-                            break;
-                        case 4:
-                            setPos(200, 0, 0, 255, 255); // Peace sign
-                            break;
-                        case 5:
-                            setPos(200, 200, 0, 0, 0); // A-OK
-                            break;
-                        case 6:
-                            setPos(0, 255, 255, 255, 255); // Thumbs Up
-                            break;
-                        case 7:
-                            setPos(255, 0, 255, 255, 255); // Index pointing
-                            break;
-                        case 8:
-                            setPos(255, 0, 255, 255, 0); // Rock On
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                break;
-            default:
-                break;
+        if (!modeSelect) {
+            switch (cMode) {
+                case 0: // matching glove movements
+                    convertSensors();
+                    break;
+                case 1: // commands
+                    commands();
+                    break;
+                case 2:
+                    heyKidWantSomeCandy();
+                    break;
+                default:
+                    break;
+            }
         }
         pulseServos();
         delay();

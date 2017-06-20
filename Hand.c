@@ -27,11 +27,11 @@
 /*==============================================================================
     VARIABLES
 ==============================================================================*/
-unsigned char arcPos[5]; //Position for each finger. 0 represents open. 255 means fully closed.
+unsigned char arcPos[5], arcMinPos[5] = {255, 255, 255, 255, 255}; //Position for each finger. 0 represents open. 255 means fully closed.
 unsigned char cMode, cDelay, cCountFingerCycle, cCycleIncrement; //cDelay is for counting duration when mode select button is held 
 unsigned char cGesture; // variable for command number
-bool modeSelect, isPressedForMode, isPressedForGesture, buttonWasLetGo; // variables needed to properly navigate mode selection
-int nDelay; //  for keeping track of the proper delay to pulse servos every 20ms
+bool modeSelect, isPressedForMode, isPressedForGesture, buttonWasLetGo, calibMode; // variables needed to properly navigate mode selection
+int nDelay, nCalibrationCounter; //  for keeping track of the proper delay to pulse servos every 20ms
 
 /*==============================================================================
     SET POS
@@ -50,6 +50,17 @@ void setPos(unsigned char a, unsigned char b, unsigned char c, unsigned char d, 
 }
 
 /*==============================================================================
+    BEEP
+        Boop.
+==============================================================================*/
+void beep(unsigned int pitch, unsigned int duration) {
+    for (duration; duration != 0; duration--) {
+        BEEPER = !BEEPER;
+        for (unsigned int j = pitch; j != 0; j--);
+    }
+}
+
+/*==============================================================================
     INIT VARIABLES
         A function to set starting values for each variable.
         Created so that setting starting values is made simple as it is all in 
@@ -61,10 +72,12 @@ void initVariables() {
     isPressedForMode = false;
     isPressedForGesture = false;
     buttonWasLetGo = true;
+    calibMode = true;
     cMode = 0;
     cDelay = 0;
     cCountFingerCycle = 5;
     cCycleIncrement = 5;
+    nCalibrationCounter = 0;
 }
 
 /*==============================================================================
@@ -106,6 +119,7 @@ unsigned char checkMode() {
                 cDelay = 0;
                 modeSelect = true;
                 buttonWasLetGo = false;
+                beep(200, 500);
                 for (unsigned char i = 0; i < 5; i++) {
                     arcPos[i] = (cTempMode == i) ? 255 : 0; // Bend the finger that is equal to the mode; Straighten all the others.
                 }
@@ -116,7 +130,14 @@ unsigned char checkMode() {
                 cDelay = 0;
                 modeSelect = false;
                 buttonWasLetGo = false;
-                cTempMode--; // to compensate for the cTempMode++ below
+                beep(400, 500);
+                cTempMode--;
+                // to compensate for the cTempMode++ below
+                if (cTempMode == 0) {
+                    calibMode = true;
+                } else {
+                    calibMode = false;
+                }
                 setPos(0, 0, 0, 0, 0); //Straighten all fingers
             } else { // user has pressed the button to change the mode
                 for (unsigned char i = 0; i < 5; i++) {
@@ -219,17 +240,43 @@ void convertSensors() {
     arcPos[4] = adConvert(SENSORPINKIE);
     // the lines below censor out the middle finger. i.e., can't give someone
     //    // the finger
-    //    unsigned char cMax = 0;
-    //    if (arcPos[2] > (arcPos[0] && arcPos[1] && arcPos[3] && arcPos[4])) {
-    //        // to find the size of array in C, you need to use sizeof(). Instead of
-    //        //that, we just hard-coded in 5 in the line below
-    //        for (unsigned char i = 0; i < 5; i++) {
-    //            if (arcPos[i] > cMax && i != 2) {
-    //                arcPos[i] = cMax;
-    //            }
-    //        }
-    //        arcPos[2] = cMax;
-    //    }
+    if (!calibMode) {
+        unsigned char cMax = 0;
+        if (arcPos[2] > arcPos[0] && arcPos[2] > arcPos[1] && arcPos[2] > arcPos[3] && arcPos[2] > arcPos[4]) {
+            // to find the size of array in C, you need to use sizeof(). Instead of
+            //that, we just hard-coded in 5 in the line below
+            for (unsigned char i = 0; i < 5; i++) {
+                if (arcPos[i] > cMax && i != 2) {
+                    arcPos[i] = cMax;
+                }
+            }
+            arcPos[2] = cMax;
+        }
+    }
+}
+
+/*==============================================================================
+    CALIBRATION
+        Function to convert all analogue flex sensors to 8bit value by 
+        calling the A/D conversion function.
+==============================================================================*/
+void calibrate() {
+    modeSelect = false;
+    for (unsigned char i = 0; i < 5; i++) {
+        if (arcPos[i] < arcMinPos[i] && arcPos[i] > 0) {
+            arcMinPos[i] = arcPos[i];
+        }
+    }
+    nCalibrationCounter++;
+    __delay_ms(1);
+    if (nCalibrationCounter % 1000 == 0 && nCalibrationCounter != 10000) {
+        beep(200, 500);
+    }
+    if (nCalibrationCounter == 10000) {
+        nCalibrationCounter = 0;
+        calibMode = false;
+        beep(400, 2000);
+    }
 }
 
 /*==============================================================================
@@ -313,7 +360,11 @@ int main(void) {
         if (!modeSelect) {
             switch (cMode) {
                 case 0: // matching glove movements
-                    convertSensors();
+                    //                    convertSensors();
+                    //                    if (calibMode) {
+                    //                        calibrate();
+                    //                    }
+                    setPos(0, 0, 0, 0, 0);
                     break;
                 case 1: // pre-programmed gestures
                     commands();
@@ -325,8 +376,10 @@ int main(void) {
                     break;
             }
         }
-        pulseServos();
-        delay();
+        if (!calibMode || modeSelect || cMode != 0) {
+            pulseServos();
+            delay();
+        }
         cMode = checkMode();
     }
 }

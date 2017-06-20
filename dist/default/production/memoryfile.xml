@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <executable name="dist/default/production\CHRPMini-Hand.X.production.hex">
+  <executable name="dist/default/production\CHRPMini-Hand.production.hex">
     <memory name="program">
       <units>bytes</units>
       <length>24576</length>
-      <used>1584</used>
-      <free>22992</free>
+      <used>1609</used>
+      <free>22967</free>
     </memory>
     <memory name="data">
       <units>bytes</units>
       <length>2048</length>
-      <used>30</used>
-      <free>2018</free>
+      <used>38</used>
+      <free>2010</free>
     </memory>
   </executable>
 </project>

@@ -3,7 +3,8 @@
     Version: 3.1				Date: May 24, 2017
     Target: CHRPMini			Processor: PIC18F25K50
 ==============================================================================*/
-
+//need to make convert sensors jitter less. can do this by having steps instead of exact values\
+// censoring stuff in convert sensors does not work.
 #include    "xc.h"              // XC compiler general include file
 #include    "stdint.h"          // Include integer definitions
 #include    "stdbool.h"         // Include Boolean (true/false) definitions
@@ -90,93 +91,6 @@ unsigned char adConvert(unsigned char chan) {
 }
 
 /*==============================================================================
-    CONVERT SENSORS
-        Function to convert all analogue flex sensors to 8bit value by 
-        calling the A/D conversion function.
-==============================================================================*/
-void convertSensors() {
-    //arcPos[0] = adConvert(SENSORTHUMB);
-    //arcPos[1] = adConvert(SENSORINDEX);
-    //arcPos[2] = adConvert(SENSORMIDDLE);
-    //arcPos[3] = adConvert(SENSORRING);
-    //arcPos[4] = adConvert(SENSORPINKIE);
-    unsigned char cMax = 0;
-    if (arcPos[2] > (arcPos[0] && arcPos[1] && arcPos[3] && arcPos[4])) {
-        for (unsigned char i = 0; i < 5/*too lazy to look up array size*/; i++) {
-            if (arcPos[i] > cMax && i != 2) {
-                arcPos[i] = cMax;
-            }
-        }
-        arcPos[2] = cMax;
-    }
-}
-
-/*==============================================================================
-    COMMANDS
-        Function to switch between preprogrammed finger positions
-        using the button.
-==============================================================================*/
-void commands() {
-    /*
-     * We are able to still change the gesture using the same button
-     * because entering mode select requires the user to hold the button 
-     * for approximately 3 seconds.
-     */
-    if (S1 == 0 && !modeSelect) {
-        isPressedForGesture = true;
-    }
-    if (S1 == 1 && isPressedForGesture && !modeSelect) { // gesture changes when button is let go
-        isPressedForGesture = false;
-        cGesture++;
-        if (cGesture == 9)cGesture = 0;
-        switch (cGesture) {
-            case 0:
-                setPos(0, 0, 0, 0, 0); // Open hand
-                break;
-            case 1:
-                setPos(255, 255, 255, 255, 255); // Fist
-                break;
-            case 2:
-                setPos(0, 0, 255, 255, 0); // Spider-man
-                break;
-            case 3:
-                setPos(0, 255, 255, 255, 0); // Hang Loose
-                break;
-            case 4:
-                setPos(200, 0, 0, 255, 255); // Peace sign ?
-                break;
-            case 5:
-                setPos(200, 200, 0, 0, 0); // A-OK
-                break;
-            case 6:
-                setPos(0, 255, 255, 255, 255); // Thumbs Up
-                break;
-            case 7:
-                setPos(255, 0, 255, 255, 255); // Index pointing
-                break;
-            case 8:
-                setPos(255, 0, 255, 255, 0); // Rock On
-                break;
-            default:
-                break;
-        }
-    }
-}
-
-/*==============================================================================
-    HEY KID, WANT SOME CANDY?
-        Function to lure small children towards the van.
-        (SPOILER: Kid doesn't actually get candy. We can't afford that)
-==============================================================================*/
-void heyKidWantSomeCandy() {
-    setPos(255, cCountFingerCycle, 255, 255, 255);
-    cCountFingerCycle += cCycleIncrement;
-    if (cCountFingerCycle == 255 || cCountFingerCycle == 0) {
-        cCycleIncrement *= -1;
-    }
-}
-
-/*==============================================================================
     CHECK MODE 
         Function to check if the mode needs to change
         If S1 is held, go into mode select. Each time S1 is pressed, switch mode.
@@ -202,7 +116,7 @@ unsigned char checkMode() {
                 cDelay = 0;
                 modeSelect = false;
                 buttonWasLetGo = false;
-                cTempMode--;
+                cTempMode--; // to compensate for the cTempMode++ below
                 setPos(0, 0, 0, 0, 0); //Straighten all fingers
             } else { // user has pressed the button to change the mode
                 for (unsigned char i = 0; i < 5; i++) {
@@ -231,7 +145,7 @@ unsigned char checkMode() {
 void pulseServos() {
     /*  Servo specifications
      * The servo turns 180 degrees. Below values were found by trail and error
-     * as the datasheet was a little off.
+     * as the datasheet was an approximation
      * 0.54ms to 2.07ms on. 20ms period.
      */
 
@@ -293,6 +207,101 @@ void delay() {
 }
 
 /*==============================================================================
+    CONVERT SENSORS
+        Function to convert all analogue flex sensors to 8bit value by 
+        calling the A/D conversion function.
+==============================================================================*/
+void convertSensors() {
+    arcPos[0] = adConvert(SENSORTHUMB);
+    arcPos[1] = adConvert(SENSORINDEX);
+    arcPos[2] = adConvert(SENSORMIDDLE);
+    arcPos[3] = adConvert(SENSORRING);
+    arcPos[4] = adConvert(SENSORPINKIE);
+    // the lines below censor out the middle finger. i.e., can't give someone
+    //    // the finger
+    //    unsigned char cMax = 0;
+    //    if (arcPos[2] > (arcPos[0] && arcPos[1] && arcPos[3] && arcPos[4])) {
+    //        // to find the size of array in C, you need to use sizeof(). Instead of
+    //        //that, we just hard-coded in 5 in the line below
+    //        for (unsigned char i = 0; i < 5; i++) {
+    //            if (arcPos[i] > cMax && i != 2) {
+    //                arcPos[i] = cMax;
+    //            }
+    //        }
+    //        arcPos[2] = cMax;
+    //    }
+}
+
+/*==============================================================================
+    COMMANDS
+        Function to switch between preprogrammed finger positions
+        using the button.
+==============================================================================*/
+void commands() {
+    /*
+     * We are able to still change the gesture using the same button
+     * because entering mode select requires the user to hold the button 
+     * for approximately 3 seconds.
+     */
+    if (S1 == 0 && !modeSelect) {
+        isPressedForGesture = true;
+    }
+    if (S1 == 1 && isPressedForGesture && !modeSelect) { // gesture changes when button is let go
+        isPressedForGesture = false;
+        cGesture++;
+        if (cGesture == 9)cGesture = 0;
+        switch (cGesture) {
+            case 0:
+                setPos(0, 0, 0, 0, 0); // Open hand
+                break;
+            case 1:
+                setPos(255, 255, 255, 255, 255); // Fist
+                break;
+            case 2:
+                setPos(0, 0, 255, 255, 0); // Spider-man
+                break;
+            case 3:
+                setPos(0, 255, 255, 255, 0); // Hang Loose
+                break;
+            case 4:
+                setPos(200, 0, 0, 255, 255); // Peace sign ?
+                break;
+            case 5:
+                setPos(200, 200, 0, 0, 0); // A-OK
+                break;
+            case 6:
+                setPos(0, 255, 255, 255, 255); // Thumbs Up
+                break;
+            case 7:
+                setPos(255, 0, 255, 255, 255); // Index pointing
+                break;
+            case 8:
+                setPos(255, 0, 255, 255, 0); // Rock On
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+/*==============================================================================
+    HEY KID, WANT SOME CANDY?
+        Function to lure small children towards the van.
+        (SPOILER: Kid doesn't actually get candy. We can't afford that)
+ 
+        Update: This function actually cycles the index finger back and forth.
+        This creates the "come here" gesture with your finger. Maybe the kid
+        really will get candy.
+==============================================================================*/
+void heyKidWantSomeCandy() {
+    setPos(255, cCountFingerCycle, 255, 255, 255);
+    cCountFingerCycle += cCycleIncrement;
+    if (cCountFingerCycle == 255 || cCountFingerCycle == 0) {
+        cCycleIncrement *= -1;
+    }
+}
+
+/*==============================================================================
  MAIN PROGRAM CODE.
 ==============================================================================*/
 int main(void) {
@@ -306,11 +315,11 @@ int main(void) {
                 case 0: // matching glove movements
                     convertSensors();
                     break;
-                case 1: // commands
+                case 1: // pre-programmed gestures
                     commands();
                     break;
                 case 2:
-                    heyKidWantSomeCandy();
+                    heyKidWantSomeCandy(); // "come here" gesture
                     break;
                 default:
                     break;

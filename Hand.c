@@ -15,10 +15,10 @@
     Finger Pathing
 ==============================================================================*/
 #define THUMB           0	// Port B value for both motors stopped
-#define INDEXFINGER     1
-#define MIDDLEFINGER    2
-#define RINGFINGER      3
-#define PINKIEFINGER    4
+#define INDEX           1
+#define MIDDLE          2
+#define RING            3
+#define PINKIE          4
 
 /*==============================================================================
     VARIABLES
@@ -45,10 +45,10 @@ int nDelay, nCalibrationCounter;
 ==============================================================================*/
 void setPos(unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned char e) {
     arcPos[THUMB] = a;
-    arcPos[INDEXFINGER] = b;
-    arcPos[MIDDLEFINGER] = c;
-    arcPos[RINGFINGER] = d;
-    arcPos[PINKIEFINGER] = e;
+    arcPos[INDEX] = b;
+    arcPos[MIDDLE] = c;
+    arcPos[RING] = d;
+    arcPos[PINKIE] = e;
 }
 
 /*==============================================================================
@@ -122,6 +122,7 @@ unsigned char checkMode() {
                 cDelay = 0;
                 modeSelect = true;
                 buttonWasLetGo = false;
+                isPressedForMode = false;
                 beep(200, 500);
                 for (unsigned char i = 0; i < 5; i++) {
                     arcPos[i] = (cTempMode == i) ? 255 : 0; // Bend the finger that is equal to the mode; Straighten all the others.
@@ -133,26 +134,30 @@ unsigned char checkMode() {
                 cDelay = 0;
                 modeSelect = false;
                 buttonWasLetGo = false;
+                isPressedForMode = false;
                 beep(400, 500);
-                cTempMode--; // to compensate for the cTempMode++ some lines below
+                //cTempMode--; // to compensate for the cTempMode++ some lines below
                 if (cTempMode == 0) {
                     calibMode = true;
                 } else {
                     calibMode = false;
                 }
                 setPos(0, 0, 0, 0, 0); //Straighten all fingers
-            } else { // user has pressed the button to change the mode
-                for (unsigned char i = 0; i < 5; i++) {
-                    arcPos[i] = (cTempMode == i) ? 255 : 0; // Bend the finger that is equal to the mode; Straighten all the others.
-                }
-            }
+            }// else { // user has pressed the button to change the mode
+
+            //}
         }
     }
 
     if (S1 == 1) { // mode is changed after the button is let go. This is done so that the user is able to leave mode select.
-        if (isPressedForMode && modeSelect) {
+        if (buttonWasLetGo && isPressedForMode && modeSelect) {
             cTempMode++;
-            if (cTempMode == 5)cTempMode = 0;
+            if (cTempMode == 5) {
+                cTempMode = 0;
+            }
+            for (unsigned char i = 0; i < 5; i++) {
+                arcPos[i] = (cTempMode == i) ? 255 : 0; // Bend the finger that is equal to the mode; Straighten all the others.
+            }
         }
         buttonWasLetGo = true;
         cDelay = 0;
@@ -189,7 +194,7 @@ void pulseServos() {
     //Index Finger
     SERVOINDEX = 1;
     __delay_us(540);
-    for (unsigned char i = 255 - arcPos[INDEXFINGER]; i != 0; i--) {
+    for (unsigned char i = 255 - arcPos[INDEX]; i != 0; i--) {
         __delay_us(6);
     }
     SERVOINDEX = 0;
@@ -197,7 +202,7 @@ void pulseServos() {
     //Middle Finger
     SERVOMIDDLE = 1;
     __delay_us(540);
-    for (unsigned char i = 255 - arcPos[MIDDLEFINGER]; i != 0; i--) {
+    for (unsigned char i = 255 - arcPos[MIDDLE]; i != 0; i--) {
         __delay_us(6);
     }
     SERVOMIDDLE = 0;
@@ -205,7 +210,7 @@ void pulseServos() {
     //Ring Finger
     SERVORING = 1;
     __delay_us(540);
-    for (unsigned char i = 255 - arcPos[RINGFINGER]; i != 0; i--) {
+    for (unsigned char i = 255 - arcPos[RING]; i != 0; i--) {
         __delay_us(6);
     }
     SERVORING = 0;
@@ -213,7 +218,7 @@ void pulseServos() {
     //Pinkie Finger
     SERVOPINKIE = 1;
     __delay_us(540);
-    for (unsigned char i = 255 - arcPos[PINKIEFINGER]; i != 0; i--) {
+    for (unsigned char i = 255 - arcPos[PINKIE]; i != 0; i--) {
         __delay_us(6);
     }
     SERVOPINKIE = 0;
@@ -229,7 +234,7 @@ void pulseServos() {
         other parts of the code.
 ==============================================================================*/
 void delay() {
-    nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[THUMB] - arcPos[INDEXFINGER] - arcPos[MIDDLEFINGER] - arcPos[RINGFINGER] - arcPos[PINKIEFINGER]) / 6);
+    nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[THUMB] - arcPos[INDEX] - arcPos[MIDDLE] - arcPos[RING] - arcPos[PINKIE]) / 6);
     for (int i = nDelay; i != 0; i--) {
         __delay_us(6);
     }
@@ -247,10 +252,10 @@ void delay() {
 ==============================================================================*/
 void convertSensors() {
     arcPos[THUMB] = 255 - adConvert(SENSORTHUMB);
-    arcPos[INDEXFINGER] = 255 - adConvert(SENSORINDEX);
-    arcPos[MIDDLEFINGER] = 255 - adConvert(SENSORMIDDLE);
-    arcPos[RINGFINGER] = 255 - adConvert(SENSORRING);
-    arcPos[PINKIEFINGER] = 255 - adConvert(SENSORPINKIE);
+    arcPos[INDEX] = 255 - adConvert(SENSORINDEX);
+    arcPos[MIDDLE] = 255 - adConvert(SENSORMIDDLE);
+    arcPos[RING] = 255 - adConvert(SENSORRING);
+    arcPos[PINKIE] = 255 - adConvert(SENSORPINKIE);
 }
 
 /*==============================================================================
@@ -261,15 +266,15 @@ void convertSensors() {
 void censorFinger() {
     if (!calibMode) {
         unsigned char cMin = 255;
-        if (arcPos[MIDDLEFINGER] < arcPos[THUMB] && arcPos[MIDDLEFINGER] < arcPos[INDEXFINGER] && arcPos[MIDDLEFINGER] < arcPos[RINGFINGER] && arcPos[MIDDLEFINGER] < arcPos[PINKIEFINGER]) {
+        if (arcPos[MIDDLE] < arcPos[THUMB] && arcPos[MIDDLE] < arcPos[INDEX] && arcPos[MIDDLE] < arcPos[RING] && arcPos[MIDDLE] < arcPos[PINKIE]) {
             // to find the size of array in C, you need to use sizeof(). Instead of
             //that, we just hard-coded in 5 in the line below
             for (unsigned char i = 0; i < 5; i++) {
-                if (cMin > arcPos[i] && i != MIDDLEFINGER) {
+                if (cMin > arcPos[i] && i != MIDDLE) {
                     cMin = arcPos[i];
                 }
             }
-            arcPos[MIDDLEFINGER] = cMin;
+            arcPos[MIDDLE] = cMin;
         }
     }
 }

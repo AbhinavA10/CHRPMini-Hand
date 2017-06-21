@@ -1,4 +1,46 @@
 Version 3.2 HI-TECH Software Intermediate Code
+"5175 C:\Program Files (x86)\Microchip\xc8\v1.41\include\pic18f25k50.h
+[v _OSCTUNE `Vuc ~T0 @X0 0 e@3995 ]
+"11423
+[v _OSCCON `Vuc ~T0 @X0 0 e@4051 ]
+"11362
+[v _OSCCON2 `Vuc ~T0 @X0 0 e@4050 ]
+"7309
+[v _ACTCON `Vuc ~T0 @X0 0 e@4021 ]
+"13877
+[v _PLLRDY `Vb ~T0 @X0 0 e@32407 ]
+"3421
+[v _LATA `Vuc ~T0 @X0 0 e@3977 ]
+"225
+[v _ANSELA `Vuc ~T0 @X0 0 e@3931 ]
+"4096
+[v _TRISA `Vuc ~T0 @X0 0 e@3986 ]
+"3532
+[v _LATB `Vuc ~T0 @X0 0 e@3978 ]
+"269
+[v _ANSELB `Vuc ~T0 @X0 0 e@3932 ]
+"4317
+[v _TRISB `Vuc ~T0 @X0 0 e@3987 ]
+"3643
+[v _LATC `Vuc ~T0 @X0 0 e@3979 ]
+"318
+[v _ANSELC `Vuc ~T0 @X0 0 e@3933 ]
+"4538
+[v _TRISC `Vuc ~T0 @X0 0 e@3988 ]
+"11505
+[v _T0CON `Vuc ~T0 @X0 0 e@4053 ]
+"2752
+[v _PORTA `Vuc ~T0 @X0 0 e@3968 ]
+"2903
+[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
+"3012
+[v _PORTC `Vuc ~T0 @X0 0 e@3970 ]
+"8860
+[v _ADCON0 `Vuc ~T0 @X0 0 e@4034 ]
+"8793
+[v _ADCON1 `Vuc ~T0 @X0 0 e@4033 ]
+"8723
+[v _ADCON2 `Vuc ~T0 @X0 0 e@4032 ]
 [; ;htc.h: 26: extern const char __xc8_OPTIM_SPEED;
 [; ;htc.h: 28: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -4995,83 +5037,147 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 161: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 163: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 165: extern __nonreentrant void _delay3(unsigned char);
-"23 PIC18F25K50config.c
-[p x PLLSEL=PLL3X ]
-"24
-[p x CFGPLLEN=OFF ]
-"25
-[p x CPUDIV=NOCLKDIV ]
-"26
-[p x LS48MHZ=SYS48X8 ]
+[; ;stdint.h: 13: typedef signed char int8_t;
+[; ;stdint.h: 20: typedef signed int int16_t;
+[; ;stdint.h: 28: typedef signed short long int int24_t;
+[; ;stdint.h: 36: typedef signed long int int32_t;
+[; ;stdint.h: 43: typedef unsigned char uint8_t;
+[; ;stdint.h: 49: typedef unsigned int uint16_t;
+[; ;stdint.h: 56: typedef unsigned short long int uint24_t;
+[; ;stdint.h: 63: typedef unsigned long int uint32_t;
+[; ;stdint.h: 71: typedef signed char int_least8_t;
+[; ;stdint.h: 78: typedef signed int int_least16_t;
+[; ;stdint.h: 90: typedef signed short long int int_least24_t;
+[; ;stdint.h: 98: typedef signed long int int_least32_t;
+[; ;stdint.h: 105: typedef unsigned char uint_least8_t;
+[; ;stdint.h: 111: typedef unsigned int uint_least16_t;
+[; ;stdint.h: 121: typedef unsigned short long int uint_least24_t;
+[; ;stdint.h: 128: typedef unsigned long int uint_least32_t;
+[; ;stdint.h: 137: typedef signed char int_fast8_t;
+[; ;stdint.h: 144: typedef signed int int_fast16_t;
+[; ;stdint.h: 156: typedef signed short long int int_fast24_t;
+[; ;stdint.h: 164: typedef signed long int int_fast32_t;
+[; ;stdint.h: 171: typedef unsigned char uint_fast8_t;
+[; ;stdint.h: 177: typedef unsigned int uint_fast16_t;
+[; ;stdint.h: 187: typedef unsigned short long int uint_fast24_t;
+[; ;stdint.h: 194: typedef unsigned long int uint_fast32_t;
+[; ;stdint.h: 200: typedef int32_t intmax_t;
+[; ;stdint.h: 205: typedef uint32_t uintmax_t;
+[; ;stdint.h: 210: typedef int16_t intptr_t;
+[; ;stdint.h: 215: typedef uint16_t uintptr_t;
+[; ;stdbool.h: 12: typedef unsigned char bool;
+[; ;CHRPMini.h: 71: void initOsc(void);
+[; ;CHRPMini.h: 72: void initPorts(void);
+[; ;CHRPMini.h: 73: void initANA(void);
+"16 CHRPMini.c
+[v _initOsc `(v ~T0 @X0 1 ef ]
+"17
+{
+[; ;CHRPMini.c: 16: void initOsc(void)
+[; ;CHRPMini.c: 17: {
+[e :U _initOsc ]
+[f ]
+[; ;CHRPMini.c: 18: OSCTUNE = 0x80;
+"18
+[e = _OSCTUNE -> -> 128 `i `uc ]
+[; ;CHRPMini.c: 19: OSCCON = 0x70;
+"19
+[e = _OSCCON -> -> 112 `i `uc ]
+[; ;CHRPMini.c: 20: OSCCON2 = 0x10;
+"20
+[e = _OSCCON2 -> -> 16 `i `uc ]
+[; ;CHRPMini.c: 21: ACTCON = 0x90;
+"21
+[e = _ACTCON -> -> 144 `i `uc ]
+[; ;CHRPMini.c: 22: while(!PLLRDY);
+"22
+[e $U 604  ]
+[e :U 605 ]
+[e :U 604 ]
+[e $ ! _PLLRDY 605  ]
+[e :U 606 ]
+[; ;CHRPMini.c: 23: }
+"23
+[e :UE 603 ]
+}
+"27
+[v _initPorts `(v ~T0 @X0 1 ef ]
+"28
+{
+[; ;CHRPMini.c: 27: void initPorts(void)
+[; ;CHRPMini.c: 28: {
+[e :U _initPorts ]
+[f ]
+[; ;CHRPMini.c: 29: LATA = 0b00000000;
 "29
-[p x FOSC=INTOSCIO ]
+[e = _LATA -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 30: ANSELA = 0b00000000;
 "30
-[p x PCLKEN=OFF ]
+[e = _ANSELA -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 31: TRISA = 0b00101111;
 "31
-[p x FCMEN=OFF ]
-"32
-[p x IESO=OFF ]
+[e = _TRISA -> -> 47 `i `uc ]
+[; ;CHRPMini.c: 33: LATB = 0b00000000;
+"33
+[e = _LATB -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 34: ANSELB = 0b00000000;
+"34
+[e = _ANSELB -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 35: TRISB = 0b00000000;
 "35
-[p x nPWRTEN=OFF ]
+[e = _TRISB -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 36: LATC = 0b00000000;
 "36
-[p x BOREN=SBORDIS ]
+[e = _LATC -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 37: ANSELC = 0b00000000;
 "37
-[p x BORV=190 ]
+[e = _ANSELC -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 38: TRISC = 0b10110000;
 "38
-[p x nLPBOR=ON ]
+[e = _TRISC -> -> 176 `i `uc ]
+[; ;CHRPMini.c: 41: T0CON = 0b10000001;
 "41
-[p x WDTEN=SWON ]
-"42
-[p x WDTPS=32768 ]
+[e = _T0CON -> -> 129 `i `uc ]
+[; ;CHRPMini.c: 44: PORTA = 0;
+"44
+[e = _PORTA -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 45: PORTB = 0;
 "45
-[p x CCP2MX=RC1 ]
+[e = _PORTB -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 46: PORTC = 0;
 "46
-[p x PBADEN=OFF ]
+[e = _PORTC -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 47: }
 "47
-[p x T3CMX=RC0 ]
-"48
-[p x SDOMX=RB3 ]
-"49
-[p x MCLRE=OFF ]
+[e :UE 607 ]
+}
 "52
-[p x STVREN=ON ]
+[v _initANA `(v ~T0 @X0 1 ef ]
 "53
-[p x LVP=OFF ]
+{
+[; ;CHRPMini.c: 52: void initANA(void)
+[; ;CHRPMini.c: 53: {
+[e :U _initANA ]
+[f ]
+[; ;CHRPMini.c: 54: LATA = 0b00000000;
 "54
-[p x XINST=OFF ]
+[e = _LATA -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 55: ANSELA = 0b0011111;
+"55
+[e = _ANSELA -> -> 31 `i `uc ]
+[; ;CHRPMini.c: 56: ADCON0 = 0b00000000;
+"56
+[e = _ADCON0 -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 57: ADCON1 = 0b00000000;
 "57
-[p x CP0=OFF ]
+[e = _ADCON1 -> -> 0 `i `uc ]
+[; ;CHRPMini.c: 58: ADCON2 = 0b00001110;
 "58
-[p x CP1=OFF ]
+[e = _ADCON2 -> -> 14 `i `uc ]
+[; ;CHRPMini.c: 59: TRISA = 0b00101111;
 "59
-[p x CP2=OFF ]
+[e = _TRISA -> -> 47 `i `uc ]
+[; ;CHRPMini.c: 60: }
 "60
-[p x CP3=OFF ]
-"63
-[p x CPB=OFF ]
-"64
-[p x CPD=OFF ]
-"67
-[p x WRT0=OFF ]
-"68
-[p x WRT1=OFF ]
-"69
-[p x WRT2=OFF ]
-"70
-[p x WRT3=OFF ]
-"73
-[p x WRTC=OFF ]
-"74
-[p x WRTB=OFF ]
-"75
-[p x WRTD=OFF ]
-"78
-[p x EBTR0=OFF ]
-"79
-[p x EBTR1=OFF ]
-"80
-[p x EBTR2=OFF ]
-"81
-[p x EBTR3=OFF ]
-"84
-[p x EBTRB=OFF ]
+[e :UE 608 ]
+}

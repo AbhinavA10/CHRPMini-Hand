@@ -1,12 +1,12 @@
-Microchip MPLAB XC8 Compiler V1.42 ()
+Microchip MPLAB XC8 Compiler V1.41 ()
 
 Linker command line:
 
--W-3 --edf=C:\Program Files\Microchip\xc8\v1.42\dat\en_msgs.txt -cs \
-  -h+dist/default/production\CHRPMini-Hand.production.sym \
-  --cmf=dist/default/production\CHRPMini-Hand.production.cmf -z -Q18F25K50 \
-  -oC:\Users\SCHIE3~1\AppData\Local\Temp\s5o0.2 \
-  -Mdist/default/production/CHRPMini-Hand.production.map -E1 -ver=XC8 \
+-W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v1.41\dat\en_msgs.txt -cs \
+  -h+dist/default/production\CHRPMini-Hand.X.production.sym \
+  --cmf=dist/default/production\CHRPMini-Hand.X.production.cmf -z \
+  -Q18F25K50 -oC:\Users\Abhi\AppData\Local\Temp\sb8o.2 \
+  -Mdist/default/production/CHRPMini-Hand.X.production.map -E1 -ver=XC8 \
   -ASTACK=060h-07ffh -pstack=STACK \
   -ACODE=02000h-02005h,02008h-02015h,02018h-07FFFh \
   -ACONST=02000h-02005h,02008h-02015h,02018h-07FFFh \
@@ -25,8 +25,8 @@ Linker command line:
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -prparam=COMRAM \
-  C:\Users\SCHIE3~1\AppData\Local\Temp\s5o0.obj \
-  dist/default/production\CHRPMini-Hand.production.obj 
+  C:\Users\Abhi\AppData\Local\Temp\sb8o.obj \
+  dist/default/production\CHRPMini-Hand.X.production.obj 
 
 Object code version is 3.11
 
@@ -38,28 +38,30 @@ Call graph: (short form)
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\SCHIE3~1\AppData\Local\Temp\s5o0.obj
+C:\Users\Abhi\AppData\Local\Temp\sb8o.obj
                 init                               2000     2000        4     1000       0
                 idloc                            200000   200000        8   200000       0
                 config                           300000   300000        E   300000       0
-dist/default/production\CHRPMini-Hand.production.obj
-                text12                             7AAC     7AAC       44     3D56       0
-                text11                             79D6     79D6       18     3CEB       0
-                text10                             7EB4     7EB4      14C     3F5A       0
-                text9                              7D70     7D70      144     3EB8       0
-                text8                              7C22     7C22       84     3E11       0
-                text7                              7BA6     7BA6       7C     3DD3       0
-                text6                              7A0A     7A0A       30     3D05       0
-                text5                              79EE     79EE       1C     3CF7       0
-                text4                              79C0     79C0       16     3CE0       0
-                text3                              7A70     7A70       3C     3D38       0
-                text2                              7AF0     7AF0       44     3D78       0
-                text1                              7CA6     7CA6       CA     3E53       0
-                text0                              7B34     7B34       72     3D9A       0
+dist/default/production\CHRPMini-Hand.X.production.obj
+                text14                             7A6A     7A6A       44     3D35       0
+                text13                             7970     7970       18     3CB8       0
+                text12                             7D7C     7D7C      140     3EBE       0
+                text11                             7EBC     7EBC      144     3F5E       0
+                text10                             79A4     79A4       24     3CD2       0
+                text9                              7AF2     7AF2       48     3D79       0
+                text8                              7C10     7C10       84     3E08       0
+                text7                              7B94     7B94       7C     3DCA       0
+                text6                              79C8     79C8       30     3CE4       0
+                text5                              7988     7988       1C     3CC4       0
+                text4                              795A     795A       16     3CAD       0
+                text3                              7A2E     7A2E       3C     3D17       0
+                text2                              7AAE     7AAE       44     3D57       0
+                text1                              7C94     7C94       E8     3E4A       0
+                text0                              7B3A     7B3A       5A     3D9D       0
                 cstackCOMRAM                         14       14        E        1       1
                 dataCOMRAM                           22       22        5        1       1
                 bssCOMRAM                             1        1       13        1       1
-                cinit                              7A3A     7A3A       36     3D1D       0
+                cinit                              79F8     79F8       36     3CFC       0
                 idataCOMRAM                        2008     2008        5     2008       0
 
 TOTAL           Name                               Link     Load   Length     Space
@@ -67,20 +69,22 @@ TOTAL           Name                               Link     Load   Length     Sp
 
         CLASS   CODE           
                 init                               2000     2000        4         0
-                text12                             7AAC     7AAC       44         0
-                text11                             79D6     79D6       18         0
-                text10                             7EB4     7EB4      14C         0
-                text9                              7D70     7D70      144         0
-                text8                              7C22     7C22       84         0
-                text7                              7BA6     7BA6       7C         0
-                text6                              7A0A     7A0A       30         0
-                text5                              79EE     79EE       1C         0
-                text4                              79C0     79C0       16         0
-                text3                              7A70     7A70       3C         0
-                text2                              7AF0     7AF0       44         0
-                text1                              7CA6     7CA6       CA         0
-                text0                              7B34     7B34       72         0
-                cinit                              7A3A     7A3A       36         0
+                text14                             7A6A     7A6A       44         0
+                text13                             7970     7970       18         0
+                text12                             7D7C     7D7C      140         0
+                text11                             7EBC     7EBC      144         0
+                text10                             79A4     79A4       24         0
+                text9                              7AF2     7AF2       48         0
+                text8                              7C10     7C10       84         0
+                text7                              7B94     7B94       7C         0
+                text6                              79C8     79C8       30         0
+                text5                              7988     7988       1C         0
+                text4                              795A     795A       16         0
+                text3                              7A2E     7A2E       3C         0
+                text2                              7AAE     7AAE       44         0
+                text1                              7C94     7C94       E8         0
+                text0                              7B3A     7B3A       5A         0
+                cinit                              79F8     79F8       36         0
                 idataCOMRAM                        2008     2008        5         0
 
         CLASS   CONST          
@@ -135,20 +139,22 @@ SEGMENTS        Name                           Load    Length   Top    Selector 
                 bssCOMRAM                      000001  000026  000027         1       1  COMRAM  
                 reset_vec                      002000  000004  002004      1000       0  CODE    
                 idataCOMRAM                    002008  000005  00200D      2008       0  CODE    
-                text4                          0079C0  000016  0079D6      3CE0       0  CODE    
-                text11                         0079D6  000018  0079EE      3CEB       0  CODE    
-                text5                          0079EE  00001C  007A0A      3CF7       0  CODE    
-                text6                          007A0A  000030  007A3A      3D05       0  CODE    
-                cinit                          007A3A  000036  007A70      3D1D       0  CODE    
-                text3                          007A70  00003C  007AAC      3D38       0  CODE    
-                text12                         007AAC  000044  007AF0      3D56       0  CODE    
-                text2                          007AF0  000044  007B34      3D78       0  CODE    
-                text0                          007B34  000072  007BA6      3D9A       0  CODE    
-                text7                          007BA6  00007C  007C22      3DD3       0  CODE    
-                text8                          007C22  000084  007CA6      3E11       0  CODE    
-                text1                          007CA6  0000CA  007D70      3E53       0  CODE    
-                text9                          007D70  000144  007EB4      3EB8       0  CODE    
-                text10                         007EB4  00014C  008000      3F5A       0  CODE    
+                text4                          00795A  000016  007970      3CAD       0  CODE    
+                text13                         007970  000018  007988      3CB8       0  CODE    
+                text5                          007988  00001C  0079A4      3CC4       0  CODE    
+                text10                         0079A4  000024  0079C8      3CD2       0  CODE    
+                text6                          0079C8  000030  0079F8      3CE4       0  CODE    
+                cinit                          0079F8  000036  007A2E      3CFC       0  CODE    
+                text3                          007A2E  00003C  007A6A      3D17       0  CODE    
+                text14                         007A6A  000044  007AAE      3D35       0  CODE    
+                text2                          007AAE  000044  007AF2      3D57       0  CODE    
+                text9                          007AF2  000048  007B3A      3D79       0  CODE    
+                text0                          007B3A  00005A  007B94      3D9D       0  CODE    
+                text7                          007B94  00007C  007C10      3DCA       0  CODE    
+                text8                          007C10  000084  007C94      3E08       0  CODE    
+                text1                          007C94  0000E8  007D7C      3E4A       0  CODE    
+                text12                         007D7C  000140  007EBC      3EBE       0  CODE    
+                text11                         007EBC  000144  008000      3F5E       0  CODE    
                 idloc                          200000  000008  200008    200000       0  IDLOC   
                 config                         300000  00000E  30000E    300000       0  CONFIG  
 
@@ -167,21 +173,21 @@ UNUSED ADDRESS RANGES
         BIGRAM           000027-0007FF              7D9
         CODE             002004-002005                2
                          00200D-002015                9
-                         002018-0079BF             59A8
+                         002018-007959             5942
         COMRAM           000027-00005F               39
         CONST            002004-002005                2
                          00200D-002015                9
-                         002018-0079BF             59A8
+                         002018-007959             5942
         EEDATA           F00000-F000FF              100
         FARRAM           000000-000000                1
         MEDIUMCONST      002004-002005                2
                          00200D-002015                9
-                         002018-0079BF             59A8
+                         002018-007959             5942
         RAM              000060-0007FF              100
         SFR              000F53-000FFF                D
         SMALLCONST       002004-002005                2
                          00200D-002015                9
-                         002018-0079BF              100
+                         002018-007959              100
         STACK            000060-0007FF              7A0
 
                                   Symbol Table
@@ -320,6 +326,8 @@ __Htext1                      text1        000000
 __Htext10                     text10       000000
 __Htext11                     text11       000000
 __Htext12                     text12       000000
+__Htext13                     text13       000000
+__Htext14                     text14       000000
 __Htext2                      text2        000000
 __Htext3                      text3        000000
 __Htext4                      text4        000000
@@ -394,6 +402,8 @@ __Ltext1                      text1        000000
 __Ltext10                     text10       000000
 __Ltext11                     text11       000000
 __Ltext12                     text12       000000
+__Ltext13                     text13       000000
+__Ltext14                     text14       000000
 __Ltext2                      text2        000000
 __Ltext3                      text3        000000
 __Ltext4                      text4        000000
@@ -405,7 +415,7 @@ __Ltext9                      text9        000000
 __S0                          (abs)        30000E
 __S1                          (abs)        000027
 __S2                          (abs)        000000
-___awdiv                      text8        007C22
+___awdiv                      text8        007C10
 ___awdiv@counter              cstackCOMRAM 000018
 ___awdiv@dividend             cstackCOMRAM 000014
 ___awdiv@divisor              cstackCOMRAM 000016
@@ -418,45 +428,51 @@ ___rparam_used                (abs)        000001
 ___sp                         stack        000000
 __accesstop                   (abs)        000060
 __activetblptr                (abs)        000002
-__end_of___awdiv              text8        007CA6
-__end_of__initialization      cinit        007A66
-__end_of_beep                 text12       007AF0
-__end_of_checkMode            text10       008000
-__end_of_commands             text9        007EB4
-__end_of_delay                text7        007C22
-__end_of_heyKidWantSomeCandy  text6        007A3A
-__end_of_initANA              text5        007A0A
-__end_of_initOsc              text4        0079D6
-__end_of_initPorts            text3        007AAC
-__end_of_initVariables        text2        007B34
-__end_of_main                 text0        007BA6
-__end_of_pulseServos          text1        007D70
-__end_of_setPos               text11       0079EE
-__initialization              cinit        007A3A
+__end_of___awdiv              text8        007C94
+__end_of__initialization      cinit        007A24
+__end_of_adConvert            text10       0079C8
+__end_of_beep                 text14       007AAE
+__end_of_checkMode            text12       007EBC
+__end_of_commands             text11       008000
+__end_of_convertSensors       text9        007B3A
+__end_of_delay                text7        007C10
+__end_of_heyKidWantSomeCandy  text6        0079F8
+__end_of_initANA              text5        0079A4
+__end_of_initOsc              text4        007970
+__end_of_initPorts            text3        007A6A
+__end_of_initVariables        text2        007AF2
+__end_of_main                 text0        007B94
+__end_of_pulseServos          text1        007D7C
+__end_of_setPos               text13       007988
+__initialization              cinit        0079F8
 __mediumconst                 mediumconst  000000
 __pbssCOMRAM                  bssCOMRAM    000001
-__pcinit                      cinit        007A3A
+__pcinit                      cinit        0079F8
 __pcstackCOMRAM               cstackCOMRAM 000014
 __pdataCOMRAM                 dataCOMRAM   000022
 __pidataCOMRAM                idataCOMRAM  002008
-__ptext0                      text0        007B34
-__ptext1                      text1        007CA6
-__ptext10                     text10       007EB4
-__ptext11                     text11       0079D6
-__ptext12                     text12       007AAC
-__ptext2                      text2        007AF0
-__ptext3                      text3        007A70
-__ptext4                      text4        0079C0
-__ptext5                      text5        0079EE
-__ptext6                      text6        007A0A
-__ptext7                      text7        007BA6
-__ptext8                      text8        007C22
-__ptext9                      text9        007D70
+__ptext0                      text0        007B3A
+__ptext1                      text1        007C94
+__ptext10                     text10       0079A4
+__ptext11                     text11       007EBC
+__ptext12                     text12       007D7C
+__ptext13                     text13       007970
+__ptext14                     text14       007A6A
+__ptext2                      text2        007AAE
+__ptext3                      text3        007A2E
+__ptext4                      text4        00795A
+__ptext5                      text5        007988
+__ptext6                      text6        0079C8
+__ptext7                      text7        007B94
+__ptext8                      text8        007C10
+__ptext9                      text9        007AF2
 __ramtop                      ramtop       000800
 __size_of___awdiv             (abs)        000000
+__size_of_adConvert           (abs)        000000
 __size_of_beep                (abs)        000000
 __size_of_checkMode           (abs)        000000
 __size_of_commands            (abs)        000000
+__size_of_convertSensors      (abs)        000000
 __size_of_delay               (abs)        000000
 __size_of_heyKidWantSomeCandy (abs)        000000
 __size_of_initANA             (abs)        000000
@@ -467,51 +483,54 @@ __size_of_main                (abs)        000000
 __size_of_pulseServos         (abs)        000000
 __size_of_setPos              (abs)        000000
 __smallconst                  smallconst   000000
+_adConvert                    text10       0079A4
 _arcMinPos                    dataCOMRAM   000022
 _arcPos                       bssCOMRAM    000001
-_beep                         text12       007AAC
+_beep                         text14       007A6A
 _buttonWasLetGo               bssCOMRAM    00000B
-_cCountFingerCycle            bssCOMRAM    000011
-_cCycleIncrement              bssCOMRAM    000010
+_cCountFingerCycle            bssCOMRAM    000010
+_cCycleIncrement              bssCOMRAM    00000F
 _cDelay                       bssCOMRAM    000012
-_cGesture                     bssCOMRAM    00000F
+_cGesture                     bssCOMRAM    000011
 _cMode                        bssCOMRAM    000013
 _calibMode                    bssCOMRAM    00000A
-_checkMode                    text10       007EB4
-_checkMode$207                cstackCOMRAM 00001B
-_checkMode$209                cstackCOMRAM 00001D
-_commands                     text9        007D70
-_delay                        text7        007BA6
-_heyKidWantSomeCandy          text6        007A0A
-_initANA                      text5        0079EE
-_initOsc                      text4        0079C0
-_initPorts                    text3        007A70
-_initVariables                text2        007AF0
+_checkMode                    text12       007D7C
+_checkMode$192                cstackCOMRAM 00001B
+_checkMode$194                cstackCOMRAM 00001D
+_commands                     text11       007EBC
+_convertSensors               text9        007AF2
+_delay                        text7        007B94
+_heyKidWantSomeCandy          text6        0079C8
+_initANA                      text5        007988
+_initOsc                      text4        00795A
+_initPorts                    text3        007A2E
+_initVariables                text2        007AAE
 _isPressedForGesture          bssCOMRAM    00000C
 _isPressedForMode             bssCOMRAM    00000D
-_main                         text0        007B34
+_main                         text0        007B3A
 _modeSelect                   bssCOMRAM    00000E
 _nCalibrationCounter          bssCOMRAM    000006
 _nDelay                       bssCOMRAM    000008
-_pulseServos                  text1        007CA6
-_setPos                       text11       0079D6
+_pulseServos                  text1        007C94
+_setPos                       text13       007970
+adConvert@chan                cstackCOMRAM 000014
 beep@duration                 cstackCOMRAM 000016
 beep@j                        cstackCOMRAM 000019
 beep@pitch                    cstackCOMRAM 000014
 checkMode@cTempMode           cstackCOMRAM 000021
 checkMode@i                   cstackCOMRAM 00001F
-checkMode@i_208               cstackCOMRAM 000020
+checkMode@i_193               cstackCOMRAM 000020
 delay@i                       cstackCOMRAM 000020
-end_of_initialization         cinit        007A66
+end_of_initialization         cinit        007A24
 intlevel0                     text         000000
 intlevel1                     text         000000
 intlevel2                     text         000000
 intlevel3                     text         000000
 pulseServos@i                 cstackCOMRAM 000015
-pulseServos@i_220             cstackCOMRAM 000016
-pulseServos@i_221             cstackCOMRAM 000017
-pulseServos@i_222             cstackCOMRAM 000018
-pulseServos@i_223             cstackCOMRAM 000019
+pulseServos@i_205             cstackCOMRAM 000016
+pulseServos@i_206             cstackCOMRAM 000017
+pulseServos@i_207             cstackCOMRAM 000018
+pulseServos@i_208             cstackCOMRAM 000019
 setPos@a                      cstackCOMRAM 000018
 setPos@b                      cstackCOMRAM 000014
 setPos@c                      cstackCOMRAM 000015
@@ -520,20 +539,20 @@ setPos@e                      cstackCOMRAM 000017
 stackhi                       (abs)        0007FF
 stacklo                       (abs)        000060
 start                         init         002000
-start_initialization          cinit        007A3A
+start_initialization          cinit        0079F8
 
 
 FUNCTION INFORMATION:
 
  *************** function _main *****************
  Defined at:
-		line 357 in file "Hand.c"
+		line 373 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
-                  2  216[None  ] int 
+                  2  161[None  ] int 
  Registers used:
 		wreg, fsr2l, fsr2h, status,2, status,0, prodl, prodh, cstack
  Tracked objects:
@@ -550,6 +569,7 @@ Total ram usage:        0 bytes
  This function calls:
 		_checkMode
 		_commands
+		_convertSensors
 		_delay
 		_heyKidWantSomeCandy
 		_initANA
@@ -557,7 +577,6 @@ Total ram usage:        0 bytes
 		_initPorts
 		_initVariables
 		_pulseServos
-		_setPos
  This function is called by:
 		Startup code after reset
  This function uses a non-reentrant model
@@ -565,7 +584,7 @@ Total ram usage:        0 bytes
 
  *************** function _pulseServos *****************
  Defined at:
-		line 169 in file "Hand.c"
+		line 168 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -598,7 +617,7 @@ Total ram usage:        6 bytes
 
  *************** function _initVariables *****************
  Defined at:
-		line 69 in file "Hand.c"
+		line 72 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -628,7 +647,7 @@ Total ram usage:        0 bytes
 
  *************** function _initPorts *****************
  Defined at:
-		line 27 in file "CHRP3.c"
+		line 27 in file "CHRPMini.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -657,7 +676,7 @@ Total ram usage:        0 bytes
 
  *************** function _initOsc *****************
  Defined at:
-		line 16 in file "CHRP3.c"
+		line 16 in file "CHRPMini.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -686,7 +705,7 @@ Total ram usage:        0 bytes
 
  *************** function _initANA *****************
  Defined at:
-		line 52 in file "CHRP3.c"
+		line 52 in file "CHRPMini.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -715,7 +734,7 @@ Total ram usage:        0 bytes
 
  *************** function _heyKidWantSomeCandy *****************
  Defined at:
-		line 346 in file "Hand.c"
+		line 362 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -745,7 +764,7 @@ Total ram usage:        0 bytes
 
  *************** function _delay *****************
  Defined at:
-		line 226 in file "Hand.c"
+		line 231 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -775,7 +794,7 @@ Total ram usage:        6 bytes
 
  *************** function ___awdiv *****************
  Defined at:
-		line 8 in file "C:\Program Files\Microchip\xc8\v1.42\sources\common\awdiv.c"
+		line 8 in file "C:\Program Files (x86)\Microchip\xc8\v1.41\sources\common\awdiv.c"
  Parameters:    Size  Location     Type
   dividend        2    0[COMRAM] int 
   divisor         2    2[COMRAM] int 
@@ -805,9 +824,68 @@ Total ram usage:        8 bytes
  This function uses a non-reentrant model
 
 
+ *************** function _convertSensors *****************
+ Defined at:
+		line 248 in file "Hand.c"
+ Parameters:    Size  Location     Type
+		None
+ Auto vars:     Size  Location     Type
+		None
+ Return value:  Size  Location     Type
+                  1    wreg      void 
+ Registers used:
+		wreg, status,2, status,0, cstack
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+      Params:         0       0       0       0       0       0       0       0       0
+      Locals:         0       0       0       0       0       0       0       0       0
+      Temps:          1       0       0       0       0       0       0       0       0
+      Totals:         1       0       0       0       0       0       0       0       0
+Total ram usage:        1 bytes
+ Hardware stack levels used:    1
+ Hardware stack levels required when called:    1
+ This function calls:
+		_adConvert
+ This function is called by:
+		_main
+ This function uses a non-reentrant model
+
+
+ *************** function _adConvert *****************
+ Defined at:
+		line 91 in file "Hand.c"
+ Parameters:    Size  Location     Type
+  chan            1    wreg     unsigned char 
+ Auto vars:     Size  Location     Type
+  chan            1    0[COMRAM] unsigned char 
+ Return value:  Size  Location     Type
+                  1    wreg      unsigned char 
+ Registers used:
+		wreg, status,2, status,0
+ Tracked objects:
+		On entry : 
+		On exit  : 
+		Unchanged: 
+ Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7
+      Params:         0       0       0       0       0       0       0       0       0
+      Locals:         1       0       0       0       0       0       0       0       0
+      Temps:          0       0       0       0       0       0       0       0       0
+      Totals:         1       0       0       0       0       0       0       0       0
+Total ram usage:        1 bytes
+ Hardware stack levels used:    1
+ This function calls:
+		Nothing
+ This function is called by:
+		_convertSensors
+ This function uses a non-reentrant model
+
+
  *************** function _commands *****************
  Defined at:
-		line 290 in file "Hand.c"
+		line 306 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -837,7 +915,7 @@ Total ram usage:        0 bytes
 
  *************** function _checkMode *****************
  Defined at:
-		line 112 in file "Hand.c"
+		line 115 in file "Hand.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -870,7 +948,7 @@ Total ram usage:        7 bytes
 
  *************** function _setPos *****************
  Defined at:
-		line 44 in file "Hand.c"
+		line 46 in file "Hand.c"
  Parameters:    Size  Location     Type
   a               1    wreg     unsigned char 
   b               1    0[COMRAM] unsigned char 
@@ -901,13 +979,12 @@ Total ram usage:        5 bytes
 		_checkMode
 		_commands
 		_heyKidWantSomeCandy
-		_main
  This function uses a non-reentrant model
 
 
  *************** function _beep *****************
  Defined at:
-		line 56 in file "Hand.c"
+		line 59 in file "Hand.c"
  Parameters:    Size  Location     Type
   pitch           2    0[COMRAM] unsigned int 
   duration        2    2[COMRAM] unsigned int 
@@ -940,33 +1017,35 @@ Total ram usage:        7 bytes
 MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
-CHRP3.c
-		_initOsc       		CODE           	79C0	0000	23
-		_initPorts     		CODE           	7A70	0000	61
-		_initANA       		CODE           	79EE	0000	29
+C:\Program Files (x86)\Microchip\xc8\v1.41\sources\common\awdiv.c
+		___awdiv       		CODE           	7C10	0000	133
 
-CHRP3.c estimated size: 113
+C:\Program Files (x86)\Microchip\xc8\v1.41\sources\common\awdiv.c estimated size: 133
 
 Hand.c
-		_delay         		CODE           	7BA6	0000	125
-		_beep          		CODE           	7AAC	0000	69
-		_main          		CODE           	7B34	0000	115
-		_checkMode     		CODE           	7EB4	0000	333
-		_pulseServos   		CODE           	7CA6	0000	203
-		_initVariables 		CODE           	7AF0	0000	69
-		_heyKidWantSomeCandy		CODE           	7A0A	0000	49
-		_commands      		CODE           	7D70	0000	325
-		_setPos        		CODE           	79D6	0000	25
+		_convertSensors		CODE           	7AF2	0000	73
+		_delay         		CODE           	7B94	0000	125
+		_beep          		CODE           	7A6A	0000	69
+		_main          		CODE           	7B3A	0000	91
+		_checkMode     		CODE           	7D7C	0000	321
+		_adConvert     		CODE           	79A4	0000	37
+		_pulseServos   		CODE           	7C94	0000	233
+		_initVariables 		CODE           	7AAE	0000	69
+		_heyKidWantSomeCandy		CODE           	79C8	0000	49
+		_commands      		CODE           	7EBC	0000	325
+		_setPos        		CODE           	7970	0000	25
 
-Hand.c estimated size: 1313
+Hand.c estimated size: 1417
+
+CHRPMini.c
+		_initOsc       		CODE           	795A	0000	23
+		_initPorts     		CODE           	7A2E	0000	61
+		_initANA       		CODE           	7988	0000	29
+
+CHRPMini.c estimated size: 113
 
 shared
-		__initialization		CODE           	7A3A	0000	45
+		__initialization		CODE           	79F8	0000	45
 
 shared estimated size: 45
-
-C:\Program Files\Microchip\xc8\v1.42\sources\common\awdiv.c
-		___awdiv       		CODE           	7C22	0000	133
-
-C:\Program Files\Microchip\xc8\v1.42\sources\common\awdiv.c estimated size: 133
 

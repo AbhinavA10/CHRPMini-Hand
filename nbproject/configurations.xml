@@ -13,9 +13,9 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>CHRP3.c</itemPath>
       <itemPath>PIC18F25K50config.c</itemPath>
       <itemPath>Hand.c</itemPath>
+      <itemPath>CHRPMini.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -36,7 +36,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>Simulator</platformTool>
         <languageToolchain>XC8</languageToolchain>
-        <languageToolchainVersion>1.42</languageToolchainVersion>
+        <languageToolchainVersion>1.41</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <compileType>

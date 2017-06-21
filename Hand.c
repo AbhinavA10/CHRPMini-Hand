@@ -1,10 +1,8 @@
 /*==============================================================================
     Project: Hand
-    Version: 3.1				Date: May 24, 2017
+    Version: 3.1				Date: May 29, 2017
     Target: CHRPMini			Processor: PIC18F25K50
 ==============================================================================*/
-//need to make convert sensors jitter less. can do this by having steps instead of exact values\
-// censoring stuff in convert sensors does not work.
 #include    "xc.h"              // XC compiler general include file
 #include    "stdint.h"          // Include integer definitions
 #include    "stdbool.h"         // Include Boolean (true/false) definitions
@@ -16,22 +14,26 @@
 /*==============================================================================
     Finger Pathing
 ==============================================================================*/
-/*
- * THUMB:   0
- * INDEX:   1
- * MIDDLE:  2
- * RING:    3
- * PINKIE:  4
- */
+#define THUMB           0	// Port B value for both motors stopped
+#define INDEXFINGER     1
+#define MIDDLEFINGER    2
+#define RINGFINGER      3
+#define PINKIEFINGER    4
 
 /*==============================================================================
     VARIABLES
 ==============================================================================*/
-unsigned char arcPos[5], arcMinPos[5] = {255, 255, 255, 255, 255}; //Position for each finger. 0 represents open. 255 means fully closed.
-unsigned char cMode, cDelay, cCountFingerCycle, cCycleIncrement; //cDelay is for counting duration when mode select button is held 
-unsigned char cGesture; // variable for command number
-bool modeSelect, isPressedForMode, isPressedForGesture, buttonWasLetGo, calibMode; // variables needed to properly navigate mode selection
-int nDelay, nCalibrationCounter; //  for keeping track of the proper delay to pulse servos every 20ms
+unsigned char arcPos[5], arcMaxBendPos[5] = {255, 255, 255, 255, 255}; //Position for each finger. 0 represents open. 255 means fully closed.
+unsigned char cMode, cDelay, cGesture, cCountFingerCycle, cCycleIncrement;
+//cMode is the mode the hand is in. i.e, decides what the hand will do
+//cDelay is for counting duration when mode select button is held 
+//cGesture is for the command number
+//cCountFingerCycle and cCycleIncrement are used in creating the "come here" gesture
+bool modeSelect, isPressedForMode, isPressedForGesture, buttonWasLetGo, calibMode;
+// the above variables are needed to properly navigate mode selection, calibration, and gesture cycling
+int nDelay, nCalibrationCounter;
+//nDelay is for keeping track of the proper delay to pulse servos every 20ms
+//nCalibrationCounter is for having the calibration mode on for only 10 seconds/beeps.
 
 /*==============================================================================
     SET POS
@@ -42,16 +44,17 @@ int nDelay, nCalibrationCounter; //  for keeping track of the proper delay to pu
         This will allow us to have certain gestures on command.
 ==============================================================================*/
 void setPos(unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned char e) {
-    arcPos[0] = a;
-    arcPos[1] = b;
-    arcPos[2] = c;
-    arcPos[3] = d;
-    arcPos[4] = e;
+    arcPos[THUMB] = a;
+    arcPos[INDEXFINGER] = b;
+    arcPos[MIDDLEFINGER] = c;
+    arcPos[RINGFINGER] = d;
+    arcPos[PINKIEFINGER] = e;
 }
 
 /*==============================================================================
     BEEP
-        Boop.
+        A generic beep function. Used in other parts of the code so that 
+        we can tell what mode it is in.
 ==============================================================================*/
 void beep(unsigned int pitch, unsigned int duration) {
     for (duration; duration != 0; duration--) {
@@ -72,7 +75,7 @@ void initVariables() {
     isPressedForMode = false;
     isPressedForGesture = false;
     buttonWasLetGo = true;
-    calibMode = true;
+    calibMode = false;
     cMode = 0;
     cDelay = 0;
     cCountFingerCycle = 5;
@@ -131,8 +134,7 @@ unsigned char checkMode() {
                 modeSelect = false;
                 buttonWasLetGo = false;
                 beep(400, 500);
-                cTempMode--;
-                // to compensate for the cTempMode++ below
+                cTempMode--; // to compensate for the cTempMode++ some lines below
                 if (cTempMode == 0) {
                     calibMode = true;
                 } else {
@@ -161,19 +163,24 @@ unsigned char checkMode() {
 
 /*==============================================================================
     PULSE SERVOS 
-        Servo function to pulse all 5 servos.
+        Servo function to pulse all 5 servos one after the other.
 ==============================================================================*/
 void pulseServos() {
     /*  Servo specifications
      * The servo turns 180 degrees. Below values were found by trail and error
      * as the datasheet was an approximation
-     * 0.54ms to 2.07ms on. 20ms period.
+     * 0.54ms to 2.07ms on time, and a 20ms period.
      */
 
-    //Thumb Finger
+    //Thumb
     SERVOTHUMB = 1; //Turn it on
     __delay_us(540); //540 works well to give a -90 degree pulse.
-    for (unsigned char i = arcPos[0]; i != 0; i--) {
+    for (unsigned char i = 255 - arcPos[THUMB]; i != 0; i--) {
+        /*
+         * The 255- arcPos[x] is needed so that the servo turns in the opposite 
+         * direction i.e., starts at max position
+         * This stops the threads in the hand from crossing over each other.
+         */
         __delay_us(6); //For the SG90 servo, a 6us delay for each position
         // allows a max pulse of 2.07ms for +90 degrees.
     }
@@ -182,7 +189,7 @@ void pulseServos() {
     //Index Finger
     SERVOINDEX = 1;
     __delay_us(540);
-    for (unsigned char i = arcPos[1]; i != 0; i--) {
+    for (unsigned char i = 255 - arcPos[INDEXFINGER]; i != 0; i--) {
         __delay_us(6);
     }
     SERVOINDEX = 0;
@@ -190,7 +197,7 @@ void pulseServos() {
     //Middle Finger
     SERVOMIDDLE = 1;
     __delay_us(540);
-    for (unsigned char i = arcPos[2]; i != 0; i--) {
+    for (unsigned char i = 255 - arcPos[MIDDLEFINGER]; i != 0; i--) {
         __delay_us(6);
     }
     SERVOMIDDLE = 0;
@@ -198,7 +205,7 @@ void pulseServos() {
     //Ring Finger
     SERVORING = 1;
     __delay_us(540);
-    for (unsigned char i = arcPos[3]; i != 0; i--) {
+    for (unsigned char i = 255 - arcPos[RINGFINGER]; i != 0; i--) {
         __delay_us(6);
     }
     SERVORING = 0;
@@ -206,7 +213,7 @@ void pulseServos() {
     //Pinkie Finger
     SERVOPINKIE = 1;
     __delay_us(540);
-    for (unsigned char i = arcPos[4]; i != 0; i--) {
+    for (unsigned char i = 255 - arcPos[PINKIEFINGER]; i != 0; i--) {
         __delay_us(6);
     }
     SERVOPINKIE = 0;
@@ -218,10 +225,11 @@ void pulseServos() {
         each servo is always 20ms.
         Takes the goal of a 20ms pulse, subtracts guaranteed servo pulses of 0.54ms
         and then also subtracts any extra pulses for each position. (-2500) was 
-        added as an adjustment factor to account for clock cycles in other code.
+        added as an approximated adjustment factor to account for clock cycles/delays in 
+        other parts of the code.
 ==============================================================================*/
 void delay() {
-    nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[0] - arcPos[1] - arcPos[2] - arcPos[3] - arcPos[4]) / 6);
+    nDelay = (int) ((20000 - 2500 - 540 * 5 - arcPos[THUMB] - arcPos[INDEXFINGER] - arcPos[MIDDLEFINGER] - arcPos[RINGFINGER] - arcPos[PINKIEFINGER]) / 6);
     for (int i = nDelay; i != 0; i--) {
         __delay_us(6);
     }
@@ -229,42 +237,53 @@ void delay() {
 
 /*==============================================================================
     CONVERT SENSORS
-        Function to convert all analogue flex sensors to 8bit value by 
+        Function to convert all analog flex sensors to 8bit value by 
         calling the A/D conversion function.
+        
+        The position must equal 255 minus the value that the A/D conversion returns.
+        This is because the conductivity of the foam increases as it is bent, 
+        meaning less resistance, and therefore a lower value. Without this, the
+        hand would start as a fist, and then unbend as the user bends the glove.
 ==============================================================================*/
 void convertSensors() {
-    arcPos[0] = adConvert(SENSORTHUMB);
-    arcPos[1] = adConvert(SENSORINDEX);
-    arcPos[2] = adConvert(SENSORMIDDLE);
-    arcPos[3] = adConvert(SENSORRING);
-    arcPos[4] = adConvert(SENSORPINKIE);
-    // the lines below censor out the middle finger. i.e., can't give someone
-    //    // the finger
+    arcPos[THUMB] = 255 - adConvert(SENSORTHUMB);
+    arcPos[INDEXFINGER] = 255 - adConvert(SENSORINDEX);
+    arcPos[MIDDLEFINGER] = 255 - adConvert(SENSORMIDDLE);
+    arcPos[RINGFINGER] = 255 - adConvert(SENSORRING);
+    arcPos[PINKIEFINGER] = 255 - adConvert(SENSORPINKIE);
+}
+
+/*==============================================================================
+    CENSOR FINGER
+        Function to censor out the middle finger. i.e., can't give someone
+        the finger.
+==============================================================================*/
+void censorFinger() {
     if (!calibMode) {
-        unsigned char cMax = 0;
-        if (arcPos[2] > arcPos[0] && arcPos[2] > arcPos[1] && arcPos[2] > arcPos[3] && arcPos[2] > arcPos[4]) {
+        unsigned char cMin = 255;
+        if (arcPos[MIDDLEFINGER] < arcPos[THUMB] && arcPos[MIDDLEFINGER] < arcPos[INDEXFINGER] && arcPos[MIDDLEFINGER] < arcPos[RINGFINGER] && arcPos[MIDDLEFINGER] < arcPos[PINKIEFINGER]) {
             // to find the size of array in C, you need to use sizeof(). Instead of
             //that, we just hard-coded in 5 in the line below
             for (unsigned char i = 0; i < 5; i++) {
-                if (arcPos[i] > cMax && i != 2) {
-                    arcPos[i] = cMax;
+                if (cMin > arcPos[i] && i != MIDDLEFINGER) {
+                    cMin = arcPos[i];
                 }
             }
-            arcPos[2] = cMax;
+            arcPos[MIDDLEFINGER] = cMin;
         }
     }
 }
 
 /*==============================================================================
     CALIBRATION
-        Function to convert all analogue flex sensors to 8bit value by 
+        Function to convert all analog flex sensors to 8bit value by 
         calling the A/D conversion function.
 ==============================================================================*/
 void calibrate() {
-    modeSelect = false;
+    modeSelect = false; // just to make sure it's not in mode select
     for (unsigned char i = 0; i < 5; i++) {
-        if (arcPos[i] < arcMinPos[i] && arcPos[i] > 0) {
-            arcMinPos[i] = arcPos[i];
+        if (arcPos[i] < arcMaxBendPos[i] && arcPos[i] > 0) {
+            arcMaxBendPos[i] = arcPos[i];
         }
     }
     nCalibrationCounter++;
@@ -311,7 +330,7 @@ void commands() {
                 setPos(0, 255, 255, 255, 0); // Hang Loose
                 break;
             case 4:
-                setPos(200, 0, 0, 255, 255); // Peace sign ?
+                setPos(200, 0, 0, 255, 255); // Peace sign
                 break;
             case 5:
                 setPos(200, 200, 0, 0, 0); // A-OK
@@ -353,18 +372,16 @@ void heyKidWantSomeCandy() {
 ==============================================================================*/
 int main(void) {
     initOsc(); // Initialize oscillator and wait for it to stabilize
-    initPorts(); // Initialize CHRP3 I/O and peripherals
-    initANA(); // Initialize Port A analogue inputs
+    initPorts(); // Initialize CHRPMini I/O and peripherals
+    initANA(); // Initialize Port A analog inputs (for Flex sensors)
     initVariables(); // Initialize all variables 
     while (1) {
         if (!modeSelect) {
             switch (cMode) {
                 case 0: // matching glove movements
-                    //                    convertSensors();
-                    //                    if (calibMode) {
-                    //                        calibrate();
-                    //                    }
-                    setPos(0, 0, 0, 0, 0);
+                    convertSensors();
+                    //censorFinger();
+                    //if (calibMode) calibrate();
                     break;
                 case 1: // pre-programmed gestures
                     commands();
@@ -376,7 +393,7 @@ int main(void) {
                     break;
             }
         }
-        if (!calibMode || modeSelect || cMode != 0) {
+        if (!calibMode || modeSelect) {
             pulseServos();
             delay();
         }

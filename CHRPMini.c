@@ -1,5 +1,5 @@
 /*==============================================================================
-	CHRP 3.1 (PIC18F25K50) hardware initialization and user functions.
+	CHRP Mini (PIC18F25K50) hardware initialization and user functions.
 ==============================================================================*/
 
 #include	"xc.h"				// XC compiler general include file

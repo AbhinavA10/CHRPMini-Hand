@@ -3,15 +3,15 @@
  Unused memory ranges:
   0h - 1FFFh
   2004h - 2007h
-  200Dh - 79BFh
+  200Dh - 7959h
   8000h - 1FFFFFh
   200008h - 2FFFFFh
   30000Eh - 30003Fh
   
- dist/default/production\CHRPMini-Hand.production.hex ranges:
+ dist/default/production\CHRPMini-Hand.X.production.hex ranges:
   2000h - 2003h
   2008h - 200Ch
-  79C0h - 7FFFh
+  795Ah - 7FFFh
   200000h - 200007h
   300000h - 30000Dh
   
@@ -26,9 +26,11 @@
   T = Trailing code
   & = Find & replace opcode
   X = Find & delete opcode
-  1 = dist/default/production\CHRPMini-Hand.production.hex
+  1 = dist/default/production\CHRPMini-Hand.X.production.hex
 00000000: ----------------------------------------------------------------
 00002000: 1111----11111---------------------------------------------------
+00007940: --------------------------11111111111111111111111111111111111111
+00007980: 1111111111111111111111111111111111111111111111111111111111111111
 000079C0: 1111111111111111111111111111111111111111111111111111111111111111
 00007A00: 1111111111111111111111111111111111111111111111111111111111111111
 00007A40: 1111111111111111111111111111111111111111111111111111111111111111

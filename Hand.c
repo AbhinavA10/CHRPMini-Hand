@@ -3,6 +3,8 @@
     Version: 3.1				Date: May 29, 2017
     Target: CHRPMini			Processor: PIC18F25K50
 ==============================================================================*/
+// fix mode 0 bug
+// fix calibration
 #include    "xc.h"              // XC compiler general include file
 #include    "stdint.h"          // Include integer definitions
 #include    "stdbool.h"         // Include Boolean (true/false) definitions
@@ -281,9 +283,18 @@ void censorFinger() {
 
 /*==============================================================================
     CALIBRATION
-        Function to convert all analog flex sensors to 8bit value by 
-        calling the A/D conversion function.
+        Function to calibrate all analog flex sensors in a period of 10 seconds
+        after entering sensor mode (0)
 ==============================================================================*/
+
+/*
+ * SOME INFO:
+ * Dividing a 5V signal into 256 states results in an input sensitivity of about 19.5mV
+ * This means  the lowest resistance in a sensor probably gives about a "32"
+ * We need to create either a look up table (array of 256) or a conversion factor to map the minimum of 
+ * 35 to 0 on the servo, and then spread the other sensor values across the servos
+ * http://www.ohmslawcalculator.com/voltage-divider-calculator
+ */
 void calibrate() {
     modeSelect = false; // just to make sure it's not in mode select
     for (unsigned char i = 0; i < 5; i++) {
@@ -300,6 +311,8 @@ void calibrate() {
         nCalibrationCounter = 0;
         calibMode = false;
         beep(400, 2000);
+        // write some code here
+
     }
 }
 
